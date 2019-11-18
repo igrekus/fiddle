@@ -36,7 +36,7 @@ def eq_sum(array):
     return np.all(array.sum(axis=0) == array.sum(axis=1))
 
 ar = np.random.randint(0, 10, 10)
-df = pd.read_csv('road_data.csv', header=0, names=['cars', 'acc', 'vodka', 'crime', 'income', 'retail'])
+df = pd.read_csv('data/road_data.csv', header=0, names=['cars', 'acc', 'vodka', 'crime', 'income', 'retail'])
 
 print('1. max even:', ar[ar % 2 == 0].max())
 

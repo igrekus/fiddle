@@ -159,8 +159,6 @@ fabric.properties
 
 \.idea/
 
-data/
-
 venv1/
 
 venv/
