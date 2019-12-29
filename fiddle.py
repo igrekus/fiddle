@@ -34,10 +34,8 @@ def process_txt(txt_dir):
 
 
 def process_archive(path_to_file, target_dir):
-    if is_tar(path_to_file):
-        extract(tarfile.open, path_to_file, target_dir)
-    elif is_zip(path_to_file):
-        extract(zipfile.ZipFile, path_to_file, target_dir)
+    open_func = tarfile.open if is_tar(path_to_file) else zipfile.ZipFile
+    extract(open_func, path_to_file, target_dir)
 
 
 def is_text(f):
