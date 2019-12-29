@@ -13,6 +13,11 @@ wrong_file = [
     'The key is somewhere but not here',
 ]
 
+open_func = {
+    True: tarfile.open,
+    False: zipfile.ZipFile
+}
+
 
 def filter_files(l):
     return [f for f in os.listdir(l) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
@@ -34,8 +39,7 @@ def process_txt(txt_dir):
 
 
 def process_arc_file(path_to_file, target_dir):
-    open_func = tarfile.open if is_tar(path_to_file) else zipfile.ZipFile
-    extract(open_func, path_to_file, target_dir)
+    extract(open_func[is_tar(path_to_file)], path_to_file, target_dir)
 
 
 def is_txt(f):
