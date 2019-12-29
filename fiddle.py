@@ -38,7 +38,7 @@ def process_arc_file(path_to_file, target_dir):
     extract(open_func, path_to_file, target_dir)
 
 
-def is_text(f):
+def is_txt(f):
     return f.endswith('.txt')
 
 
@@ -54,7 +54,7 @@ def remove_archive(path_to_file):
 def walk_archive(source_dir, target):
     new_current_dir = f'{source_dir}\\{target}'
     for f in filter_files(source_dir):
-        if is_text(f):
+        if is_txt(f):
             process_txt(source_dir)
             return
         arc_path = f'{source_dir}\\{f}'
