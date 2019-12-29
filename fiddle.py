@@ -30,13 +30,13 @@ def extract_zip(file, target_dir):
     z.close()
 
 
-def process_txt(dir_):
+def process_txt(path):
     out_txt = list()
-    for f in os.listdir(dir_):
-        with open(f'{dir_}\\{f}', mode='rt', encoding='utf-8') as txt:
+    for f in os.listdir(path):
+        with open(f'{path}\\{f}', mode='rt', encoding='utf-8') as txt:
             out_txt += txt.readlines() + ['\n']
-        if os.path.isfile(f'{dir_}\\{f}'):
-            os.remove(f'{dir_}\\{f}')
+        if os.path.isfile(f'{path}\\{f}'):
+            os.remove(f'{path}\\{f}')
     with open('res.txt', mode='at', encoding='utf-8') as out:
         out.writelines(['\n<<<\n'] + out_txt + ['\n>>>'])
 
