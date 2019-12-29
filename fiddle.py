@@ -29,9 +29,7 @@ def extract(func, file, target_dir):
 
 
 def process_txt(txt_dir):
-    out_txt = [collect_txt_data(f'{txt_dir}\\{f}') for f in os.listdir(txt_dir)]
-    with open('res.txt', mode='at', encoding='utf-8') as out:
-        out.writelines(list(itertools.chain(*out_txt)))
+    log_data([collect_txt_data(f'{txt_dir}\\{f}') for f in os.listdir(txt_dir)])
 
 
 def collect_txt_data(file):
@@ -39,6 +37,11 @@ def collect_txt_data(file):
         data = txt.readlines() + ['\n']
     os.remove(file)
     return ['\n###\n'] + data + ['\n$$$']
+
+
+def log_data(data):
+    with open('res.txt', mode='at', encoding='utf-8') as out:
+        out.writelines(list(itertools.chain(*data)))
 
 
 def process_arc_file(path_to_file, target_dir):
