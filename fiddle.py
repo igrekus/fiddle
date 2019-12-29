@@ -3,7 +3,6 @@ import tarfile
 import zipfile
 
 
-root_arc = 'find_the_key.tar.bz2'
 current_dir = 'data'
 temp = 'temp'
 
