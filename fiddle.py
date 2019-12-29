@@ -21,13 +21,11 @@ def filter_files(l):
 def extract_tar(file, target_dir):
     with tarfile.open(file) as tar:
         tar.extractall(target_dir)
-    tar.close()
 
 
 def extract_zip(file, target_dir):
     with zipfile.ZipFile(file) as z:
         z.extractall(target_dir)
-    z.close()
 
 
 def process_txt(path):
