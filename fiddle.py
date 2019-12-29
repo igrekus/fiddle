@@ -18,12 +18,12 @@ def filter_files(l):
     return [f for f in os.listdir(l) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
 
 
-def extract_tar(file, target_dir):
+def process_tar(file, target_dir):
     with tarfile.open(file) as tar:
         tar.extractall(target_dir)
 
 
-def extract_zip(file, target_dir):
+def process_zip(file, target_dir):
     with zipfile.ZipFile(file) as z:
         z.extractall(target_dir)
 
@@ -38,28 +38,44 @@ def process_txt(path):
         out.writelines(['\n<<<\n'] + out_txt + ['\n>>>'])
 
 
-def extract(source_dir, target):
-    files = filter_files(source_dir)
-    new_current = f'{source_dir}\\{target}'
-    for f in files:
-        f_path = f'{source_dir}\\{f}'
-        if f.endswith('.txt'):
+def process_archive(path, file, target_dir):
+    if is_tar(file):
+        process_tar(f'{path}\\{file}', target_dir)
+    elif is_zip(file):
+        process_zip(f'{path}\\{file}', target_dir)
+
+
+def is_text(f):
+    return f.endswith('.txt')
+
+
+def is_tar(f):
+    return '.tar' in f
+
+
+def is_zip(f):
+    return f.endswith('.zip')
+
+
+def remove_archive(source_dir, f):
+    if 'Find_the_key.tar.bz2' not in f'{source_dir}\\{f}':
+        os.remove(f'{source_dir}\\{f}')
+
+
+def walk_archive(source_dir, target):
+    new_current_dir = f'{source_dir}\\{target}'
+    for f in filter_files(source_dir):
+        if is_text(f):
             process_txt(source_dir)
             return
-        elif '.tar' in f:
-            extract_tar(f_path, new_current)
-            extract(new_current, temp)
-        elif f.endswith('.zip'):
-            extract_zip(f_path, new_current)
-            extract(new_current, temp)
 
-        if os.path.isfile(f_path):
-            if 'Find_the_key.tar.bz2' not in f_path:
-                os.remove(f_path)
+        process_archive(source_dir, f, new_current_dir)
+        walk_archive(new_current_dir, temp)
+        remove_archive(source_dir, f)
 
-    print('rmdir', new_current)
-    os.rmdir(new_current)
+    print('rmdir', new_current_dir)
+    os.rmdir(new_current_dir)
 
 
-extract(current_dir, temp)
+walk_archive(current_dir, temp)
 
