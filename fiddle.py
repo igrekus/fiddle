@@ -18,14 +18,6 @@ def filter_files(l):
     return [f for f in os.listdir(l) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
 
 
-def extract_tar(file, target_dir):
-    extract(tarfile.open, file, target_dir)
-
-
-def extract_zip(file, target_dir):
-    extract(zipfile.ZipFile, file, target_dir)
-
-
 def extract(func, file, target_dir):
     with func(file) as arc:
         arc.extractall(target_dir)
@@ -43,9 +35,9 @@ def process_txt(path):
 
 def process_archive(path, file, target_dir):
     if is_tar(file):
-        extract_tar(f'{path}\\{file}', target_dir)
+        extract(tarfile.open, f'{path}\\{file}', target_dir)
     elif is_zip(file):
-        extract_zip(f'{path}\\{file}', target_dir)
+        extract(zipfile.ZipFile, f'{path}\\{file}', target_dir)
 
 
 def is_text(f):
