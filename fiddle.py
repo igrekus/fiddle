@@ -19,13 +19,16 @@ def filter_files(l):
 
 
 def extract_tar(file, target_dir):
-    with tarfile.open(file) as tar:
-        tar.extractall(target_dir)
+    extract(tarfile.open, file, target_dir)
 
 
 def extract_zip(file, target_dir):
-    with zipfile.ZipFile(file) as z:
-        z.extractall(target_dir)
+    extract(zipfile.ZipFile, file, target_dir)
+
+
+def extract(func, file, target_dir):
+    with func(file) as arc:
+        arc.extractall(target_dir)
 
 
 def process_txt(path):
