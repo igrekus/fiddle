@@ -46,10 +46,6 @@ def is_tar(f):
     return '.tar' in f
 
 
-def is_zip(f):
-    return f.endswith('.zip')
-
-
 def remove_archive(path_to_file):
     if not path_to_file.endswith('Find_the_key.tar.bz2'):
         os.remove(path_to_file)
