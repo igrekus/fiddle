@@ -1,3 +1,4 @@
+import itertools
 import os
 import tarfile
 import zipfile
@@ -28,18 +29,16 @@ def extract(func, file, target_dir):
 
 
 def process_txt(txt_dir):
-    out_txt = list()
-    for f in os.listdir(txt_dir):
-        out_txt += collect_txt_data(f'{txt_dir}\\{f}')
+    out_txt = [collect_txt_data(f'{txt_dir}\\{f}') for f in os.listdir(txt_dir)]
     with open('res.txt', mode='at', encoding='utf-8') as out:
-        out.writelines(['\n<<<\n'] + out_txt + ['\n>>>'])
+        out.writelines(list(itertools.chain(*out_txt)))
 
 
 def collect_txt_data(file):
     with open(file, mode='rt', encoding='utf-8') as txt:
         data = txt.readlines() + ['\n']
     os.remove(file)
-    return data
+    return ['\n###\n'] + data + ['\n$$$']
 
 
 def process_arc_file(path_to_file, target_dir):
