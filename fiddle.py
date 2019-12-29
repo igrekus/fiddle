@@ -33,8 +33,7 @@ def process_txt(path):
     for f in os.listdir(path):
         with open(f'{path}\\{f}', mode='rt', encoding='utf-8') as txt:
             out_txt += txt.readlines() + ['\n']
-        if os.path.isfile(f'{path}\\{f}'):
-            os.remove(f'{path}\\{f}')
+        os.remove(f'{path}\\{f}')
     with open('res.txt', mode='at', encoding='utf-8') as out:
         out.writelines(['\n<<<\n'] + out_txt + ['\n>>>'])
 
