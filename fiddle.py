@@ -57,10 +57,10 @@ def walk_archive(source_dir, target):
         if is_text(f):
             process_txt(source_dir)
             return
-
-        process_archive(f'{source_dir}\\{f}', new_current_dir)
+        arc_path = f'{source_dir}\\{f}'
+        process_archive(arc_path, new_current_dir)
         walk_archive(new_current_dir, temp)
-        remove_archive(f'{source_dir}\\{f}')
+        remove_archive(arc_path)
 
     print('rmdir', new_current_dir)
     os.rmdir(new_current_dir)
