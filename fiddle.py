@@ -33,11 +33,11 @@ def process_txt(path):
         out.writelines(['\n<<<\n'] + out_txt + ['\n>>>'])
 
 
-def process_archive(path, file, target_dir):
-    if is_tar(file):
-        extract(tarfile.open, f'{path}\\{file}', target_dir)
-    elif is_zip(file):
-        extract(zipfile.ZipFile, f'{path}\\{file}', target_dir)
+def process_archive(path_to_file, target_dir):
+    if is_tar(path_to_file):
+        extract(tarfile.open, path_to_file, target_dir)
+    elif is_zip(path_to_file):
+        extract(zipfile.ZipFile, path_to_file, target_dir)
 
 
 def is_text(f):
@@ -52,9 +52,9 @@ def is_zip(f):
     return f.endswith('.zip')
 
 
-def remove_archive(source_dir, f):
-    if 'Find_the_key.tar.bz2' not in f'{source_dir}\\{f}':
-        os.remove(f'{source_dir}\\{f}')
+def remove_archive(path_to_file):
+    if not path_to_file.endswith('Find_the_key.tar.bz2'):
+        os.remove(path_to_file)
 
 
 def walk_archive(source_dir, target):
@@ -64,9 +64,9 @@ def walk_archive(source_dir, target):
             process_txt(source_dir)
             return
 
-        process_archive(source_dir, f, new_current_dir)
+        process_archive(f'{source_dir}\\{f}', new_current_dir)
         walk_archive(new_current_dir, temp)
-        remove_archive(source_dir, f)
+        remove_archive(f'{source_dir}\\{f}')
 
     print('rmdir', new_current_dir)
     os.rmdir(new_current_dir)
