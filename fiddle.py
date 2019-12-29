@@ -33,7 +33,7 @@ def process_txt(txt_dir):
         out.writelines(['\n<<<\n'] + out_txt + ['\n>>>'])
 
 
-def process_archive(path_to_file, target_dir):
+def process_arc_file(path_to_file, target_dir):
     open_func = tarfile.open if is_tar(path_to_file) else zipfile.ZipFile
     extract(open_func, path_to_file, target_dir)
 
@@ -58,7 +58,7 @@ def walk_archive(source_dir, target):
             process_txt(source_dir)
             return
         arc_path = f'{source_dir}\\{f}'
-        process_archive(arc_path, new_current_dir)
+        process_arc_file(arc_path, new_current_dir)
         walk_archive(new_current_dir, temp)
         remove_archive(arc_path)
 
