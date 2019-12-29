@@ -4,9 +4,6 @@ import tarfile
 import zipfile
 
 
-current_dir = 'data'
-temp = 'temp'
-
 wrong_file = [
     'Key in another file',
     "It's not the file you're looking for",
@@ -17,48 +14,6 @@ open_func = {
     True: tarfile.open,
     False: zipfile.ZipFile
 }
-
-
-def filter_files(l):
-    return [f for f in os.listdir(l) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
-
-
-def extract(func, file, target_dir):
-    with func(file) as arc:
-        arc.extractall(target_dir)
-
-
-def process_txt(txt_dir):
-    log_data([collect_txt_data(f'{txt_dir}\\{f}') for f in os.listdir(txt_dir)])
-
-
-def collect_txt_data(file):
-    with open(file, mode='rt', encoding='utf-8') as txt:
-        data = txt.readlines() + ['\n']
-    os.remove(file)
-    return ['\n###\n'] + data + ['\n$$$']
-
-
-def log_data(data):
-    with open('res.txt', mode='at', encoding='utf-8') as out:
-        out.writelines(list(itertools.chain(*data)))
-
-
-def process_arc_file(path_to_file, target_dir):
-    extract(open_func[is_tar(path_to_file)], path_to_file, target_dir)
-
-
-def is_txt(f):
-    return f.endswith('.txt')
-
-
-def is_tar(f):
-    return '.tar' in f
-
-
-def remove_archive(path_to_file):
-    if not path_to_file.endswith('Find_the_key.tar.bz2'):
-        os.remove(path_to_file)
 
 
 def walk_archive(source_dir, target):
@@ -76,5 +31,49 @@ def walk_archive(source_dir, target):
     os.rmdir(new_current_dir)
 
 
-walk_archive(current_dir, temp)
+def filter_files(path):
+    return [f for f in os.listdir(path) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
 
+
+def is_txt(f):
+    return f.endswith('.txt')
+
+
+def process_txt(txt_dir):
+    log_data([collect_txt_data(f'{txt_dir}\\{f}') for f in os.listdir(txt_dir)])
+
+
+def log_data(data):
+    with open('res.txt', mode='at', encoding='utf-8') as out:
+        out.writelines(list(itertools.chain(*data)))
+
+
+def collect_txt_data(file):
+    with open(file, mode='rt', encoding='utf-8') as txt:
+        data = txt.readlines() + ['\n']
+    os.remove(file)
+    return ['\n###\n'] + data + ['\n$$$']
+
+
+def process_arc_file(path_to_file, target_dir):
+    extract(open_func[is_tar(path_to_file)], path_to_file, target_dir)
+
+
+def extract(func, file, target_dir):
+    with func(file) as arc:
+        arc.extractall(target_dir)
+
+
+def is_tar(f):
+    return '.tar' in f
+
+
+def remove_archive(path_to_file):
+    if not path_to_file.endswith('Find_the_key.tar.bz2'):
+        os.remove(path_to_file)
+
+
+if __name__ == '__main__':
+    current_dir = 'data'
+    temp = 'temp'
+    walk_archive(current_dir, temp)
