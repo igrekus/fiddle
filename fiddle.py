@@ -1,3 +1,4 @@
+import argparse
 import itertools
 import os
 import tarfile
@@ -82,17 +83,25 @@ def find_key(raw_file):
     }
 
     key = list(filter(lambda l: l.strip().split('\n')[0] not in wrong_file, files[1:]))[0].strip().split('\n')[0]
-    with open('key.txt', mode='wt', encoding='utf-8') as out_f:
+    with open(key_file, mode='wt', encoding='utf-8') as out_f:
         out_f.write(key)
 
 
 if __name__ == '__main__':
     temp = 'temp'
     log_file = 'res.txt'
-    try:
-        current_dir = sys.argv[1]
-    except IndexError:
-        current_dir = '.'
+    key_file = 'key.txt'
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('path', help='path to the root archive', default='.', )
+    args = parser.parse_args()
+
+    if 'Find_the_key.tar.bz2' in args.path:
+        current_dir = args.path[:-(len('Find_the_key.tar.bz2') + 1)]
+    else:
+        current_dir = args.path
 
     walk_archive(current_dir, temp)
     find_key(log_file)
+
+    os.startfile(key_file)
