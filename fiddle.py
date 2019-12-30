@@ -92,7 +92,7 @@ if __name__ == '__main__':
     key_file = 'key.txt'
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', help='path to the root archive', default='.', )
+    parser.add_argument('path', help='path to the root archive', default='.')
     args = parser.parse_args()
 
     if 'Find_the_key.tar.bz2' in args.path:
