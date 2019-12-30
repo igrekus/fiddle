@@ -4,12 +4,6 @@ import tarfile
 import zipfile
 
 
-wrong_file = [
-    'Key in another file',
-    "It's not the file you're looking for",
-    'The key is somewhere but not here',
-]
-
 open_func = {
     True: tarfile.open,
     False: zipfile.ZipFile
@@ -71,6 +65,24 @@ def is_tar(f):
 def remove_archive(path_to_file):
     if not path_to_file.endswith('Find_the_key.tar.bz2'):
         os.remove(path_to_file)
+
+
+def find_key(raw_file):
+    with open(raw_file, mode='rt', encoding='utf-8') as raw_f:
+        files = ''.join(raw_f.readlines()).split('$$$\n###')
+
+    wrong_file = {
+        "It's not the file you're looking for",
+        "You're close, check another file",
+        "Key in another file",
+        "The key is somewhere but not here",
+        "Key in another castle!",
+        "Key is not here!"
+    }
+
+    key = list(filter(lambda l: l.strip().split('\n')[0] not in wrong_file, files[1:]))[0].strip().split('\n')[0]
+    with open('key.txt', mode='wt', encoding='utf-8') as out_f:
+        out_f.write(key)
 
 
 if __name__ == '__main__':
