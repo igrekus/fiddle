@@ -2,6 +2,7 @@ import itertools
 import os
 import tarfile
 import zipfile
+import sys
 
 
 open_func = {
@@ -86,8 +87,12 @@ def find_key(raw_file):
 
 
 if __name__ == '__main__':
-    current_dir = 'data'
     temp = 'temp'
     log_file = 'res.txt'
+    try:
+        current_dir = sys.argv[1]
+    except IndexError:
+        current_dir = '.'
+
     walk_archive(current_dir, temp)
     find_key(log_file)
