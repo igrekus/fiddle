@@ -38,7 +38,7 @@ def process_txt(txt_dir):
 
 
 def log_data(data):
-    with open('res.txt', mode='at', encoding='utf-8') as out:
+    with open(log_file, mode='at', encoding='utf-8') as out:
         out.writelines(list(itertools.chain(*data)))
 
 
@@ -88,4 +88,6 @@ def find_key(raw_file):
 if __name__ == '__main__':
     current_dir = 'data'
     temp = 'temp'
+    log_file = 'res.txt'
     walk_archive(current_dir, temp)
+    find_key(log_file)
