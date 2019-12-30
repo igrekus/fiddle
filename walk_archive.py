@@ -3,7 +3,6 @@ import itertools
 import os
 import tarfile
 import zipfile
-import sys
 
 
 open_func = {
