@@ -95,7 +95,9 @@ if __name__ == '__main__':
     parser.add_argument('path', help='path to the root archive', default='.')
     args = parser.parse_args()
 
-    if 'Find_the_key.tar.bz2' in args.path:
+    if args.path == 'Find_the_key.tar.bz2':
+        current_dir = '.'
+    elif 'Find_the_key.tar.bz2' in args.path:
         current_dir = args.path[:-(len('Find_the_key.tar.bz2') + 1)]
     else:
         current_dir = args.path
