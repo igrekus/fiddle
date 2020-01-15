@@ -27,7 +27,7 @@ def walk_archive(source_dir, target):
 
 
 def filter_files(path):
-    return [f for f in os.listdir(path) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
+    return [f for f in os.listdir(path) if is_tar(f) or f.endswith('.zip') or is_txt(f)]
 
 
 def is_txt(f):
