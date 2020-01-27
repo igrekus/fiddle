@@ -63,8 +63,4 @@ test_funcs = [is_straight, is_kind_5, is_kind_4, is_kind_3, is_two_pairs, is_kin
 
 
 def check_combination(hand):
-    # tests =
-    # '0000101' 5
     return labels.get(int(''.join([str(int(f(hand))) for f in test_funcs]), 2), 'Nothing')
-
-# cards = [i for i in range(1, 13)] * 4
