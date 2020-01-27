@@ -19,7 +19,7 @@ def is_impossible(seq):
 
 
 def is_straight(seq):
-    return len(seq) == 5 and (max(seq) - min(seq)) == 4
+    return len(set(seq)) == 5 and (max(seq) - min(seq)) == 4
 
 
 def is_kind_4(seq):
