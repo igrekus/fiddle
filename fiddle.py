@@ -19,10 +19,6 @@ def is_kind(seq, length, times=1):
     return tst and ln == times
 
 
-def is_straight(seq):
-    return len(set(seq)) == 5 and (max(seq) - min(seq)) == 4
-
-
 labels = {
     32: 'Straight',
     16: 'Impossible',
@@ -34,7 +30,7 @@ labels = {
 }
 
 test_funcs = [
-    is_straight,
+    lambda seq: partial(is_kind, length=1, times=5)(seq) and (max(seq) - min(seq)) == 4,
     partial(is_kind, length=5),
     partial(is_kind, length=4),
     partial(is_kind, length=3),
