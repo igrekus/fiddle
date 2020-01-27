@@ -46,8 +46,8 @@ def is_two_pairs(seq):
     return bool(count) and len(count) == 2
 
 
-def is_fullhouse(seq):
-    return is_kind_3(seq) and is_one_pair(hand)
+def is_full_house(seq):
+    return is_kind_3(seq) and is_one_pair(seq)
 
 
 def check_combination(hand):
