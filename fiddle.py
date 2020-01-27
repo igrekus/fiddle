@@ -1,108 +1,74 @@
-import argparse
-import itertools
-import os
-import tarfile
-import zipfile
+# Итак, новая задача для всех желающих попробовать свои силы, в этот раз попроще (Никита жаловался).
+# Реализовать функцию, которая принимает на вход список из 5 целых положительных чисел и возвращает название комбинации в покере:
+# + если одинаковы 5, то вернуть "Impossible", иначе
+# + если есть 5 последовательных ([1,2,3,4,5]), то вернуть "Straight", иначе
+# + если одинаковы 4, то вернуть "Four of a Kind", иначе
+# + если одинаковы 2, то вернуть "One Pair", иначе
+# - если одинаковы 2 и 2, то вернуть "Two Pairs", иначе
+# - если одинаковы 3, то вернуть "Three of a Kind", иначе
+
+# - если одинаковы 3 и 2 ([1,1,3,3,3]), то вернуть "Full House", иначе
+# - вернуть "Nothing".
+# сигнатура def check_combination(cards: list) -> str:
+# нужно только дописать код в функции, не нужно ничего лишнего, импорт чего-либо запрещен (разве что рандом для проверки)
+
+import random
 
 
-open_func = {
-    True: tarfile.open,
-    False: zipfile.ZipFile
-}
+def has_set_of_len(seq, n):
+    return len(set(seq)) == 5 - n + 1
 
 
-def walk_archive(source_dir, target):
-    new_current_dir = f'{source_dir}\\{target}'
-    for f in filter_files(source_dir):
-        if is_txt(f):
-            process_txt(source_dir)
-            return
-        arc_path = f'{source_dir}\\{f}'
-        process_arc_file(arc_path, new_current_dir)
-        walk_archive(new_current_dir, temp)
-        remove_archive(arc_path)
-
-    print('rmdir', new_current_dir)
-    os.rmdir(new_current_dir)
+def is_impossible(seq):
+    return len(set(seq)) == 1
 
 
-def filter_files(path):
-    return [f for f in os.listdir(path) if '.tar' in f or f.endswith('.zip') or f.endswith('.txt')]
+def is_straight(seq):
+    return len(seq) == 5 and (max(seq) - min(seq)) == 4
 
 
-def is_txt(f):
-    return f.endswith('.txt')
+def is_kind_4(seq):
+    nums = set(seq)
+    count = [n for n in nums if seq.count(n) == 4]
+    return bool(count)
 
 
-def process_txt(txt_dir):
-    log_data([collect_txt_data(f'{txt_dir}\\{f}') for f in os.listdir(txt_dir)])
+def is_kind_3(seq):
+    nums = set(seq)
+    count = [n for n in nums if seq.count(n) == 3]
+    return bool(count)
 
 
-def log_data(data):
-    with open(log_file, mode='at', encoding='utf-8') as out:
-        out.writelines(list(itertools.chain(*data)))
+def has_one_pair(seq):
+    nums = set(seq)
+    count = [n for n in nums if seq.count(n) == 2]
+    return bool(count) and len(count) == 1
 
 
-def collect_txt_data(file):
-    with open(file, mode='rt', encoding='utf-8') as txt:
-        data = txt.readlines() + ['\n']
-    os.remove(file)
-    return ['\n###\n'] + data + ['\n$$$']
+def has_two_pairs(seq):
+    nums = set(seq)
+    count = [n for n in nums if seq.count(n) == 2]
+    return bool(count) and len(count) == 2
 
 
-def process_arc_file(path_to_file, target_dir):
-    extract(open_func[is_tar(path_to_file)], path_to_file, target_dir)
+def is_fullhouse(seq):
+    return has_set_of_len(seq, 2) and has_set_of_len(seq, 3)
 
 
-def extract(func, file, target_dir):
-    with func(file) as arc:
-        arc.extractall(target_dir)
+def check_combination(hand):
+    print(hand)
+    print('same', is_impossible(hand))
+    print('straight', is_straight(hand))
+    print('4 kind', is_kind_4(hand))
+    print('one pair', has_one_pair(hand))
+    print('two pairs', has_two_pairs(hand))
+    print('kind 3', is_kind_3(hand))
+    print('fullhouse', is_kind_3(hand) and has_one_pair(hand))
 
 
-def is_tar(f):
-    return '.tar' in f
+cards = [i for i in range(14)] * 4
+hand = random.sample(cards, 5)
 
-
-def remove_archive(path_to_file):
-    if not path_to_file.endswith('Find_the_key.tar.bz2'):
-        os.remove(path_to_file)
-
-
-def find_key(raw_file):
-    with open(raw_file, mode='rt', encoding='utf-8') as raw_f:
-        files = ''.join(raw_f.readlines()).split('$$$\n###')
-
-    wrong_file = {
-        "It's not the file you're looking for",
-        "You're close, check another file",
-        "Key in another file",
-        "The key is somewhere but not here",
-        "Key in another castle!",
-        "Key is not here!"
-    }
-
-    key = list(filter(lambda l: l.strip().split('\n')[0] not in wrong_file, files[1:]))[0].strip().split('\n')[0]
-    with open(key_file, mode='wt', encoding='utf-8') as out_f:
-        out_f.write(key)
-
-
-if __name__ == '__main__':
-    temp = 'temp'
-    log_file = 'res.txt'
-    key_file = 'key.txt'
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('path', help='path to the root archive', default='.')
-    args = parser.parse_args()
-
-    if args.path == 'Find_the_key.tar.bz2':
-        current_dir = '.'
-    elif 'Find_the_key.tar.bz2' in args.path:
-        current_dir = args.path[:-(len('Find_the_key.tar.bz2') + 1)]
-    else:
-        current_dir = args.path
-
-    walk_archive(current_dir, temp)
-    find_key(log_file)
-
-    os.startfile(key_file)
+# check_combination(hand)
+check_combination([2, 4, 4, 2, 2])
+# check_combination([2, 3, 4, 5, 6])
