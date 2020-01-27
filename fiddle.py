@@ -33,7 +33,7 @@ labels = {
     1: 'One Pair'
 }
 
-w_partial = [
+test_funcs = [
     is_straight,
     partial(is_kind, length=5),
     partial(is_kind, length=4),
@@ -44,4 +44,4 @@ w_partial = [
 
 
 def check_combination(hand):
-    return labels.get(int(''.join([str(int(f(hand))) for f in w_partial]), 2), 'Nothing')
+    return labels.get(int(''.join([str(int(f(hand))) for f in test_funcs]), 2), 'Nothing')
