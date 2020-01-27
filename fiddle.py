@@ -65,7 +65,7 @@ def check_combination(hand):
         return 'Straight'
     elif is_kind_4(hand):
         return 'Four of a Kind'
-    elif is_fullhouse(hand):
+    elif is_full_house(hand):
         return 'Full House'
     elif is_kind_3(hand):
         return 'Three of a Kind'
