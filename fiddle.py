@@ -14,10 +14,6 @@
 import random
 
 
-def has_set_of_len(seq, n):
-    return len(set(seq)) == 5 - n + 1
-
-
 def is_impossible(seq):
     return len(set(seq)) == 1
 
