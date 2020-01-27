@@ -49,21 +49,17 @@ def is_two_pairs(seq):
     return is_kind(seq, 2, 2)
 
 
-def is_full_house(seq):
-    return is_kind_3(seq) and is_kind_2(seq)
-
-
 labels = {
-    69: 'Full House',
     32: 'Straight',
     16: 'Impossible',
     8: 'Four of a Kind',
     4: 'Three of a Kind',
+    5: 'Full House',
     2: 'Two Pair',
     1: 'Pair'
 }
 
-test_funcs = [is_full_house, is_straight, is_kind_5, is_kind_4, is_kind_3, is_two_pairs, is_kind_2]
+test_funcs = [is_straight, is_kind_5, is_kind_4, is_kind_3, is_two_pairs, is_kind_2]
 
 
 def check_combination(hand):
