@@ -18,11 +18,11 @@ def test_check_combination():
     expect(check_combination([1, 1, 2, 2, 2])).to_equal('Full House')
     expect(check_combination([2, 2, 1, 1, 1])).to_equal('Full House')
     expect(check_combination([2, 3, 1, 1, 1])).to_equal('Three of a Kind')
-    expect(check_combination([2, 2, 3, 1, 1])).to_equal('Two Pair')
-    expect(check_combination([2, 2, 3, 4, 1])).to_equal('Pair')
+    expect(check_combination([2, 2, 3, 1, 1])).to_equal('Two Pairs')
+    expect(check_combination([2, 2, 3, 4, 1])).to_equal('One Pair')
     expect(check_combination([2, 5, 3, 7, 1])).to_equal('Nothing')
 
-    with open('D:\\work\\python\\fiddle\\dataset.json', mode='rt', encoding='utf-8') as f:
+    with open('D:\\work\\python\\fiddle\\dataset_norm.json', mode='rt', encoding='utf-8') as f:
         js = json.loads(''.join(f.readlines()))
 
     for k, v in js.items():
