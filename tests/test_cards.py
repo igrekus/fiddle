@@ -2,8 +2,7 @@ import json
 
 from pyexpect import expect
 
-from fiddle import is_kind_5, is_straight, is_kind_4, is_kind_3, is_kind_2, is_two_pairs, is_full_house, \
-    check_combination
+from fiddle import is_kind_5, is_straight, is_kind_4, is_kind_3, is_kind_2, is_two_pairs,  check_combination
 
 
 def test_is_impossible():
@@ -42,15 +41,6 @@ def test_is_two_pairs():
     expect(is_two_pairs([1, 2, 2, 4, 4])).to_equal(True)
     expect(is_two_pairs([2, 2, 2, 4, 4])).to_equal(False)
     expect(is_two_pairs([1, 1, 2, 4, 4])).to_equal(True)
-
-
-def test_is_full_house():
-    expect(is_full_house([1, 1, 2, 2, 2])).to_equal(True)
-    expect(is_full_house([1, 1, 1, 2, 2])).to_equal(True)
-    expect(is_full_house([1, 1, 1, 1, 2])).to_equal(False)
-    expect(is_full_house([1, 2, 3, 4, 5])).to_equal(False)
-    expect(is_full_house([1, 1, 3, 2, 2])).to_equal(False)
-    expect(is_full_house([1, 1, 1, 2, 3])).to_equal(False)
 
 
 def test_check_combination():
