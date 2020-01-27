@@ -20,25 +20,25 @@ def has_seq(seq, l):
     return bool(count), len(count)
 
 
-def is_kind(seq, length, times):
+def is_kind(seq, length, times=1):
     tst, ln = has_seq(seq, length)
     return tst and ln == times
 
 
 def is_kind_5(seq):
-    return is_kind(seq, 5, 1)
+    return is_kind(seq, 5)
 
 
 def is_kind_4(seq):
-    return is_kind(seq, 4, 1)
+    return is_kind(seq, 4)
 
 
 def is_kind_3(seq):
-    return is_kind(seq, 3, 1)
+    return is_kind(seq, 3)
 
 
 def is_kind_2(seq):
-    return is_kind(seq, 2, 1)
+    return is_kind(seq, 2)
 
 
 def is_two_pairs(seq):
