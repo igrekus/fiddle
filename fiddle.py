@@ -53,31 +53,49 @@ def is_full_house(seq):
     return is_kind_3(seq) and is_kind_2(seq)
 
 
-def check_combination(hand):
-    # tests =
-    # '1000000'
-    # '0100000'
-    # '0010000'
-    # '0001000'
-    # '0000100'
-    # '0000010'
-    # '0000001'
-    if is_full_house(hand):
-        return 'Full House'
-    if is_straight(hand):
-        return 'Straight'
-    if is_kind_5(hand):
-        return 'Impossible'
-    if is_kind_4(hand):
-        return 'Four of a Kind'
-    if is_kind_3(hand):
-        return 'Three of a Kind'
-    if is_two_pairs(hand):
-        return 'Two Pair'
-    if is_kind_2(hand):
-        return 'Pair'
-    else:
-        return 'Nothing'
+labels = {
+    69: 'Full House',
+    32: 'Straight',
+    16: 'Impossible',
+    8: 'Four of a Kind',
+    4: 'Three of a Kind',
+    2: 'Two Pair',
+    1: 'Pair'
+}
 
+
+def check_combination(hand):
+    test_funcs = [is_full_house, is_straight, is_kind_5, is_kind_4, is_kind_3, is_two_pairs, is_kind_2]
+    # tests =
+    # '0000101' 5
+
+    # '1000101' 69
+    # '0100000' 32
+    # '0010000' 16
+    # '0001000' 8
+    # '0000100' 4
+    # '0000010' 2
+    # '0000001' 1
+    ret = 'Nothing'
+    if is_full_house(hand):
+        ret = 'Full House'
+    elif is_straight(hand):
+        ret = 'Straight'
+    elif is_kind_5(hand):
+        ret = 'Impossible'
+    elif is_kind_4(hand):
+        ret = 'Four of a Kind'
+    elif is_kind_3(hand):
+        ret = 'Three of a Kind'
+    elif is_two_pairs(hand):
+        ret = 'Two Pair'
+    elif is_kind_2(hand):
+        ret = 'Pair'
+    else:
+        ret = 'Nothing'
+
+    index = int(''.join([str(int(f(hand))) for f in test_funcs]), 2)
+    print(index, ret)
+    return ret
 
 # cards = [i for i in range(1, 13)] * 4
