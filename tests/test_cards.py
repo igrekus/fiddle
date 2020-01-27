@@ -2,13 +2,7 @@ import json
 
 from pyexpect import expect
 
-from fiddle import is_straight, check_combination
-
-
-def test_is_straight():
-    expect(is_straight([1, 2, 3, 4, 5])).to_equal(True)
-    expect(is_straight([5, 6, 7, 8, 9])).to_equal(True)
-    expect(is_straight([5, 6, 1, 8, 9])).to_equal(False)
+from fiddle import check_combination
 
 
 def test_check_combination():
