@@ -9,10 +9,6 @@
 # - если одинаковы 3 и 2 ([1,1,3,3,3]), то вернуть "Full House", иначе
 # - вернуть "Nothing".
 # сигнатура def check_combination(cards: list) -> str:
-# нужно только дописать код в функции, не нужно ничего лишнего, импорт чего-либо запрещен (разве что рандом для проверки)
-import itertools
-import json
-import random
 
 
 def is_straight(seq):
