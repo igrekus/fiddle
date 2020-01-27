@@ -10,7 +10,8 @@
 # - вернуть "Nothing".
 # сигнатура def check_combination(cards: list) -> str:
 # нужно только дописать код в функции, не нужно ничего лишнего, импорт чего-либо запрещен (разве что рандом для проверки)
-
+import itertools
+import json
 import random
 
 
@@ -61,29 +62,22 @@ def check_combination(hand):
     # '0000100'
     # '0000010'
     # '0000001'
+    if is_full_house(hand):
+        return 'Full House'
     if is_straight(hand):
         return 'Straight'
-    elif is_kind_5(hand):
+    if is_kind_5(hand):
         return 'Impossible'
-    elif is_kind_4(hand):
+    if is_kind_4(hand):
         return 'Four of a Kind'
-    elif is_full_house(hand):
-        return 'Full House'
-    elif is_kind_3(hand):
+    if is_kind_3(hand):
         return 'Three of a Kind'
-    elif is_two_pairs(hand):
-        return 'Two Pairs'
-    elif is_kind_2(hand):
-        return 'One Pair'
+    if is_two_pairs(hand):
+        return 'Two Pair'
+    if is_kind_2(hand):
+        return 'Pair'
     else:
         return 'Nothing'
 
 
-cards = [i for i in range(1, 15)] * 4
-
-# hand = [2, 4, 4, 5, 5]
-
-for _ in range(10):
-    hand = random.sample(cards, 5)
-    print(list(sorted(hand)))
-    print(check_combination(hand))
+# cards = [i for i in range(1, 13)] * 4
