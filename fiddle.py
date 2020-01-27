@@ -14,40 +14,42 @@
 import random
 
 
-def is_impossible(seq):
-    return len(set(seq)) == 1
-
-
 def is_straight(seq):
     return len(set(seq)) == 5 and (max(seq) - min(seq)) == 4
 
 
+def has_seq(seq, l):
+    count = [n for n in set(seq) if seq.count(n) == l]
+    return bool(count), len(count)
+
+
+def is_kind(seq, length, times):
+    tst, ln = has_seq(seq, length)
+    return tst and ln == times
+
+
+def is_kind_5(seq):
+    return is_kind(seq, 5, 1)
+
+
 def is_kind_4(seq):
-    nums = set(seq)
-    count = [n for n in nums if seq.count(n) == 4]
-    return bool(count)
+    return is_kind(seq, 4, 1)
 
 
 def is_kind_3(seq):
-    nums = set(seq)
-    count = [n for n in nums if seq.count(n) == 3]
-    return bool(count)
+    return is_kind(seq, 3, 1)
 
 
-def is_one_pair(seq):
-    nums = set(seq)
-    count = [n for n in nums if seq.count(n) == 2]
-    return bool(count) and len(count) == 1
+def is_kind_2(seq):
+    return is_kind(seq, 2, 1)
 
 
 def is_two_pairs(seq):
-    nums = set(seq)
-    count = [n for n in nums if seq.count(n) == 2]
-    return bool(count) and len(count) == 2
+    return is_kind(seq, 2, 2)
 
 
 def is_full_house(seq):
-    return is_kind_3(seq) and is_one_pair(seq)
+    return is_kind_3(seq) and is_kind_2(seq)
 
 
 def check_combination(hand):
@@ -59,10 +61,10 @@ def check_combination(hand):
     # '0000100'
     # '0000010'
     # '0000001'
-    if is_impossible(hand):
-        return 'Impossible'
-    elif is_straight(hand):
+    if is_straight(hand):
         return 'Straight'
+    elif is_kind_5(hand):
+        return 'Impossible'
     elif is_kind_4(hand):
         return 'Four of a Kind'
     elif is_full_house(hand):
@@ -71,7 +73,7 @@ def check_combination(hand):
         return 'Three of a Kind'
     elif is_two_pairs(hand):
         return 'Two Pairs'
-    elif is_one_pair(hand):
+    elif is_kind_2(hand):
         return 'One Pair'
     else:
         return 'Nothing'
