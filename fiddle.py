@@ -1,3 +1,7 @@
+import itertools
+import json
+
+
 def partial(func, *args, **keywords):
     def newfunc(*fargs, **fkeywords):
         newkeywords = keywords.copy()
@@ -31,3 +35,13 @@ def check_combination(hand):
         partial(has_seq_of, length=2, times=2),
         partial(has_seq_of, length=2)
     ]]), 2), 'Nothing')
+
+
+perms = list(itertools.permutations([1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5], 5))
+
+out = dict()
+for p in perms:
+    out[f"{p[0]} {p[1]} {p[2]} {p[3]} {p[4]}"] = check_combination(p)
+
+with open('perms.json', mode='wt', encoding='utf-8') as f:
+    f.write(json.dumps(out))
