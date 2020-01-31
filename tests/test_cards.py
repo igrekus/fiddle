@@ -16,7 +16,7 @@ def test_check_combination():
     expect(check_combination([2, 2, 3, 4, 1])).to_equal('One Pair')
     expect(check_combination([2, 5, 3, 7, 1])).to_equal('Nothing')
 
-    with open('D:\\work\\python\\fiddle\\dataset_norm.json', mode='rt', encoding='utf-8') as f:
+    with open('..\\data\\poker\\dataset_norm.json', mode='rt', encoding='utf-8') as f:
         js = json.loads(''.join(f.readlines()))
 
     for k, v in js.items():
