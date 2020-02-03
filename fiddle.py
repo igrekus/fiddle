@@ -19,7 +19,11 @@ def add_digit(st, should=False):
     return st[:-1] + choice(digits) if should else st
 
 
+def base(st, k=8):
+    return ''.join(choices(st, k=k))
+
+
 def password(length: int, use_upper=False, use_digits=False) -> str:
     if length < 8:
         raise ValueError('Minimal password length is 8')
-    return add_digit(add_upper(''.join(choices(ascii_lowercase, k=length)), should=use_upper), should=use_digits)
+    return add_digit(add_upper(base(ascii_lowercase, k=length), should=use_upper), should=use_digits)
