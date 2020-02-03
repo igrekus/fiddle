@@ -14,20 +14,18 @@ from string import ascii_lowercase, ascii_uppercase, digits
 class Password:
     def __init__(self, length=8):
         self.password = ''.join(choices(ascii_lowercase, k=length))
+        self.where = 0
 
-    def upper(self, should=False):
-        self._add_to(what=ascii_uppercase, where=0, should=should)
+    def using(self, what='', when=False):
+        self.password = self.password[:self.where] + choice(what) + self.password[self.where + 1:] if when else self.password
+        self.where += 1
         return self
-
-    def digit(self, should=False):
-        self._add_to(what=digits, where=1, should=should)
-        return self
-
-    def _add_to(self, what, where=0, should=False):
-        self.password = self.password[:where] + choice(what) + self.password[where + 1:] if should else self.password
 
 
 def password(length: int, use_upper=False, use_digits=False) -> str:
     if length < 8:
         raise ValueError('Minimal password length is 8')
-    return Password(length=length).upper(use_upper).digit(use_digits).password
+    return Password(length)\
+        .using(what=ascii_uppercase, when=use_upper)\
+        .using(what=digits, when=use_digits)\
+        .password
