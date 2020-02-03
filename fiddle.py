@@ -1,7 +1,23 @@
-import collections
+# Новая задача: написать функцию генерации пароля, сигнатура(не менять!)
+# def password(length: int, use_upper=False, use_digits=False) -> str:
+# + Функция возвращает случайную последовательность длины length, состоящую только из латиницы и цифр (опционально)
+# + Если не заданы флаги то функция возвращает пароль указанной длины из различных строчных(маленьких) букв
+# + Если заданная длина пароля меньше 8 должно быть брошено исключение ValueError с текстом Minimal password length is 8
+# + Если флаг use_upper = True то последовательность должна содержать минимум 1 Заглавную букву
+# + Если флаг use_digit = True то последовательность должна содержать минимум 1 цифру (0-9)
+# + Не при каких условиях пароль НЕ может состоять только из больших букв или только из цифр.
 
-c = collections.Counter([1, 1, 1, 1, 2, 2, 2, 3, 3])
+from random import choice, choices
+from string import ascii_lowercase, ascii_uppercase, digits
 
-for num, times in c.items():
-    for index in range(times):
-        print(f'{num} - {index + 1}')
+
+def password(length: int, use_upper=False, use_digits=False) -> str:
+    if length < 8:
+        raise ValueError('Minimal password length is 8')
+
+    res = ''.join(choices(ascii_lowercase, k=length))
+    if use_upper:
+        res = choice(ascii_uppercase) + res[1:]
+    if use_digits:
+        res = res[:-1] + choice(digits)
+    return res
