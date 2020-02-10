@@ -1,12 +1,8 @@
-# импортировать ничего нельзя
-# Реализовать функцию
-# to_russian_string(value: int) -> str:
-# которая примнимает на вход целое число от 0 до 999 (включая) и
-# возвращает его письменное преставление на русском языке строчными буквами,
-# например 0='ноль', 111='сто одиннадцать'
-# При неверных значениях бросать любое адекватное исключение.
-
 import itertools
+
+from pyexpect import expect
+from fiddle import to_russian_string
+
 
 _0_to_9 = [
     'ноль',
@@ -69,7 +65,14 @@ d = {i: s for i, s in zip(range(1000), itertools.chain(
 ))}
 
 
-def to_russian_string(value: int) -> str:
-    if value not in range(1000):
-        raise ValueError('Input value must be within [0..999]')
-    return d[value]
+def test_input_value_not_in_range():
+    expect(lambda: to_russian_string(-1)).to_raise(ValueError)
+    expect(lambda: to_russian_string(1000)).to_raise(ValueError)
+
+    print(_20_to_29)
+
+
+def test_to_ru_string():
+    for i in range(1000):
+        expect(to_russian_string(i)).to_equal(d[i])
+
