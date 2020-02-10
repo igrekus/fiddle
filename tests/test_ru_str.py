@@ -69,8 +69,6 @@ def test_input_value_not_in_range():
     expect(lambda: to_russian_string(-1)).to_raise(ValueError)
     expect(lambda: to_russian_string(1000)).to_raise(ValueError)
 
-    print(_20_to_29)
-
 
 def test_to_ru_string():
     for i in range(1000):
