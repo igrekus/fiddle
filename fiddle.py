@@ -1,6 +1,14 @@
 from itertools import chain, repeat
 
 
+def gen_nums(high_place, prev_nums):
+    return [f'{high} {low}' for high, low in decimal_pairs(high_place, prev_nums)]
+
+
+def decimal_pairs(places, prev_nums):
+    yield from zip(repeat_place(places, len(prev_nums)), repeat_nums(prev_nums, len(places)))
+
+
 def repeat_place(place, times):
     yield from chain(*[[p] * times for p in place])
 
