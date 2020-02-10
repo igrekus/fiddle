@@ -1,19 +1,19 @@
 from itertools import chain, repeat
 
 
-def high_places(place, times):
+def repeat_place(place, times):
     yield from chain(*[[p] * times for p in place])
 
 
-def prev_nums(place, times):
-    yield from chain(*repeat(place, times))
+def repeat_nums(nums, times):
+    yield from chain(*repeat(nums, times))
 
 
-def decimal_pairs(higher_places, lower_places):
-    yield from zip(high_places(higher_places, len(lower_places)), prev_nums(lower_places, len(higher_places)))
+def decimal_pairs(places, prev_nums):
+    yield from zip(repeat_place(places, len(prev_nums)), repeat_nums(prev_nums, len(places)))
 
 
-def place_to_string(high_place, prev_nums):
+def gen_nums(high_place, prev_nums):
     return [f'{high} {low}' for high, low in decimal_pairs(high_place, prev_nums)]
 
 
@@ -22,8 +22,8 @@ _100s = ['сто', 'двести', 'триста', 'четыреста', 'пят
 ones = ['ноль', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять']
 teens = ['десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать']
 
-first_hundred = ones + teens + place_to_string(_10s, ones)
-first_thousand = first_hundred + place_to_string(_100s, first_hundred)
+first_hundred = ones + teens + gen_nums(_10s, ones)
+first_thousand = first_hundred + gen_nums(_100s, first_hundred)
 
 d = {i: s.replace(' ноль', '') for i, s in zip(range(1000), first_thousand)}
 
