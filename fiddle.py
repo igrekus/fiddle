@@ -1,16 +1,16 @@
 from itertools import chain, repeat
 
 
-def repeat_high_place(place, times):
+def high_places(place, times):
     yield from chain(*[[p] * times for p in place])
 
 
-def repeat_prev_numbers(place, times):
+def prev_nums(place, times):
     yield from chain(*repeat(place, times))
 
 
 def decimal_pairs(higher_places, lower_places):
-    yield from zip(repeat_high_place(higher_places, len(lower_places)), repeat_prev_numbers(lower_places, len(higher_places)))
+    yield from zip(high_places(higher_places, len(lower_places)), prev_nums(lower_places, len(higher_places)))
 
 
 def place_to_string(high_place, prev_nums):
