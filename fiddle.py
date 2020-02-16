@@ -72,7 +72,7 @@ def _separate_by_digit_number(raw: list):
 
 
 def _extract_pin(raw: dict):
-    return ''.join([str(len(v)) for k, v in raw.items()])
+    return ''.join([f'{len(v)}' for k, v in raw.items()])
 
 
 if __name__ == '__main__':
