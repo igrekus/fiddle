@@ -16,7 +16,7 @@
 # если на вход подается текст 'example test for testing {"fieldOne":1, "fields":2, "fielD":[1,"22", "e3r4"], "fieldN":"2 3 4"} more unnecessary data'
 # то ответ '1210'
 
-# + 1 extract json (only one json, may be empty)   TODO handle newlines
+# + 1 extract json (only one json, may be empty)
 # + 2 extract value fields -- fields with at least one uppercase letter, guaranteed to have at least one number
 # + 3 normalize fields (one int, one list, one string) -> set of nums:
 #   + int, guaranteed to be positive
