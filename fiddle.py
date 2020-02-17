@@ -25,11 +25,12 @@
 # + 4 collect info from normalized fields
 # + 5 extract result from collected info
 # + 6 return -- string with 4 digits, 1st - n of unique one-digit nums, 2nd -- n of unique two-digit nums, etc.
-
 import re
 import json
 import string
+from functools import singledispatch
 from collections import defaultdict
+from itertools import chain
 
 test_str = 'example test for testing {"fieldOne":1, "fields":2,\n"fielD":[1,"22", "e3r4"], "fieldN":"2 3 4"} more unnecessary data'
 upper_set = set(string.ascii_uppercase)
@@ -48,30 +49,33 @@ def _filter_digits(st):
     return int(''.join(filter(str.isdigit, st)))
 
 
-def _wrap_in_list(what):
-    return [what]
-
-
 def _normalize_list_value(lv):
     return [v if isinstance(v, int) else _filter_digits(v) for v in lv]
 
 
+@singledispatch
+def _normalize_value(value: int):
+    return [value]
+
+
+@_normalize_value.register
+def _(value: str):
+    return [_filter_digits(value)]
+
+
+@_normalize_value.register
+def _(value: list):
+    return _normalize_list_value(value)
+
+
 def _normalize_values(raw: list):
-    out = list()
-    for value in raw:
-        if isinstance(value, int):
-            out += _wrap_in_list(value)
-        elif isinstance(value, str):
-            out += _wrap_in_list(_filter_digits(value))
-        elif isinstance(value, list):
-            out += _normalize_list_value(value)
-    return [str(o) for o in out]
+    return [o for o in chain(*[_normalize_value(v) for v in raw])]
 
 
 def _separate_by_digit_number(raw: list):
     d = {i + 1: set() for i in range(4)}
     for el in raw:
-        d[len(el)].add(el)
+        d[len(f'{el}')].add(el)
     return d
 
 
