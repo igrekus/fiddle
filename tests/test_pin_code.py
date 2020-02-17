@@ -37,3 +37,8 @@ def test_pin_code_only_twoes():
     expect(text_to_pin_code(test)).to_equal('0300')
 
 
+def test_pin_code_only_threes():
+    test = 'example test for testing {"fieldOne":122, "fields":2, "fielD":[333, "jj", ""], "fieldN":"999"} more unnecessary data'
+    expect(text_to_pin_code(test)).to_equal('0030')
+
+
