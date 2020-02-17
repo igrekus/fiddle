@@ -27,11 +27,9 @@
 # + 6 return -- string with 4 digits, 1st - n of unique one-digit nums, 2nd -- n of unique two-digit nums, etc.
 import re
 import json
-import string
 from functools import singledispatch
 from itertools import chain
-
-upper_set = set(string.ascii_uppercase)
+from string import ascii_uppercase as uppercase
 
 
 def _extract_json(raw_str):
@@ -40,7 +38,7 @@ def _extract_json(raw_str):
 
 
 def _filter_value_fields(raw: dict):
-    return [v for k, v in raw.items() if set(k).intersection(upper_set)]
+    return [value for field, value in raw.items() if set(field).intersection(uppercase)]
 
 
 def _filter_digits(st):
