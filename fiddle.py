@@ -29,10 +29,8 @@ import re
 import json
 import string
 from functools import singledispatch
-from collections import defaultdict
 from itertools import chain
 
-test_str = 'example test for testing {"fieldOne":1, "fields":2,\n"fielD":[1,"22", "e3r4"], "fieldN":"2 3 4"} more unnecessary data'
 upper_set = set(string.ascii_uppercase)
 
 
