@@ -69,7 +69,7 @@ def _(value: list):
 
 
 def _normalize_values(raw: list):
-    return [o for o in chain(*[_normalize_value(v) for v in raw])]
+    return [o for o in chain(*(_normalize_value(v) for v in raw))]
 
 
 def _separate_by_digit_number(raw: list):
