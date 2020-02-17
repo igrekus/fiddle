@@ -61,7 +61,7 @@ def _(value: list):
 
 
 def _normalize_values(raw: list):
-    return chain(*(_normalize_value(v) for v in raw))
+    return filter(bool, chain(*(_normalize_value(v) for v in raw)))
 
 
 def _separate_by_digit_number(raw):
