@@ -34,100 +34,6 @@ from string import ascii_uppercase as uppercase
 from typing import List, Iterable, Iterator
 
 
-def _extract_json_string(raw_str: str) -> str:
-    """
-    Helper function, extracts a string between the '{' and '}' including these characters.
-
-    Not a part of the public API.
-    """
-    json_regex = re.compile(r'''^             # beginning of the input string    
-                            .*                # any character up until the first '{'
-                            (?P<json>{.*})    # capture a string between the '{' and '}' into a named group ('json')
-                            .*                # any character until the end of the string
-                            $                 # end of the string
-                            ''', re.VERBOSE)
-    return json_regex.match(raw_str.replace('\n', ' '))['json']
-
-
-def _filter_value_fields(raw: dict):
-    """
-    Helper function, filters out non-significant fields from the input dictionary.
-    Significant field key must contain at least one latin upper case letter.
-
-    Not a part of the public API.
-    """
-    return [value for field, value in raw.items() if set(field).intersection(uppercase)]
-
-
-def _filter_digits(st: str) -> str:
-    """
-    Helper function, filters out everything except digits.
-
-    Not a part of the public API.
-    """
-    return ''.join(filter(str.isdigit, st))
-
-
-@singledispatch
-def _normalize_value(value: int) -> List[str]:
-    """
-    Helper function, normalizes int type values.
-
-    Not a part of the public API.
-    """
-    return [f'{value}']
-
-
-@_normalize_value.register
-def _(value: str) -> List[str]:
-    """
-    Overload, normalizes str type values.
-
-    Not a part of the public API.
-    """
-    return [_filter_digits(value)]
-
-
-@_normalize_value.register
-def _(value: list) -> List[str]:
-    """
-    Overload, normalizes list type values.
-
-    Not a part of the public API.
-    """
-    return [f'{v}' if isinstance(v, int) else _filter_digits(v) for v in value]
-
-
-def _normalize_values(raw: List[str]) -> Iterator[str]:
-    """
-    Helper function, normalizes passed list of values into an iterable of strings.
-
-    Not a part of the public API.
-    """
-    return filter(bool, chain(*(_normalize_value(v) for v in raw)))
-
-
-def _separate_numbers(raw):
-    """
-    Helper function, separates normalized values by the number of digits into an intermediate data structure.
-
-    Not a part of the public API.
-    """
-    d = defaultdict(set)
-    for el in raw:
-        d[len(f'{el}')].add(el)
-    return d
-
-
-def _extract_pin(raw: dict):
-    """
-    Helper function, extracts target PIN code from the intermediate data structure.
-
-    Not a part of the public API.
-    """
-    return ''.join([f'{len(raw.get(digit, ""))}' for digit in range(1, 5)])
-
-
 def text_to_pin_code(text: str) -> str:
     """
     Extracts the PIN code from the passed string. PIN code is encoded according to the rules:
@@ -160,3 +66,97 @@ def text_to_pin_code(text: str) -> str:
                 _filter_value_fields(
                     json.loads(
                         _extract_json_string(text))))))
+
+
+def _extract_pin(raw: dict):
+    """
+    Helper function, extracts target PIN code from the intermediate data structure.
+
+    Not a part of the public API.
+    """
+    return ''.join([f'{len(raw.get(digit, ""))}' for digit in range(1, 5)])
+
+
+def _separate_numbers(raw):
+    """
+    Helper function, separates normalized values by the number of digits into an intermediate data structure.
+
+    Not a part of the public API.
+    """
+    d = defaultdict(set)
+    for el in raw:
+        d[len(f'{el}')].add(el)
+    return d
+
+
+def _normalize_values(raw: List[str]) -> Iterator[str]:
+    """
+    Helper function, normalizes passed list of values into an iterable of strings.
+
+    Not a part of the public API.
+    """
+    return filter(bool, chain(*(_normalize_value(v) for v in raw)))
+
+
+@singledispatch
+def _normalize_value(value: int) -> List[str]:
+    """
+    Helper function, normalizes int type values.
+
+    Not a part of the public API.
+    """
+    return [f'{value}']
+
+
+@_normalize_value.register
+def _(value: str) -> List[str]:
+    """
+    Overload, normalizes str type values.
+
+    Not a part of the public API.
+    """
+    return [_filter_digits(value)]
+
+
+@_normalize_value.register
+def _(value: list) -> List[str]:
+    """
+    Overload, normalizes list type values.
+
+    Not a part of the public API.
+    """
+    return [f'{v}' if isinstance(v, int) else _filter_digits(v) for v in value]
+
+
+def _filter_digits(st: str) -> str:
+    """
+    Helper function, filters out everything except digits.
+
+    Not a part of the public API.
+    """
+    return ''.join(filter(str.isdigit, st))
+
+
+def _filter_value_fields(raw: dict):
+    """
+    Helper function, filters out non-significant fields from the input dictionary.
+    Significant field key must contain at least one latin upper case letter.
+
+    Not a part of the public API.
+    """
+    return [value for field, value in raw.items() if set(field).intersection(uppercase)]
+
+
+def _extract_json_string(raw_str: str) -> str:
+    """
+    Helper function, extracts a string between the '{' and '}' including these characters.
+
+    Not a part of the public API.
+    """
+    json_regex = re.compile(r'''^             # beginning of the input string    
+                            .*                # any character up until the first '{'
+                            (?P<json>{.*})    # capture a string between the '{' and '}' into a named group ('json')
+                            .*                # any character until the end of the string
+                            $                 # end of the string
+                            ''', re.VERBOSE)
+    return json_regex.match(raw_str.replace('\n', ' '))['json']
