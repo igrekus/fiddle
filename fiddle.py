@@ -45,7 +45,7 @@ def _filter_value_fields(raw: dict):
 
 
 def _filter_digits(st):
-    return int(''.join([s for s in st if s in string.digits]))
+    return int(''.join(filter(str.isdigit, st)))
 
 
 def _normalize_list_value(lv):
