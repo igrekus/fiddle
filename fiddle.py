@@ -48,6 +48,10 @@ def _filter_digits(st):
     return int(''.join(filter(str.isdigit, st)))
 
 
+def _wrap_in_list(what):
+    return [what]
+
+
 def _normalize_list_value(lv):
     return [v if isinstance(v, int) else _filter_digits(v) for v in lv]
 
@@ -56,11 +60,11 @@ def _normalize_values(raw: list):
     out = list()
     for value in raw:
         if isinstance(value, int):
-            out.append(value)
-        elif isinstance(value, list):
-            out.extend(_normalize_list_value(value))
+            out += _wrap_in_list(value)
         elif isinstance(value, str):
-            out.append(_filter_digits(value))
+            out += _wrap_in_list(_filter_digits(value))
+        elif isinstance(value, list):
+            out += _normalize_list_value(value)
     return [str(o) for o in out]
 
 
