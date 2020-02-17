@@ -75,8 +75,8 @@ def _extract_pin(raw: dict):
     return ''.join([f'{len(v)}' for k, v in raw.items()])
 
 
-if __name__ == '__main__':
-    js = json.loads(_extract_json(test_str))
+def text_to_pin_code(text: str) -> str:
+    js = json.loads(_extract_json(text))
     filtered = _filter_value_fields(js)
     normalized = _normalize_values(filtered)
     separated = _separate_by_digit_number(normalized)
@@ -84,4 +84,8 @@ if __name__ == '__main__':
     print(filtered)
     print(normalized)
     print(separated)
-    print(pin)
+    return pin
+
+
+if __name__ == '__main__':
+    print(text_to_pin_code(test_str))
