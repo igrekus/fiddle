@@ -81,9 +81,9 @@ def text_to_pin_code(text: str) -> str:
     normalized = _normalize_values(filtered)
     separated = _separate_by_digit_number(normalized)
     pin = _extract_pin(separated)
-    print(filtered)
-    print(normalized)
-    print(separated)
+    print('\nfilt', filtered)
+    print('normd', normalized)
+    print('septd', separated)
     return pin
 
 
