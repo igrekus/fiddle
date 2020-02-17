@@ -45,10 +45,6 @@ def _filter_digits(st):
     return ''.join(filter(str.isdigit, st))
 
 
-def _normalize_list_value(lv):
-    return [v if isinstance(v, int) else _filter_digits(v) for v in lv]
-
-
 @singledispatch
 def _normalize_value(value: int):
     return [value]
@@ -61,7 +57,7 @@ def _(value: str):
 
 @_normalize_value.register
 def _(value: list):
-    return _normalize_list_value(value)
+    return [v if isinstance(v, int) else _filter_digits(v) for v in value]
 
 
 def _normalize_values(raw: list):
