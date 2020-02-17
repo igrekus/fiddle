@@ -35,7 +35,8 @@ upper_set = set(string.ascii_uppercase)
 
 
 def _extract_json(raw_str):
-    return re.compile('^.*(?P<json>{.+?}).*$').match(raw_str.replace('\n', ' '))['json']
+    json_regex = re.compile('^.*(?P<json>{.*}).*$')
+    return json_regex.match(raw_str.replace('\n', ' '))['json']
 
 
 def _filter_value_fields(raw: dict):
