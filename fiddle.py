@@ -25,13 +25,20 @@
 # + 4 collect info from normalized fields
 # + 5 extract result from collected info
 # + 6 return -- string with 4 digits, 1st - n of unique one-digit nums, 2nd -- n of unique two-digit nums, etc.
+
+# TODO:
+# newlines?
+# more than 9 entries?
+# only [str, int] in list, no float, complex, decimal?
+#
+
 import re
 import json
 from collections import defaultdict
 from functools import singledispatch
 from itertools import chain
 from string import ascii_uppercase as uppercase
-from typing import List, Iterable, Iterator
+from typing import List, Iterator, Dict
 
 
 def text_to_pin_code(text: str) -> str:
@@ -68,7 +75,7 @@ def text_to_pin_code(text: str) -> str:
                         _extract_json_string(text))))))
 
 
-def _extract_pin(raw: dict):
+def _extract_pin(raw: dict) -> str:
     """
     Helper function, extracts target PIN code from the intermediate data structure.
 
@@ -77,7 +84,7 @@ def _extract_pin(raw: dict):
     return ''.join([f'{len(raw.get(digit, ""))}' for digit in range(1, 5)])
 
 
-def _separate_numbers(raw):
+def _separate_numbers(raw: Iterator) -> Dict[int, set]:
     """
     Helper function, separates normalized values by the number of digits into an intermediate data structure.
 
@@ -89,7 +96,7 @@ def _separate_numbers(raw):
     return d
 
 
-def _normalize_values(raw: List[str]) -> Iterator[str]:
+def _normalize_values(raw: Iterator) -> Iterator:
     """
     Helper function, normalizes passed list of values into an iterable of strings.
 
@@ -137,7 +144,7 @@ def _filter_digits(st: str) -> str:
     return ''.join(filter(str.isdigit, st))
 
 
-def _filter_value_fields(raw: dict):
+def _filter_value_fields(raw: dict) -> Iterator:
     """
     Helper function, filters out non-significant fields from the input dictionary.
     Significant field key must contain at least one latin upper case letter.
@@ -153,7 +160,7 @@ def _extract_json_string(raw_str: str) -> str:
 
     Not a part of the public API.
     """
-    json_regex = re.compile(r'''^             # beginning of the input string    
+    json_regex = re.compile(r'''^             # start of the input string    
                             .*                # any character up until the first '{'
                             (?P<json>{.*})    # capture a string between the '{' and '}' into a named group ('json')
                             .*                # any character until the end of the string
