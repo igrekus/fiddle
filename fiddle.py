@@ -27,6 +27,7 @@
 # + 6 return -- string with 4 digits, 1st - n of unique one-digit nums, 2nd -- n of unique two-digit nums, etc.
 import re
 import json
+from collections import defaultdict
 from functools import singledispatch
 from itertools import chain
 from string import ascii_uppercase as uppercase
@@ -66,14 +67,14 @@ def _normalize_values(raw: list):
 
 
 def _separate_by_digit_number(raw):
-    d = {i + 1: set() for i in range(4)}
+    d = defaultdict(set)
     for el in raw:
         d[len(f'{el}')].add(el)
-    return d.values()
+    return d
 
 
-def _extract_pin(raw):
-    return ''.join([f'{len(digit)}' for digit in raw])
+def _extract_pin(raw: dict):
+    return ''.join([f'{len(raw.get(digit, ""))}' for digit in range(1, 5)])
 
 
 def text_to_pin_code(text: str) -> str:
