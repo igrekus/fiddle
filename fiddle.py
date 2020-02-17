@@ -30,6 +30,7 @@ import json
 from functools import singledispatch
 from itertools import chain
 from string import ascii_uppercase as uppercase
+from typing import List
 
 
 def _extract_json(raw_str):
@@ -41,22 +42,22 @@ def _filter_value_fields(raw: dict):
     return [value for field, value in raw.items() if set(field).intersection(uppercase)]
 
 
-def _filter_digits(st):
+def _filter_digits(st) -> str:
     return ''.join(filter(str.isdigit, st))
 
 
 @singledispatch
-def _normalize_value(value: int):
-    return [value]
+def _normalize_value(value: int) -> List[str]:
+    return [f'{value}']
 
 
 @_normalize_value.register
-def _(value: str):
+def _(value: str) -> List[str]:
     return [_filter_digits(value)]
 
 
 @_normalize_value.register
-def _(value: list):
+def _(value: list) -> List[str]:
     return [f'{v}' if isinstance(v, int) else _filter_digits(v) for v in value]
 
 
