@@ -68,11 +68,11 @@ def _separate_by_digit_number(raw):
     d = {i + 1: set() for i in range(4)}
     for el in raw:
         d[len(f'{el}')].add(el)
-    return d
+    return d.values()
 
 
-def _extract_pin(raw: dict):
-    return ''.join([f'{len(v)}' for k, v in raw.items()])
+def _extract_pin(raw):
+    return ''.join([f'{len(digit)}' for digit in raw])
 
 
 def text_to_pin_code(text: str) -> str:
