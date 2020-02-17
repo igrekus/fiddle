@@ -61,10 +61,10 @@ def _(value: list):
 
 
 def _normalize_values(raw: list):
-    return [o for o in chain(*(_normalize_value(v) for v in raw))]
+    return chain(*(_normalize_value(v) for v in raw))
 
 
-def _separate_by_digit_number(raw: list):
+def _separate_by_digit_number(raw):
     d = {i + 1: set() for i in range(4)}
     for el in raw:
         d[len(f'{el}')].add(el)
