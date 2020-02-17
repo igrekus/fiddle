@@ -10,3 +10,10 @@ def test_pin_code_example():
 def test_pin_code_empty_json():
     test = 'example test for testing {} more unnecessary data'
     expect(text_to_pin_code(test)).to_equal('0000')
+
+
+def test_pin_code_empty_strings_in_list_field():
+    test = 'example test for testing {"fieldOne":1, "fielDs":2, "fielD":[5, "a", "ebc"], "fieldn":"2 3 4"} more unnecessary data'
+    expect(text_to_pin_code(test)).to_equal('3000')
+
+
