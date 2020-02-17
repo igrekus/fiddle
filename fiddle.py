@@ -132,7 +132,7 @@ def _(value: list) -> List[str]:
 
     Not a part of the public API.
     """
-    return [f'{v}' if isinstance(v, int) else _filter_digits(v) for v in value]
+    return [_filter_digits(f'{v}') for v in value]
 
 
 def _filter_digits(st: str) -> str:
