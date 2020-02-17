@@ -31,42 +31,88 @@ from collections import defaultdict
 from functools import singledispatch
 from itertools import chain
 from string import ascii_uppercase as uppercase
-from typing import List
+from typing import List, Iterable, Iterator
 
 
-def _extract_json(raw_str):
-    json_regex = re.compile('^.*(?P<json>{.*}).*$')
+def _extract_json_string(raw_str: str) -> str:
+    """
+    Helper function, extracts a string between the '{' and '}' including these characters.
+
+    Not a part of the public API.
+    """
+    json_regex = re.compile(r'''^             # beginning of the input string    
+                            .*                # any character up until the first '{'
+                            (?P<json>{.*})    # capture a string between the '{' and '}' into a named group ('json')
+                            .*                # any character until the end of the string
+                            $                 # end of the string
+                            ''', re.VERBOSE)
     return json_regex.match(raw_str.replace('\n', ' '))['json']
 
 
 def _filter_value_fields(raw: dict):
+    """
+    Helper function, filters out non-significant fields from the input dictionary.
+    Significant field key must contain at least one latin upper case letter.
+
+    Not a part of the public API.
+    """
     return [value for field, value in raw.items() if set(field).intersection(uppercase)]
 
 
-def _filter_digits(st) -> str:
+def _filter_digits(st: str) -> str:
+    """
+    Helper function, filters out everything except digits.
+
+    Not a part of the public API.
+    """
     return ''.join(filter(str.isdigit, st))
 
 
 @singledispatch
 def _normalize_value(value: int) -> List[str]:
+    """
+    Helper function, normalizes int type values.
+
+    Not a part of the public API.
+    """
     return [f'{value}']
 
 
 @_normalize_value.register
 def _(value: str) -> List[str]:
+    """
+    Overload, normalizes str type values.
+
+    Not a part of the public API.
+    """
     return [_filter_digits(value)]
 
 
 @_normalize_value.register
 def _(value: list) -> List[str]:
+    """
+    Overload, normalizes list type values.
+
+    Not a part of the public API.
+    """
     return [f'{v}' if isinstance(v, int) else _filter_digits(v) for v in value]
 
 
-def _normalize_values(raw: list):
+def _normalize_values(raw: List[str]) -> Iterator[str]:
+    """
+    Helper function, normalizes passed list of values into an iterable of strings.
+
+    Not a part of the public API.
+    """
     return filter(bool, chain(*(_normalize_value(v) for v in raw)))
 
 
-def _separate_by_digit_number(raw):
+def _separate_numbers(raw):
+    """
+    Helper function, separates normalized values by the number of digits into an intermediate data structure.
+
+    Not a part of the public API.
+    """
     d = defaultdict(set)
     for el in raw:
         d[len(f'{el}')].add(el)
@@ -74,13 +120,43 @@ def _separate_by_digit_number(raw):
 
 
 def _extract_pin(raw: dict):
+    """
+    Helper function, extracts target PIN code from the intermediate data structure.
+
+    Not a part of the public API.
+    """
     return ''.join([f'{len(raw.get(digit, ""))}' for digit in range(1, 5)])
 
 
 def text_to_pin_code(text: str) -> str:
+    """
+    Extracts the PIN code from the passed string. PIN code is encoded according to the rules:
+
+    - guaranteed to contain only one standard-compliant JSON in the serialized form
+    - JSON may or may not be empty
+    - JSON field containing at least one uppercase latin letter guaranteed to be a part of the encoded PIN (pin field)
+    - pin field guaranteed to contain at least one significant number
+    - pin field may have type of:
+        * int
+        * str
+        * List[str, int]
+    - int pin field guaranteed to be positive
+    - str pin field guaranteed to contain only one number but it's digits may be separated by an arbitrary string
+    - list pin field guaranteed to not contain other collections
+    - list pin field guaranteed to have at least one encoding number
+    - list pin field may contain strings including encoding numbers in string form
+
+    The resulting PIN is a string of four digits, where the first digit is the number of unique single decimal place
+    numbers, second digit is the number of two decimal place numbers, etc.
+
+    Part of the public API.
+
+    :param text: utf-8 string containing encoded PIN
+    :return: string of four digits according to the encoding rules
+    """
     return _extract_pin(
-        _separate_by_digit_number(
+        _separate_numbers(
             _normalize_values(
                 _filter_value_fields(
                     json.loads(
-                        _extract_json(text))))))
+                        _extract_json_string(text))))))
