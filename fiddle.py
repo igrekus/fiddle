@@ -82,16 +82,9 @@ def _extract_pin(raw: dict):
 
 
 def text_to_pin_code(text: str) -> str:
-    js = json.loads(_extract_json(text))
-    filtered = _filter_value_fields(js)
-    normalized = _normalize_values(filtered)
-    separated = _separate_by_digit_number(normalized)
-    pin = _extract_pin(separated)
-    print('\nfilt', filtered)
-    print('normd', normalized)
-    print('septd', separated)
-    return pin
-
-
-if __name__ == '__main__':
-    print(text_to_pin_code(test_str))
+    return _extract_pin(
+        _separate_by_digit_number(
+            _normalize_values(
+                _filter_value_fields(
+                    json.loads(
+                        _extract_json(text))))))
