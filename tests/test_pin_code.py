@@ -22,3 +22,18 @@ def test_pin_code_empty_strings_in_list_field():
     expect(text_to_pin_code(test)).to_equal('3000')
 
 
+def test_pin_code_non_num_string_in_string_field():
+    test = 'example test for testing {"fieldOne":1, "fielDs":2, "fielD":[5, "a", "ebc"], "fieldN":"aaa"} more unnecessary data'
+    expect(text_to_pin_code(test)).to_equal('3000')
+
+
+def test_pin_code_only_ones():
+    test = 'example test for testing {"fieldOne":1, "fielDs":2, "fielD":[5, "a", "ebc"], "fieldN":"aaa"} more unnecessary data'
+    expect(text_to_pin_code(test)).to_equal('3000')
+
+
+def test_pin_code_only_twoes():
+    test = 'example test for testing {"fieldone":1, "fields":2, "fielD":[25, "22", "e45c"], "fieldn":"aaa"} more unnecessary data'
+    expect(text_to_pin_code(test)).to_equal('0300')
+
+
