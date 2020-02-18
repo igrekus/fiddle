@@ -69,7 +69,7 @@ def text_to_pin_code(text: str) -> str:
     """
     return _get_pin(
         _pack_numbers(
-            _normalize(
+            _get_numbers(
                 _filter_value_fields(
                     json.loads(
                         _extract_json_string(text))))))
@@ -96,20 +96,20 @@ def _pack_numbers(raw: Iterator) -> Dict[int, set]:
     return d
 
 
-def _normalize(raw: Iterator) -> Iterator:
-    return _to_int(_filter_empty(_normalize_values(raw)))
-
-
-def _to_int(raw: Iterator) -> Iterator:
+def _get_numbers(raw: Iterator) -> Iterator:
     """
     Helper function, normalizes passed list of values into an iterable of strings.
 
     Not a part of the public API.
     """
-    return (int(x) for x in _filter_empty(raw))
+    return _to_int(_remove_empty(_normalize_values(raw)))
 
 
-def _filter_empty(raw: Iterator) -> Iterator:
+def _to_int(raw: Iterator) -> Iterator:
+    return (int(x) for x in _remove_empty(raw))
+
+
+def _remove_empty(raw: Iterator) -> Iterator:
     return filter(bool, raw)
 
 
