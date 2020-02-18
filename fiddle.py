@@ -68,7 +68,7 @@ def text_to_pin_code(text: str) -> str:
     :return: string of four digits according to the encoding rules
     """
     return _get_pin(
-        _separate_numbers(
+        _pack_numbers(
             _normalize(
                 _filter_value_fields(
                     json.loads(
@@ -84,7 +84,7 @@ def _get_pin(num_container: Dict[int, set]) -> str:
     return ''.join(f'{len(num_container.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))
 
 
-def _separate_numbers(raw: Iterator) -> Dict[int, set]:
+def _pack_numbers(raw: Iterator) -> Dict[int, set]:
     """
     Helper function, separates normalized values by the number of digits into an intermediate data structure.
 
