@@ -1,51 +1,11 @@
-# Код хранится в текстовом файле, который помимо случайного текста содержит также и json,
-# в котором есть все нужные данные (остальная информация не важна)
-# В каждом файле гарантированно находится только 1 json, но он(жсон) может быть и пустым (в таком случае пин-код '0000').
-# В файле гарантированно нет больше фигурных скобок, кроме тех, что обрамляют json. Жсон гарантированно даст валидный пин-код.
-# Необходимые числа находятся только в тех парах ключ-значение, в которых ключ содержит хотя бы 1 заглавную букву (далее "значимые поля")
-# Результат работы нашей программы это строка содержащая 4 цифры от '0000' до '9999', где первая цифра это количество уникальных однозначных чисел во всех значимых полях,
-# вторая цифра это количество уникальных двузначных и так далее.
-# Каждое значимое поле содержит минимум 1 число (не может не содержать чисел)
-# Значения могут быть целым числом, строкой или списком.
-# Если значение представлено строкой, то она может содержать только 1 число, но его цифры могут быть разделены любыми занками,
-# например '2 3 4 '=234
-# Если значение представлено целым числом то оно обязательно будет положительным
-# Список обязательно содержит хоть 1 число, но не обязан содержать только числа, список не может содержать другие коллекции (списки,словари и т.п.),
-# Например [1, '2', 'f'] - валидный список, который дает 1 и 2
-# Пример
-# если на вход подается текст 'example test for testing {"fieldOne":1, "fields":2, "fielD":[1,"22", "e3r4"], "fieldN":"2 3 4"} more unnecessary data'
-# то ответ '1210'
+# -*- coding: utf-8 -*-
 
-# + 1 extract json (only one json, may be empty)
-# + 2 extract value fields -- fields with at least one uppercase letter, guaranteed to have at least one number
-# + 3 normalize fields (one int, one list, one string) -> set of nums:
-#   + int, guaranteed to be positive
-#   + string, filter and concat digits: '2 3 4 ' -> 234
-#   + list, guaranteed to be flat, [1, '2', 'f'] -> [1, 2]
-# + 4 collect info from normalized fields
-# + 5 extract result from collected info
-# + 6 return -- string with 4 digits, 1st - n of unique one-digit nums, 2nd -- n of unique two-digit nums, etc.
+"""
+PIN code extractor module.
 
-# TODO:
-# newlines?
-# more than 9 entries?
-# only [str, int] in list, no float, complex, decimal?
-#
+Implements the extraction of a PIN code from the passed string according to the rules:
 
-import re
-import json
-from collections import defaultdict
-from functools import singledispatch
-from itertools import chain
-from string import ascii_uppercase as uppercase
-from typing import List, Iterator, Dict, Union
-
-
-def text_to_pin_code(text: str) -> str:
-    """
-    Extracts the PIN code from the passed string. PIN code is encoded according to the rules:
-
-    - guaranteed to contain only one standard-compliant JSON in the serialized form
+    - input utf-8 string is guaranteed to contain only one standard-compliant JSON in the serialized form
     - JSON may or may not be empty
     - JSON field containing at least one uppercase latin letter guaranteed to be a part of the encoded PIN (pin field)
     - pin field guaranteed to contain at least one significant number
@@ -59,10 +19,40 @@ def text_to_pin_code(text: str) -> str:
     - list pin field guaranteed to have at least one encoding number
     - list pin field may contain strings including encoding numbers in string form
 
-    The resulting PIN is a string of four digits, where the first digit is the number of unique single decimal place
-    numbers, second digit is the number of two decimal place numbers, etc.
+The resulting PIN is a string of four digits, where the first digit is the number of unique single decimal place
+numbers, second digit is the number of two decimal place numbers, etc.
 
-    Part of the public API.
+Example:
+
+    The module is to be used from a user script:
+
+        from text_to_pin_code import text_to_pin_code
+
+        print(text_to_pin_code('{}'))   # prints 0000
+
+Functions with names starting with an underscore are intended for internal use and thus are not being a part of
+the public API.
+
+TODO:
+- newlines?
+- more than 9 entries?
+- only [str, int] in list, no float, complex, decimal?
+"""
+
+import re
+import json
+from collections import defaultdict
+from functools import singledispatch
+from itertools import chain
+from string import ascii_uppercase as uppercase
+from typing import List, Iterator, Dict, Union
+
+
+def text_to_pin_code(text: str) -> str:
+    """
+    Implements the PIN-code extractor as per rules defined in the module docstring.
+
+    Part of the module public API.
 
     :param text: utf-8 string containing encoded PIN
     :return: string of four digits according to the encoding rules
@@ -78,8 +68,6 @@ def text_to_pin_code(text: str) -> str:
 def _get_pin(num_container: Dict[int, set]) -> str:
     """
     Helper function, extracts target PIN code from the intermediate data structure.
-
-    Not a part of the public API.
     """
     return ''.join(f'{len(num_container.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))
 
@@ -87,8 +75,6 @@ def _get_pin(num_container: Dict[int, set]) -> str:
 def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
     """
     Helper function, packs normalized numbers encoding PIN into an intermediate data structure by the number of digits.
-
-    Not a part of the public API.
     """
     d = defaultdict(set)
     for el in raw:
@@ -99,8 +85,6 @@ def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
 def _get_numbers(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> Iterator[int]:
     """
     Helper function, extracts numbers from filtered JSON fields.
-
-    Not a part of the public API.
     """
     return _to_int(_remove_empty(_normalize_values(raw)))
 
@@ -116,8 +100,6 @@ def _remove_empty(raw: Iterator[str]) -> Iterator[str]:
 def _normalize_values(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> Iterator[str]:
     """
     Helper function, normalizes all types of pin field values to a list of strings.
-
-    Not a part of public API.
     """
     return chain(*(_normalize_value(v) for v in raw))
 
@@ -126,8 +108,6 @@ def _normalize_values(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> 
 def _normalize_value(value: int) -> List[str]:
     """
     Helper function, normalizes int type values.
-
-    Not a part of the public API.
     """
     return [f'{value}']
 
@@ -136,8 +116,6 @@ def _normalize_value(value: int) -> List[str]:
 def _(value: str) -> List[str]:
     """
     Overload, normalizes str type values.
-
-    Not a part of the public API.
     """
     return [_filter_digits(value)]
 
@@ -146,8 +124,6 @@ def _(value: str) -> List[str]:
 def _(value: list) -> List[str]:
     """
     Overload, normalizes list type values.
-
-    Not a part of the public API.
     """
     return [_filter_digits(f'{v}') for v in value]
 
@@ -155,8 +131,6 @@ def _(value: list) -> List[str]:
 def _filter_digits(st: str) -> str:
     """
     Helper function, filters out everything except digits.
-
-    Not a part of the public API.
     """
     return ''.join(filter(str.isdigit, st))
 
@@ -165,8 +139,6 @@ def _filter_pin_fields(raw: dict) -> Iterator[Union[int, str, List[Union[int, st
     """
     Helper function, filters out non-significant fields from the input dictionary.
     Significant field key must contain at least one latin upper case letter.
-
-    Not a part of the public API.
     """
     return (value for field, value in raw.items() if set(field).intersection(uppercase))
 
@@ -174,8 +146,6 @@ def _filter_pin_fields(raw: dict) -> Iterator[Union[int, str, List[Union[int, st
 def _extract_json_string(raw_str: str) -> str:
     """
     Helper function, extracts a string between the '{' and '}' including these characters.
-
-    Not a part of the public API.
     """
     json_regex = re.compile(r'''^             # start of the input string    
                             .*                # any character up until the first '{'
