@@ -75,13 +75,13 @@ def text_to_pin_code(text: str) -> str:
                         _extract_json_string(text))))))
 
 
-def _extract_pin(raw: dict) -> str:
+def _extract_pin(num_container: dict) -> str:
     """
     Helper function, extracts target PIN code from the intermediate data structure.
 
     Not a part of the public API.
     """
-    return ''.join([f'{len(raw.get(digit, ""))}' for digit in range(1, 5)])
+    return ''.join(f'{len(num_container.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))
 
 
 def _separate_numbers(raw: Iterator) -> Dict[int, set]:
