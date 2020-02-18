@@ -69,7 +69,7 @@ def text_to_pin_code(text: str) -> str:
     """
     return _extract_pin(
         _separate_numbers(
-            _normalize_values(
+            _normalize(
                 _filter_value_fields(
                     json.loads(
                         _extract_json_string(text))))))
@@ -96,13 +96,25 @@ def _separate_numbers(raw: Iterator) -> Dict[int, set]:
     return d
 
 
-def _normalize_values(raw: Iterator) -> Iterator:
+def _normalize(raw: Iterator) -> Iterator:
+    return _to_int(_filter_empty(_normalize_values(raw)))
+
+
+def _to_int(raw: Iterator) -> Iterator:
     """
     Helper function, normalizes passed list of values into an iterable of strings.
 
     Not a part of the public API.
     """
-    return filter(bool, chain(*(_normalize_value(v) for v in raw)))
+    return (int(x) for x in _filter_empty(raw))
+
+
+def _filter_empty(raw: Iterator) -> Iterator:
+    return filter(bool, raw)
+
+
+def _normalize_values(raw: Iterator) -> Iterator:
+    return chain(*(_normalize_value(v) for v in raw))
 
 
 @singledispatch
