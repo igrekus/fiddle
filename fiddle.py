@@ -163,7 +163,7 @@ def _filter_value_fields(raw: dict) -> Iterator:
 
     Not a part of the public API.
     """
-    return [value for field, value in raw.items() if set(field).intersection(uppercase)]
+    return (value for field, value in raw.items() if set(field).intersection(uppercase))
 
 
 def _extract_json_string(raw_str: str) -> str:
