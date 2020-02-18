@@ -74,7 +74,7 @@ def _get_pin(num_container: Dict[int, set]) -> str:
 
 def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
     """
-    Helper function, packs normalized numbers encoding PIN into an intermediate data structure by the number of digits.
+    Helper function, packs normalized numbers encoding PIN into an intermediate data structure.
     """
     d = defaultdict(set)
     for el in raw:
