@@ -49,7 +49,7 @@ def text_to_pin_code(text: str) -> str:
     - JSON may or may not be empty
     - JSON field containing at least one uppercase latin letter guaranteed to be a part of the encoded PIN (pin field)
     - pin field guaranteed to contain at least one significant number
-    - pin field may have type of:
+    - pin field may have the type of:
         * int
         * str
         * List[str, int]
