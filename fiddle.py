@@ -67,7 +67,7 @@ def text_to_pin_code(text: str) -> str:
     :param text: utf-8 string containing encoded PIN
     :return: string of four digits according to the encoding rules
     """
-    return _extract_pin(
+    return _get_pin(
         _separate_numbers(
             _normalize(
                 _filter_value_fields(
@@ -75,7 +75,7 @@ def text_to_pin_code(text: str) -> str:
                         _extract_json_string(text))))))
 
 
-def _extract_pin(num_container: dict) -> str:
+def _get_pin(num_container: Dict[int, set]) -> str:
     """
     Helper function, extracts target PIN code from the intermediate data structure.
 
