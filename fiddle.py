@@ -70,7 +70,7 @@ def text_to_pin_code(text: str) -> str:
     return _get_pin(
         _pack_numbers(
             _get_numbers(
-                _filter_value_fields(
+                _filter_pin_fields(
                     json.loads(
                         _extract_json_string(text))))))
 
@@ -161,7 +161,7 @@ def _filter_digits(st: str) -> str:
     return ''.join(filter(str.isdigit, st))
 
 
-def _filter_value_fields(raw: dict) -> Iterator[Union[int, str, List[Union[int, str]]]]:
+def _filter_pin_fields(raw: dict) -> Iterator[Union[int, str, List[Union[int, str]]]]:
     """
     Helper function, filters out non-significant fields from the input dictionary.
     Significant field key must contain at least one latin upper case letter.
