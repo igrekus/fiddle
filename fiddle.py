@@ -86,7 +86,7 @@ def _get_pin(num_container: Dict[int, set]) -> str:
 
 def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
     """
-    Helper function, separates normalized values by the number of digits into an intermediate data structure.
+    Helper function, packs normalized numbers encoding PIN into an intermediate data structure by the number of digits.
 
     Not a part of the public API.
     """
@@ -98,7 +98,7 @@ def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
 
 def _get_numbers(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> Iterator[int]:
     """
-    Helper function, normalizes passed list of values into an iterable of strings.
+    Helper function, extracts numbers from filtered JSON fields.
 
     Not a part of the public API.
     """
@@ -114,6 +114,11 @@ def _remove_empty(raw: Iterator[str]) -> Iterator[str]:
 
 
 def _normalize_values(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> Iterator[str]:
+    """
+    Helper function, normalizes all types of pin field values to a list of strings.
+
+    Not a part of public API.
+    """
     return chain(*(_normalize_value(v) for v in raw))
 
 
