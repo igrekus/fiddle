@@ -38,7 +38,7 @@ from collections import defaultdict
 from functools import singledispatch
 from itertools import chain
 from string import ascii_uppercase as uppercase
-from typing import List, Iterator, Dict
+from typing import List, Iterator, Dict, Union
 
 
 def text_to_pin_code(text: str) -> str:
@@ -84,7 +84,7 @@ def _get_pin(num_container: Dict[int, set]) -> str:
     return ''.join(f'{len(num_container.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))
 
 
-def _pack_numbers(raw: Iterator) -> Dict[int, set]:
+def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
     """
     Helper function, separates normalized values by the number of digits into an intermediate data structure.
 
@@ -96,7 +96,7 @@ def _pack_numbers(raw: Iterator) -> Dict[int, set]:
     return d
 
 
-def _get_numbers(raw: Iterator) -> Iterator:
+def _get_numbers(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> Iterator[int]:
     """
     Helper function, normalizes passed list of values into an iterable of strings.
 
@@ -105,15 +105,15 @@ def _get_numbers(raw: Iterator) -> Iterator:
     return _to_int(_remove_empty(_normalize_values(raw)))
 
 
-def _to_int(raw: Iterator) -> Iterator:
+def _to_int(raw: Iterator[str]) -> Iterator[int]:
     return (int(x) for x in _remove_empty(raw))
 
 
-def _remove_empty(raw: Iterator) -> Iterator:
-    return filter(bool, raw)
+def _remove_empty(raw: Iterator[str]) -> Iterator[str]:
+    return (s for s in raw if s)
 
 
-def _normalize_values(raw: Iterator) -> Iterator:
+def _normalize_values(raw: Iterator[Union[int, str, List[Union[int, str]]]]) -> Iterator[str]:
     return chain(*(_normalize_value(v) for v in raw))
 
 
