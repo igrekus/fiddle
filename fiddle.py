@@ -58,11 +58,10 @@ def text_to_pin_code(text: str) -> str:
     :return: string of four digits according to the encoding rules
     """
     return _get_pin(
-        _pack_numbers(
-            _get_numbers(
-                _filter_pin_fields(
-                    json.loads(
-                        _extract_json_string(text))))))
+        _extract_nums(
+            _filter_pin_fields(
+                json.loads(
+                    _extract_json_string(text)))))
 
 
 def _get_pin(num_container: Dict[int, set]) -> str:
@@ -70,6 +69,13 @@ def _get_pin(num_container: Dict[int, set]) -> str:
     Helper function, extracts target PIN code from the intermediate data structure.
     """
     return ''.join(f'{len(num_container.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))
+
+
+def _extract_nums(raw) -> Dict[int, set]:
+    """
+    Helper function, abstracts away number extraction steps.
+    """
+    return _pack_numbers(_get_numbers(raw))
 
 
 def _pack_numbers(raw: Iterator[int]) -> Dict[int, set]:
