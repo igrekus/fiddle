@@ -32,11 +32,6 @@ Example:
 
 Functions with names starting with an underscore are intended for internal use and thus are not being a part of
 the public API.
-
-TODO:
-- newlines?
-- more than 9 entries?
-- only [str, int] in list, no float, complex, decimal?
 """
 
 import re
