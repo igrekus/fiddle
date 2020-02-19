@@ -20,7 +20,7 @@ class pipe:
 
 
 def text_to_pin_code(text):
-    return list(
+    return next(
         text
         | _to_json_string
         | _to_json
@@ -30,7 +30,7 @@ def text_to_pin_code(text):
         | _to_int
         | _pack_numbers
         | _get_pin
-    )[0]
+    )
 
 
 @pipe
