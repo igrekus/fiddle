@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
 import json
-from collections import defaultdict
 from functools import singledispatch, update_wrapper
 from itertools import chain, groupby
 from string import ascii_uppercase as uppercase
