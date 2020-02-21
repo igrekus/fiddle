@@ -3,7 +3,7 @@ import re
 import json
 from collections import defaultdict
 from functools import singledispatch, update_wrapper
-from itertools import chain
+from itertools import chain, groupby
 from string import ascii_uppercase as uppercase
 
 
@@ -84,10 +84,7 @@ def _to_int(raw):
 
 @pipe
 def _pack_numbers(raw):
-    d = defaultdict(set)
-    for el in next(raw):
-        d[len(f'{el}')].add(el)
-    yield from [d]
+    yield from [{n: set(vals) for n, vals in groupby(next(raw), key=lambda x: len(f'{x}'))}]
 
 
 @pipe
