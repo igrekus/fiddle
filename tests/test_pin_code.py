@@ -51,3 +51,7 @@ def test_pin_code_bool_in_list():
     test = 'example test for testing {"fieldOne":4, "fields":2, "fielD":[5, "22", "e3r4", true], "fieldN":"2 3 4"} more unnecessary data'
     expect(text_to_pin_code(test)).to_equal('2210')
 
+
+def test_pin_code_four_number_example():
+    test = 'example2 test for 12 testing {"fiel":1, "fieldS":2, "fielD":[1,"2234", "e3r45i6"], "fieldN":"23 4", "one":100, "mOre":3245} more unnecessary data'
+    expect(text_to_pin_code(test)).to_equal('2013')
