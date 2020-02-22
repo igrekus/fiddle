@@ -83,7 +83,7 @@ def _to_int(raw):
 
 @pipe
 def _pack_numbers(raw):
-    yield from [{n: set(vals) for n, vals in groupby(next(raw), key=lambda x: len(f'{x}'))}]
+    yield from [{n: set(vals) for n, vals in groupby(sorted(next(raw)), key=lambda x: len(f'{x}'))}]
 
 
 @pipe
