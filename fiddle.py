@@ -42,12 +42,12 @@ def _to_json(json_str):
 
 @pipe
 def _filter_pin_fields(raw):
-    return [value for field, value in raw.items() if set(field).intersection(uppercase)]
+    return (value for field, value in raw.items() if field.lower() != field)
 
 
 @pipe
 def _normalize_values(raw):
-    return [*chain(*(_normalize_value(v) for v in raw))]
+    return chain(*(_normalize_value(v) for v in raw))
 
 
 @singledispatch
@@ -71,12 +71,12 @@ def _filter_digits(st):
 
 @pipe
 def _remove_empty(raw):
-    return [s for s in raw if s]
+    return (s for s in raw if s)
 
 
 @pipe
 def _to_int(raw):
-    return [int(x) for x in raw]
+    return (int(x) for x in raw)
 
 
 @pipe
