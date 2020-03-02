@@ -3,7 +3,6 @@ import re
 import json
 from functools import singledispatch, update_wrapper
 from itertools import chain, groupby
-from string import ascii_uppercase as uppercase
 
 
 class pipe:
