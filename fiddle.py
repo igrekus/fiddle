@@ -19,37 +19,35 @@ class pipe:
 
 
 def text_to_pin_code(text):
-    return next(
-        text
-        | _to_json_string
-        | _to_json
-        | _filter_pin_fields
-        | _normalize_values
-        | _remove_empty
-        | _to_int
-        | _pack_numbers
-        | _get_pin
-    )
+    return text \
+           | _to_json_string \
+           | _to_json \
+           | _filter_pin_fields \
+           | _normalize_values \
+           | _remove_empty \
+           | _to_int \
+           | _pack_numbers \
+           | _get_pin
 
 
 @pipe
 def _to_json_string(raw_str):
-    yield from [re.compile(r'''^.*(?P<json>{.*}).*$''', re.VERBOSE).match(raw_str.replace('\n', ' '))['json']]
+    return re.compile(r'''^.*(?P<json>{.*}).*$''', re.VERBOSE).match(raw_str.replace('\n', ' '))['json']
 
 
 @pipe
 def _to_json(json_str):
-    yield from [json.loads(next(json_str))]
+    return json.loads(json_str)
 
 
 @pipe
 def _filter_pin_fields(raw):
-    yield from [(value for field, value in next(raw).items() if set(field).intersection(uppercase))]
+    return [value for field, value in raw.items() if set(field).intersection(uppercase)]
 
 
 @pipe
 def _normalize_values(raw):
-    yield from [chain(*(_normalize_value(v) for v in next(raw)))]
+    return [*chain(*(_normalize_value(v) for v in raw))]
 
 
 @singledispatch
@@ -73,20 +71,19 @@ def _filter_digits(st):
 
 @pipe
 def _remove_empty(raw):
-    yield from [(s for s in next(raw) if s)]
+    return [s for s in raw if s]
 
 
 @pipe
 def _to_int(raw):
-    yield from [(int(x) for x in next(raw))]
+    return [int(x) for x in raw]
 
 
 @pipe
 def _pack_numbers(raw):
-    yield from [{n: set(vals) for n, vals in groupby(sorted(next(raw)), key=lambda x: len(f'{x}'))}]
+    return {n: set(vals) for n, vals in groupby(sorted(raw), key=lambda x: len(f'{x}'))}
 
 
 @pipe
 def _get_pin(num_container):
-    c = next(num_container)
-    yield from [''.join(f'{len(c.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))]
+    return ''.join(f'{len(num_container.get(n_digit_num, set()))}' for n_digit_num in range(1, 5))
