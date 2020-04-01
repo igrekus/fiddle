@@ -1,37 +1,24 @@
-from functools import update_wrapper
+def format_numbers(phone_number: str) -> str:
+    pn = phone_number \
+        .replace('(', '') \
+        .replace(')', '') \
+        .replace('-', '') \
+        .replace(' ', '')\
+        .replace('+7', '8')
+    print(pn)
+    code = pn[1:4]
+    three = pn[4:7]
+    two_1 = pn[7:9]
+    two_2 = pn[9:12]
+    return f'+7({code}){three}-{two_1}-{two_2}'
 
 
-class pipe:
-    def __init__(self, fun):
-        self.fun = fun
-        update_wrapper(self, fun)
+phones = [
+    '+7(909)111-22-33',
+    '8(909)111-22-33',
+    '8(909)111 22 33',
+    '8(909)111 22-33',
+]
 
-    def __ror__(self, other):
-        return self.fun(other)
-
-    def __call__(self, *args, **kwargs):
-        return pipe(lambda x: self.fun(x, *args, **kwargs))
-
-
-def fizzbuzz(num):
-    return {
-        (True, True): 'fizzbuzz',
-        (True, False): 'fizz',
-        (False, True): 'buzz',
-    }.get((num % 3 == 0, num % 5 == 0), num)
-
-
-@pipe
-def fbmap(stream):
-    yield from (fizzbuzz(el) for el in stream)
-
-
-@pipe
-def fbprint(steam):
-    return [print(el) for el in steam]
-
-
-if __name__ == '__main__':
-    range(1, 16) \
-        | fbmap \
-        | fbprint
+for ph in phones:
+    print(format_numbers(ph))
