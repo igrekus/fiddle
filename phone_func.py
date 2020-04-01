@@ -15,14 +15,3 @@ def format_numbers(phone_number: str) -> str:
     for f in [rpartial(str.replace, o, n) for o, n in zip(list('()- ') + ['+7'], [''] * 4 + ['8'])]:
         phone_number = f(phone_number)
     return f'+7({phone_number[1:4]}){phone_number[4:7]}-{phone_number[7:9]}-{phone_number[9:12]}'
-
-
-phones = [
-    '+7(909)111-22-33',
-    '8(909)111-22-33',
-    '8(909)111 22 33',
-    '8(909)111 22-33',
-]
-
-for ph in phones:
-    print('out:', format_numbers(ph))
