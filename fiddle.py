@@ -34,25 +34,25 @@ import sys
 db = dict()
 
 
-def exec_get(params):
+def get(params):
     return db.get(params[0], 'NULL')
 
 
-def exec_set(params):
+def set(params):
     db[params[0]] = params[1]
     return None
 
 
-def exec_unset(params):
+def unset(params):
     db.pop(params[0], None)
     return None
 
 
-def exec_counts(params):
+def counts(params):
     return sum(v == params[0] for v in db.values())
 
 
-def exec_end(*args):
+def end(*args):
     sys.exit()
 
 
@@ -60,17 +60,17 @@ def exec_default(*args):
     return 'unknown command'
 
 
-def exec_empty(*args):
+def empty(*args):
     sys.exit()
 
 
 command_selector = {
-    'GET': exec_get,
-    'SET': exec_set,
-    'UNSET': exec_unset,
-    'COUNTS': exec_counts,
-    'END': exec_end,
-    '': exec_empty
+    'GET': get,
+    'SET': set,
+    'UNSET': unset,
+    'COUNTS': counts,
+    'END': end,
+    '': empty
 }
 
 
