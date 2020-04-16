@@ -30,8 +30,6 @@ NULL
 
 """
 import sys
-from io import StringIO
-string_io = StringIO()
 
 db = dict()
 
@@ -90,26 +88,8 @@ def process_stream():
 
 
 def run():
-    process_stream()
-
-    sys.stdout = sys.__stdout__
-    print(string_io.getvalue())
-    print('test pass', string_io.getvalue() == """>> GET A
-NULL
->> SET A 10
->> GET A
-10
->> COUNTS 10
-1
->> SET B 20
->> SET C 10
->> COUNTS 10
-2
->> UNSET B
->> GET B
-NULL
->> END
-""")
+    while execute(input('>> ').strip()):
+        pass
 
 
 if __name__ == '__main__':
