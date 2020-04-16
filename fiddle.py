@@ -39,8 +39,7 @@ def get(params):
 
 
 def set_(params):
-    db[params[0]] = params[1]
-    return None
+    return db.update({params[0]: params[1]})
 
 
 def unset(params):
