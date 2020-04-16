@@ -84,19 +84,20 @@ def run():
     sys.stdout = string_io
 
     while True:
-        if not (com := input('>> ').strip()):
+        com = input('>> ').strip()
+        if not com:
             break
         if not sys.stdin.isatty():
             print(com)
 
         res = execute(com)
-        if res is not None:
-            print(res)
-            if res == -1:
-                sys.stdout = sys.__stdout__
-                output = string_io.getvalue()
-                print(output)
-                print('test pass', output == """>> GET A
+        if res is None:
+            continue
+        if res == -1:
+            sys.stdout = sys.__stdout__
+            output = string_io.getvalue()
+            print(output)
+            print('test pass', output == """>> GET A
 NULL
 >> SET A 10
 >> GET A
@@ -111,9 +112,9 @@ NULL
 >> GET B
 NULL
 >> END
--1
 """)
-                break
+            break
+        print(res)
 
 
 if __name__ == '__main__':
