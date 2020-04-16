@@ -77,19 +77,15 @@ command_selector = {
 def execute(com_str):
     print_command(com_str)
     op, *params = com_str.split()
-    op = op.upper()
-    return command_selector.get(op, exec_default)(params)
+    if res := command_selector.get(op.upper(), exec_default)(params):
+        print(res)
+    return True
 
 
-def print_command(com):
-    if not sys.stdin.isatty():
-        print(com)
+def nop(*args): pass
 
 
-def process_stream():
-    while com := input('>> ').strip():
-        if res := execute(com):
-            print(res)
+print_command = nop if sys.stdin.isatty() else print
 
 
 def run():
