@@ -60,12 +60,17 @@ def exec_default(*args):
     return 'unknown command'
 
 
+def exec_empty(*args):
+    sys.exit()
+
+
 command_selector = {
     'GET': exec_get,
     'SET': exec_set,
     'UNSET': exec_unset,
     'COUNTS': exec_counts,
-    'END': exec_end
+    'END': exec_end,
+    '': exec_empty
 }
 
 
