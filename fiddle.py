@@ -39,7 +39,7 @@ db = dict()
 
 
 def execute(com_str):
-    op, *params = com_str.strip().split()
+    op, *params = com_str.split()
     op = op.upper()
     if op == 'GET':
         return db.get(params[0], 'NULL')
