@@ -59,7 +59,7 @@ def exec_end(*args):
 
 
 def exec_default(*args):
-    return 'wrong command'
+    return 'unknown command'
 
 
 command_selector = {
