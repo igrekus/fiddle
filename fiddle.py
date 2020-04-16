@@ -38,23 +38,46 @@ test_commands = ['GET A', 'SET A 10', 'GET A', 'COUNTS 10', 'SET B 20', 'SET C 1
 db = dict()
 
 
+def exec_get(params):
+    return db.get(params[0], 'NULL')
+
+
+def exec_set(params):
+    db[params[0]] = params[1]
+    return None
+
+
+def exec_unset(params):
+    db.pop(params[0], None)
+    return None
+
+
+def exec_counts(params):
+    return sum(v == params[0] for v in db.values())
+
+
+def exec_end(*args):
+    return -1
+
+
+def exec_default(*args):
+    return 'wrong command'
+
 def execute(com_str):
     op, *params = com_str.split()
     op = op.upper()
     if op == 'GET':
-        return db.get(params[0], 'NULL')
+        return exec_get(params)
     elif op == 'SET':
-        db[params[0]] = params[1]
+        return exec_set(params)
     elif op == 'UNSET':
-        db.pop(params[0], None)
-        return None
+        return exec_unset(params)
     elif op == 'COUNTS':
-        return sum(v == params[0] for v in db.values())
+        return exec_counts(params)
     elif op == 'END':
-        return -1
-        # sys.exit()
+        return exec_end(params)
     else:
-        return 'wrong command'
+        return exec_default(params)
 
 
 def run():
