@@ -55,7 +55,7 @@ def end(*args):
     sys.exit()
 
 
-def exec_default(*args):
+def default(*args):
     return 'unknown command'
 
 
@@ -72,7 +72,7 @@ command_selector = {
 def execute(com_str):
     print_command(com_str)
     op, *params = com_str.split()
-    if res := command_selector.get(op.upper(), exec_default)(params):
+    if res := command_selector.get(op.upper(), default)(params):
         print(res)
     return True
 
