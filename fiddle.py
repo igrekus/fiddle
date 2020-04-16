@@ -56,7 +56,7 @@ def exec_counts(params):
 
 
 def exec_end(*args):
-    return -1
+    sys.exit()
 
 
 def exec_default(*args):
@@ -73,29 +73,29 @@ command_selector = {
 
 
 def execute(com_str):
+    print_command(com_str)
     op, *params = com_str.split()
     op = op.upper()
     return command_selector.get(op, exec_default)(params)
 
 
+def print_command(com):
+    if not sys.stdin.isatty():
+        print(com)
+
+
+def process_stream():
+    while com := input('>> ').strip():
+        if res := execute(com):
+            print(res)
+
+
 def run():
-    sys.stdout = string_io
+    process_stream()
 
-    while True:
-        com = input('>> ').strip()
-        if not com:
-            break
-        if not sys.stdin.isatty():
-            print(com)
-
-        res = execute(com)
-        if res is None:
-            continue
-        if res == -1:
-            sys.stdout = sys.__stdout__
-            output = string_io.getvalue()
-            print(output)
-            print('test pass', output == """>> GET A
+    sys.stdout = sys.__stdout__
+    print(string_io.getvalue())
+    print('test pass', string_io.getvalue() == """>> GET A
 NULL
 >> SET A 10
 >> GET A
@@ -111,8 +111,6 @@ NULL
 NULL
 >> END
 """)
-            break
-        print(res)
 
 
 if __name__ == '__main__':
