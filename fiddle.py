@@ -59,6 +59,10 @@ def default(*args):
     return 'unknown command'
 
 
+def nop(*args): pass
+
+
+print_command = nop if sys.stdin.isatty() else print
 command_selector = {
     'GET': get,
     'SET': set_,
@@ -75,12 +79,6 @@ def execute(com_str):
     if res := command_selector.get(op.upper(), default)(params):
         print(res)
     return True
-
-
-def nop(*args): pass
-
-
-print_command = nop if sys.stdin.isatty() else print
 
 
 def run():
