@@ -34,8 +34,6 @@ import sys
 from io import StringIO
 string_io = StringIO()
 
-test_commands = ['GET A', 'SET A 10', 'GET A', 'COUNTS 10', 'SET B 20', 'SET C 10', 'COUNTS 10', 'UNSET B', 'GET B', 'END']
-
 db = dict()
 
 
