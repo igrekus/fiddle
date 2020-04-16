@@ -29,6 +29,7 @@ NULL
 >> END
 
 """
+import os
 import sys
 from io import StringIO
 string_io = StringIO()
@@ -83,16 +84,18 @@ def run():
     sys.stdout = string_io
 
     while True:
-        print('>> ', end='')
-        if not (com := sys.stdin.readline().strip()):
-            sys.exit()
-        print(com)
+        if not (com := input('>> ').strip()):
+            break
+        if not sys.stdin.isatty():
+            print(com)
+
         res = execute(com)
         if res is not None:
             print(res)
             if res == -1:
                 sys.stdout = sys.__stdout__
                 output = string_io.getvalue()
+                print(output)
                 print('test pass', output == """>> GET A
 NULL
 >> SET A 10
@@ -110,7 +113,7 @@ NULL
 >> END
 -1
 """)
-                sys.exit()
+                break
 
 
 if __name__ == '__main__':
