@@ -38,7 +38,7 @@ def get(params):
     return db.get(params[0], 'NULL')
 
 
-def set(params):
+def set_(params):
     db[params[0]] = params[1]
     return None
 
@@ -62,7 +62,7 @@ def exec_default(*args):
 
 command_selector = {
     'GET': get,
-    'SET': set,
+    'SET': set_,
     'UNSET': unset,
     'COUNTS': counts,
     'END': end,
