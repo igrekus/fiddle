@@ -63,21 +63,20 @@ def exec_end(*args):
 def exec_default(*args):
     return 'wrong command'
 
+
+command_selector = {
+    'GET': exec_get,
+    'SET': exec_set,
+    'UNSET': exec_unset,
+    'COUNTS': exec_counts,
+    'END': exec_end
+}
+
+
 def execute(com_str):
     op, *params = com_str.split()
     op = op.upper()
-    if op == 'GET':
-        return exec_get(params)
-    elif op == 'SET':
-        return exec_set(params)
-    elif op == 'UNSET':
-        return exec_unset(params)
-    elif op == 'COUNTS':
-        return exec_counts(params)
-    elif op == 'END':
-        return exec_end(params)
-    else:
-        return exec_default(params)
+    return command_selector.get(op, exec_default)(params)
 
 
 def run():
