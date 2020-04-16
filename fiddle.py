@@ -63,7 +63,7 @@ def nop(*args): pass
 
 
 print_command = nop if sys.stdin.isatty() else print
-command_selector = {
+commands = {
     'GET': get,
     'SET': set_,
     'UNSET': unset,
@@ -76,7 +76,7 @@ command_selector = {
 def execute(com_str):
     print_command(com_str)
     op, *params = com_str.split()
-    if res := command_selector.get(op.upper(), default)(params):
+    if res := commands.get(op.upper(), default)(params):
         print(res)
     return True
 
