@@ -82,7 +82,10 @@ def execute(com_str):
 
 
 def run():
-    while execute(input('>> ').strip()):
+    try:
+        while execute(input('>> ').strip()):
+            pass
+    except EOFError:
         pass
 
 
