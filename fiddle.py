@@ -30,6 +30,8 @@ NULL
 
 """
 import sys
+from io import StringIO
+string_io = StringIO()
 
 test_commands = ['GET A', 'SET A 10', 'GET A', 'COUNTS 10', 'SET B 20', 'SET C 10', 'COUNTS 10', 'UNSET B', 'GET B', 'END']
 
@@ -49,12 +51,15 @@ def execute(com_str):
     elif op == 'COUNTS':
         return sum(v == params[0] for v in db.values())
     elif op == 'END':
-        sys.exit()
+        return -1
+        # sys.exit()
     else:
         return 'wrong command'
 
 
 def run():
+    sys.stdout = string_io
+
     while True:
         print('>> ', end='')
         if not (com := sys.stdin.readline().strip()):
@@ -63,6 +68,27 @@ def run():
         res = execute(com)
         if res is not None:
             print(res)
+            if res == -1:
+                sys.stdout = sys.__stdout__
+                output = string_io.getvalue()
+                print('test pass', output == """>> GET A
+NULL
+>> SET A 10
+>> GET A
+10
+>> COUNTS 10
+1
+>> SET B 20
+>> SET C 10
+>> COUNTS 10
+2
+>> UNSET B
+>> GET B
+NULL
+>> END
+-1
+""")
+                sys.exit()
 
 
 if __name__ == '__main__':
