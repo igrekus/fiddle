@@ -16,10 +16,9 @@ def counts_db(params):
 
 def get_wal(params):
     set_com = f'SET {params[0]} '
-    unset_com = f'UNSET {params[0]}'
     for log in reversed(wal):
         for com in reversed(log):
-            if com == unset_com:
+            if com == f'UNSET {params[0]}':
                 return 'MULL'
             if com.startswith(set_com):
                 return com.lstrip(set_com)
@@ -52,11 +51,8 @@ def commit(*args):
     })
     for log in reversed(wal):
         for com in reversed(log):
-            execute(com, silent=True)
+            execute(com)
     return wal.clear()
-
-def default(*args):
-    return 'unknown command'
 
 def nop(*args): pass
 
@@ -73,14 +69,13 @@ commands = {
 }
 
 
-def execute(com_str, silent=False):
+def execute(com_str):
     op, *params = com_str.split()
     op = op.upper()
     if op == 'END':
         return False
-    if res := commands.get(op.upper(), default)(params):
-        if not silent:
-            print(res)
+    if res := commands.get(op, lambda *args: 'unknown command')(params):
+        print(res)
     return True
 
 
@@ -93,4 +88,16 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    with open('inp.txt', 'rt', encoding='utf-8') as f:
+        import sys
+        from io import StringIO
+        sio = StringIO()
+        sys.stdin = f
+        sys.stdout = sio
+
+        run()
+
+        sys.stdin = sys.__stdin__
+        sys.stdout = sys.__stdout__
+        print(sio.getvalue())
+
