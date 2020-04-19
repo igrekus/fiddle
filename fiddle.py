@@ -59,7 +59,7 @@ def unset_db(params):
     return None
 
 def counts_db(params):
-    return sum(v == params[0] for v in db.values()) if params[0] in db else '0'
+    return sum(v == params[0] for v in db.values()) or '0'
 
 def get_wal(params):
     for log in reversed(wal):
