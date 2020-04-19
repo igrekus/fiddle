@@ -88,16 +88,22 @@ def run():
 
 
 if __name__ == '__main__':
+    import sys
+    from io import StringIO
+
+    sio = StringIO()
     with open('inp.txt', 'rt', encoding='utf-8') as f:
-        import sys
-        from io import StringIO
-        sio = StringIO()
         sys.stdin = f
         sys.stdout = sio
 
         run()
 
-        sys.stdin = sys.__stdin__
-        sys.stdout = sys.__stdout__
-        print(sio.getvalue())
+    sys.stdin = sys.__stdin__
+    sys.stdout = sys.__stdout__
+    print(""">> NULL
+>> >> 10
+>> 1
+>> >> >> 2
+>> >> NULL
+>> """ == sio.getvalue())
 
