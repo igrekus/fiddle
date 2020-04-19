@@ -78,14 +78,6 @@ def set_wal(params):
 def unset_wal(params):
     return wal[-1].append(f'UNSET {params[0]}')
 
-def counts_wal(params):
-    tmp = counts_db(params)
-    for log in reversed(wal):
-        for com in reversed(log):
-            if com.startswith(f'UNSET {params[0]}'):
-                tmp -= 1
-    return 'counts wal'
-
 def begin(*args):
     commands.update({
         'GET': get_wal,
