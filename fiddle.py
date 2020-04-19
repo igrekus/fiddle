@@ -44,8 +44,6 @@ NULL
 >> GET A
 10
 """
-import sys
-
 db = dict()
 wal = list()
 
@@ -61,21 +59,18 @@ def unset_db(params):
     return None
 
 def counts_db(params):
-    return sum(v == params[0] for v in db.values())
-
+    return sum(v == params[0] for v in db.values()) if params[0] in db else '0'
 
 def get_wal(params):
-    try:
-        for com in reversed(wal[-1]):
+    for log in reversed(wal):
+        for com in reversed(log):
             set_com = f'SET {params[0]} '
             unset_com = f'UNSET {params[0]}'
             if com == unset_com:
                 return 'MULL'
             if com.startswith(set_com):
                 return com.lstrip(set_com)
-    except IndexError:
-        return get_db(params)
-    return 'NULL'
+    return get_db(params)
 
 def set_wal(params):
     return wal[-1].append(f'SET {params[0]} {params[1]}')
@@ -91,11 +86,6 @@ def counts_wal(params):
                 tmp -= 1
     return 'counts wal'
 
-
-def end(*args):
-    sys.exit()
-
-
 def begin(*args):
     commands.update({
         'GET': get_wal,
@@ -104,12 +94,10 @@ def begin(*args):
     })
     return wal.append([])
 
-
 def rollback(*args):
     if wal:
         wal.pop(-1)
     return None
-
 
 def commit(*args):
     commands.update({
@@ -122,23 +110,18 @@ def commit(*args):
             execute(com, silent=True)
     return wal.clear()
 
-
 def default(*args):
     return 'unknown command'
 
-
 def nop(*args): pass
-
-
-print_command = nop if sys.stdin.isatty() else print
 
 commands = {
     'GET': get_db,
     'SET': set_db,
     'UNSET': unset_db,
     'COUNTS': counts_db,
-    'END': end,
-    '': end,
+    'END': nop,
+    '': nop,
     'BEGIN': begin,
     'ROLLBACK': rollback,
     'COMMIT': commit
@@ -146,9 +129,10 @@ commands = {
 
 
 def execute(com_str, silent=False):
-    if not silent:
-        print_command(com_str)
     op, *params = com_str.split()
+    op = op.upper()
+    if op == 'END':
+        return False
     if res := commands.get(op.upper(), default)(params):
         if not silent:
             print(res)
