@@ -65,13 +65,16 @@ def counts_db(params):
 
 
 def get_wal(params):
-    for com in reversed(wal[-1]):
-        set_com = f'SET {params[0]} '
-        unset_com = f'UNSET {params[0]}'
-        if com == unset_com:
-            return 'MULL'
-        if com.startswith(set_com):
-            return com.lstrip(set_com)
+    try:
+        for com in reversed(wal[-1]):
+            set_com = f'SET {params[0]} '
+            unset_com = f'UNSET {params[0]}'
+            if com == unset_com:
+                return 'MULL'
+            if com.startswith(set_com):
+                return com.lstrip(set_com)
+    except IndexError:
+        return get_db(params)
     return 'NULL'
 
 def set_wal(params):
@@ -103,7 +106,8 @@ def begin(*args):
 
 
 def rollback(*args):
-    wal.pop(-1)
+    if wal:
+        wal.pop(-1)
     return None
 
 
