@@ -3,9 +3,7 @@ import numpy as np
 
 def dimension(dim):
     res = np.eye(dim * 2 - 1, k=dim - 1, dtype=int) | np.eye(dim * 2 - 1, k=1 - dim, dtype=int)
-    res[1:dim - 1] |= res[dim:-1][::-1, :]
-    res[dim:-1] |= res[1:dim - 1][::-1, :]
-    return res
+    return res | res[::-1, :]
 
 
 for dim in [1, 3, 4]:
