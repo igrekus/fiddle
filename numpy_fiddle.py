@@ -2,11 +2,9 @@ import numpy as np
 
 
 def dimension(dim):
-    places = dim * 2 - 1
-    mid = dim - 1
-    res = np.eye(places, k=mid, dtype=int) | np.eye(places, k=-mid, dtype=int)
-    res[1:mid] |= res[mid + 1:-1][::-1, :]
-    res[mid + 1:-1] |= res[1:mid][::-1, :]
+    res = np.eye(dim * 2 - 1, k=dim - 1, dtype=int) | np.eye(dim * 2 - 1, k=1 - dim, dtype=int)
+    res[1:dim - 1] |= res[dim:-1][::-1, :]
+    res[dim:-1] |= res[1:dim - 1][::-1, :]
     return res
 
 
