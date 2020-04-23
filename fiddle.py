@@ -13,9 +13,12 @@ class Bottles:
     }
 
     def verse(self, num):
-        return f'''{self.quantity(num).capitalize()} {self.container(num)} пива на стене, {self.quantity(num)} {self.container(num)} пива!
-{self.action(num)}, {self.quantity(num - 1)} {self.container(num - 1)} пива на стене
-'''
+        return (
+            f'{self.quantity(num).capitalize()} {self.container(num)} пива на стене, '
+            f'{self.quantity(num)} {self.container(num)} пива!\n'
+            f'{self.action(num)}, '
+            f'{self.quantity(num - 1)} {self.container(num - 1)} пива на стене\n'
+        )
 
     def action(self, num):
         return self.actions.get(num, f'Возьми {self.pronoun(num)}, передай мне')
