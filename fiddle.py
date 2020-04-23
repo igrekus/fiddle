@@ -24,11 +24,9 @@ class Bottles:
             return f'''{num} бутылок пива на стене, {num} бутылок пива!
 Возьми одну, передай мне, {num - 1} бутылок пива на стене
 '''
-        else:
-            return ''
 
     def verses(self, upper, lower):
-        return '\n'.join([self.verse(num) for num in reversed(range(lower, upper + 1))])
+        return '\n'.join(filter(bool, [self.verse(num) for num in reversed(range(lower, upper + 1))]))
 
     @property
     def song(self):
