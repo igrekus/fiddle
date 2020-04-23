@@ -1,9 +1,10 @@
 from pyexpect import expect
 from fiddle import Bottles
 
+b = Bottles()
+
 
 def test_first_verse():
-    b = Bottles()
     expected = '''99 бутылок пива на стене
 99 бутылок пива!
 Возьми одну, передай мне
@@ -13,7 +14,6 @@ def test_first_verse():
 
 
 def test_another_verse():
-    b = Bottles()
     expected = '''89 бутылок пива на стене
 89 бутылок пива!
 Возьми одну, передай мне
@@ -23,7 +23,6 @@ def test_another_verse():
 
 
 def test_verse_2():
-    b = Bottles()
     expected = '''2 бутылки пива на стене
 2 бутылки пива!
 Возьми одну, передай мне
@@ -33,7 +32,6 @@ def test_verse_2():
 
 
 def test_verse_1():
-    b = Bottles()
     expected = '''1 бутылка пива на стене
 1 бутылка пива!
 Возьми одну, передай мне
@@ -43,7 +41,6 @@ def test_verse_1():
 
 
 def test_verse_0():
-    b = Bottles()
     expected = '''Нет бутылок пива на стене
 Нет бутылок пива!
 Сходи в магазин, купи ещё
@@ -53,7 +50,6 @@ def test_verse_0():
 
 
 def test_a_couple_verses():
-    b = Bottles()
     expected = '''99 бутылок пива на стене
 99 бутылок пива!
 Возьми одну, передай мне
@@ -68,7 +64,6 @@ def test_a_couple_verses():
 
 
 def test_a_few_verses():
-    b = Bottles()
     expected = '''2 бутылки пива на стене
 2 бутылки пива!
 Возьми одну, передай мне
@@ -88,5 +83,4 @@ def test_a_few_verses():
 
 
 def test_the_whole_song():
-    b = Bottles()
     expect(b.verses(99, 0)).to_equal(b.song)
