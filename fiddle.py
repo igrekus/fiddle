@@ -1,11 +1,6 @@
 class Bottles:
     def verse(self, num):
-        if num == 0:
-            return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
-{self.action(num)}, {self.qty(num - 1)} {self.container(num - 1)} пива на стене
-'''
-        else:
-            return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
+        return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
 {self.action(num)}, {self.qty(num - 1)} {self.container(num - 1)} пива на стене
 '''
 
