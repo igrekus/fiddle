@@ -2,6 +2,15 @@ class Bottles:
     actions = {0: 'Сходи в магазин, купи ещё'}
     quantities = {0: 'нет', -1: '99'}
     pronouns = {1: 'её'}
+    containers = {
+        **dict.fromkeys([1] + list(range(21, 92, 10)), 'бутылка'),
+        **dict.fromkeys(
+            [o + 10*int(d) for o, d in zip(
+                [2, 3, 4]*10,
+                [i for i in '023456789' for _ in 'rep'])],
+            'бутылки'
+        )
+    }
 
     def verse(self, num):
         return f'''{self.quantity(num).capitalize()} {self.container(num)} пива на стене, {self.quantity(num)} {self.container(num)} пива!
@@ -18,12 +27,7 @@ class Bottles:
         return self.pronouns.get(num, 'одну')
 
     def container(self, num):
-        if num in (1, 21, 31, 41, 51, 61, 71, 81, 91):
-            return 'бутылка'
-        elif num in (2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44, 52, 53, 54, 62, 63, 64, 72, 73, 74, 82, 83, 84, 92, 93, 94):
-            return 'бутылки'
-        else:
-            return 'бутылок'
+        return self.containers.get(num, 'бутылок')
 
     def verses(self, upper, lower):
         return '\n'.join(filter(bool, [self.verse(num) for num in reversed(range(lower, upper + 1))]))
