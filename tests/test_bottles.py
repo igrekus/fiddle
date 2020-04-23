@@ -4,63 +4,56 @@ from fiddle import Bottles
 
 def test_first_verse():
     b = Bottles()
-    verse = 99
     expected = '''99 бутылок пива на стене
 99 бутылок пива!
 Возьми одну, передай мне
 98 бутылок пива на стене
 '''
-    expect(b.verse(verse)).to_equal(expected)
+    expect(b.verse(99)).to_equal(expected)
 
 
 def test_another_verse():
     b = Bottles()
-    verse = 89
     expected = '''89 бутылок пива на стене
 89 бутылок пива!
 Возьми одну, передай мне
 88 бутылок пива на стене
 '''
-    expect(b.verse(verse)).to_equal(expected)
+    expect(b.verse(89)).to_equal(expected)
 
 
 def test_verse_2():
     b = Bottles()
-    verse = 2
     expected = '''2 бутылки пива на стене
 2 бутылки пива!
 Возьми одну, передай мне
 1 бутылка пива на стене
 '''
-    expect(b.verse(verse)).to_equal(expected)
+    expect(b.verse(2)).to_equal(expected)
 
 
 def test_verse_1():
     b = Bottles()
-    verse = 1
     expected = '''1 бутылка пива на стене
 1 бутылка пива!
 Возьми одну, передай мне
 Нет бутылок пива на стене
 '''
-    expect(b.verse(verse)).to_equal(expected)
+    expect(b.verse(1)).to_equal(expected)
 
 
 def test_verse_0():
     b = Bottles()
-    verse = 0
     expected = '''Нет бутылок пива на стене
 Нет бутылок пива!
 Сходи в магазин, купи ещё
 99 бутылок пива на стене
 '''
-    expect(b.verse(verse)).to_equal(expected)
+    expect(b.verse(0)).to_equal(expected)
 
 
 def test_a_couple_verses():
     b = Bottles()
-    verse_upper = 99
-    verse_lower = 98
     expected = '''99 бутылок пива на стене
 99 бутылок пива!
 Возьми одну, передай мне
@@ -71,13 +64,11 @@ def test_a_couple_verses():
 Возьми одну, передай мне
 97 бутылок пива на стене
 '''
-    expect(b.verses(verse_upper, verse_lower)).to_equal(expected)
+    expect(b.verses(99, 98)).to_equal(expected)
 
 
 def test_a_few_verses():
     b = Bottles()
-    verse_upper = 2
-    verse_lower = 0
     expected = '''2 бутылки пива на стене
 2 бутылки пива!
 Возьми одну, передай мне
@@ -93,7 +84,7 @@ def test_a_few_verses():
 Сходи в магазин, купи ещё
 99 бутылок пива на стене
 '''
-    expect(b.verses(verse_upper, verse_lower)).to_equal(expected)
+    expect(b.verses(2, 0)).to_equal(expected)
 
 
 def test_the_whole_song():
