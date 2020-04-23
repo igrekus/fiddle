@@ -1,28 +1,21 @@
 class Bottles:
+    actions = {0: 'Сходи в магазин, купи ещё'}
+    quantities = {0: 'нет', -1: '99'}
+    pronouns = {1: 'её'}
+
     def verse(self, num):
         return f'''{self.quantity(num).capitalize()} {self.container(num)} пива на стене, {self.quantity(num)} {self.container(num)} пива!
 {self.action(num)}, {self.quantity(num - 1)} {self.container(num - 1)} пива на стене
 '''
 
     def action(self, num):
-        if num == 0:
-            return 'Сходи в магазин, купи ещё'
-        else:
-            return f'Возьми {self.pronoun(num)}, передай мне'
+        return self.actions.get(num, f'Возьми {self.pronoun(num)}, передай мне')
 
     def quantity(self, num):
-        if num == 0:
-            return 'нет'
-        elif num == -1:
-            return '99'
-        else:
-            return f'{num}'
+        return self.quantities.get(num, f'{num}')
 
     def pronoun(self, num):
-        if num == 1:
-            return 'её'
-        else:
-            return 'одну'
+        return self.pronouns.get(num, 'одну')
 
     def container(self, num):
         if num in (1, 21, 31, 41, 51, 61, 71, 81, 91):
