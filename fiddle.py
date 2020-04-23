@@ -5,8 +5,8 @@ class Bottles:
 Сходи в магазин, купи ещё, 99 {self.container(num - 1)} пива на стене
 '''
         elif num == 1:
-            return f'''1 {self.container(num)} пива на стене, {num} {self.container(num)} пива!
-Возьми одну, передай мне, нет {self.container(num - 1)} пива на стене
+            return f'''{num} {self.container(num)} пива на стене, {num} {self.container(num)} пива!
+Возьми её, передай мне, нет {self.container(num - 1)} пива на стене
 '''
         else:
             return f'''{num} {self.container(num)} пива на стене, {num} {self.container(num)} пива!
