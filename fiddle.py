@@ -1,11 +1,11 @@
 class Bottles:
     def verse(self, num):
         if num == 0:
-            return f'''Нет {self.container(num)} пива на стене, нет {self.container(num)} пива!
+            return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
 Сходи в магазин, купи ещё, 99 {self.container(num - 1)} пива на стене
 '''
         else:
-            return f'''{self.qty(num)} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
+            return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
 Возьми {self.pronoun(num)}, передай мне, {self.qty(num - 1)} {self.container(num - 1)} пива на стене
 '''
 
@@ -13,7 +13,7 @@ class Bottles:
         if num == 0:
             return 'нет'
         else:
-            return num
+            return f'{num}'
 
     def pronoun(self, num):
         if num == 1:
