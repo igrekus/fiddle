@@ -1,6 +1,6 @@
 class Bottles:
     actions = {0: 'Сходи в магазин, купи ещё'}
-    quantities = {0: 'нет', -1: '99'}
+    quantities = {0: 'нет', 1: 'последняя', -1: '99'}
     pronouns = {1: 'её'}
     containers = {
         **dict.fromkeys([1] + list(range(21, 92, 10)), 'бутылка'),
