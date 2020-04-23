@@ -1,7 +1,7 @@
 class Bottles:
     def verse(self, num):
-        return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
-{self.action(num)}, {self.qty(num - 1)} {self.container(num - 1)} пива на стене
+        return f'''{self.quantity(num).capitalize()} {self.container(num)} пива на стене, {self.quantity(num)} {self.container(num)} пива!
+{self.action(num)}, {self.quantity(num - 1)} {self.container(num - 1)} пива на стене
 '''
 
     def action(self, num):
@@ -10,7 +10,7 @@ class Bottles:
         else:
             return f'Возьми {self.pronoun(num)}, передай мне'
 
-    def qty(self, num):
+    def quantity(self, num):
         if num == 0:
             return 'нет'
         elif num == -1:
