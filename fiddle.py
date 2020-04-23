@@ -8,10 +8,6 @@ class Bottles:
             return f'''1 {self.container(num)} пива на стене, {num} {self.container(num)} пива!
 Возьми одну, передай мне, нет {self.container(num - 1)} пива на стене
 '''
-        elif num == 2:
-            return f'''{num} {self.container(num)} пива на стене, {num} {self.container(num)} пива!
-Возьми одну, передай мне, {num - 1} {self.container(num - 1)} пива на стене
-'''
         else:
             return f'''{num} {self.container(num)} пива на стене, {num} {self.container(num)} пива!
 Возьми одну, передай мне, {num - 1} {self.container(num - 1)} пива на стене
