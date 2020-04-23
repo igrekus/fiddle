@@ -55,3 +55,47 @@ def test_verse_0():
 99 бутылок пива на стене
 '''
     expect(b.verse(verse)).to_equal(expected)
+
+
+def test_a_couple_verses():
+    b = Bottles()
+    verse_upper = 99
+    verse_lower = 98
+    expected = '''99 бутылок пива на стене
+99 бутылок пива!
+Возьми одну, передай мне
+98 бутылок пива на стене
+
+98 бутылок пива на стене
+98 бутылок пива!
+Возьми одну, передай мне
+97 бутылок пива на стене
+'''
+    expect(b.verses(verse_upper, verse_lower)).to_equal(expected)
+
+
+def test_a_few_verses():
+    b = Bottles()
+    verse_upper = 2
+    verse_lower = 0
+    expected = '''2 бутылки пива на стене
+2 бутылки пива!
+Возьми одну, передай мне
+1 бутылка пива на стене
+
+1 бутылка пива на стене
+1 бутылка пива!
+Возьми одну, передай мне
+Нет бутылок пива на стене
+
+Нет бутылок пива на стене
+Нет бутылок пива!
+Сходи в магазин, купи ещё
+99 бутылок пива на стене
+'''
+    expect(b.verses(verse_upper, verse_lower)).to_equal(expected)
+
+
+def test_the_whole_song():
+    b = Bottles()
+    expect(b.verses(99, 0)).to_equal(b.song)
