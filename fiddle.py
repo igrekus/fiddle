@@ -6,12 +6,18 @@ class Bottles:
 '''
         elif num == 1:
             return f'''{num} {self.container(num)} пива на стене, {num} {self.container(num)} пива!
-Возьми её, передай мне, нет {self.container(num - 1)} пива на стене
+Возьми {self.pronoun(num)}, передай мне, нет {self.container(num - 1)} пива на стене
 '''
         else:
             return f'''{num} {self.container(num)} пива на стене, {num} {self.container(num)} пива!
-Возьми одну, передай мне, {num - 1} {self.container(num - 1)} пива на стене
+Возьми {self.pronoun(num)}, передай мне, {num - 1} {self.container(num - 1)} пива на стене
 '''
+
+    def pronoun(self, num):
+        if num == 1:
+            return 'её'
+        else:
+            return 'одну'
 
     def container(self, num):
         if num in (1, 21, 31, 41, 51, 61, 71, 81, 91):
