@@ -2,7 +2,7 @@ class Bottles:
     def verse(self, num):
         if num == 0:
             return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
-Сходи в магазин, купи ещё, 99 {self.container(num - 1)} пива на стене
+Сходи в магазин, купи ещё, {self.qty(num - 1)} {self.container(num - 1)} пива на стене
 '''
         else:
             return f'''{self.qty(num).capitalize()} {self.container(num)} пива на стене, {self.qty(num)} {self.container(num)} пива!
@@ -12,6 +12,8 @@ class Bottles:
     def qty(self, num):
         if num == 0:
             return 'нет'
+        elif num == -1:
+            return '99'
         else:
             return f'{num}'
 
