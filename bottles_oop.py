@@ -34,7 +34,7 @@ class Bottles:
         return 'бутылок'
 
     def verses(self, upper, lower):
-        return '\n'.join(self.verse(num) for num in reversed(range(lower, upper + 1)))
+        return '\n'.join(self.verse(num) for num in reversed(range(lower, upper + 1))).strip()
 
     @property
     def song(self):

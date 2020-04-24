@@ -24,4 +24,4 @@ def verses(upper: int, lower: int) -> str:
             bottle.get(num - 1, 'бутылок')
         )
         for num in range(upper, lower - 1, -1)
-    )
+    ).strip()
