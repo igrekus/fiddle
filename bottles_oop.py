@@ -44,9 +44,9 @@ class Bottles:
 bottles = Bottles()
 
 
-def song():
+def song() -> str:
     return bottles.song
 
 
-def verses(upper, lower):
+def verses(upper: int, lower: int) -> str:
     return bottles.verses(upper, lower)

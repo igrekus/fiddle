@@ -8,11 +8,11 @@ bottle = {
 }
 
 
-def song():
+def song() -> str:
     return verses(99, 0)
 
 
-def verses(upper, lower):
+def verses(upper: int, lower: int) -> str:
     return '\n'.join(
         '{0} {1} пива на стене, {2} {1} пива!\n{3}, {4} {5} пива на стене.\n'
         .format(
