@@ -1,155 +1,40 @@
-"""
-Сделать маленький вариант базы данных. Никакого сетевого
-взаимодействия не нужно. Данные читаются из stdin.
-База лежит в оперативной памяти. Одна строка, всегда ровно один запрос. Аргументы
-команд пробелов не содержат. Также в вводе должен распознаваться EOF, который означает конец ввода и завершение приложения.
-Команды:
-•	SET - сохраняет аргумент в базе данных.
-•	GET - возвращает, ранее сохраненную переменную. Если такой переменной
-•	не было сохранено, возвращает NULL
-•	UNSET - удаляет, ранее установленную переменную. Если значение не было
-•	установлено, не делает ничего.
-•	COUNTS - показывает сколько раз данные значение встречается в базе данных.
-•	END - закрывает приложение.
-Пример:
->> GET A
-NULL
->> SET A 10
->> GET A
-10
->> COUNTS 10
-1
->> SET B 20
->> SET C 10
->> COUNTS 10
-2
->> UNSET B
->> GET B
-NULL
->> END
----
+class Bottles:
+    actions = {0: 'Сходи в магазин, купи ещё'}
+    quantities = {0: 'нет', 1: 'последняя', -1: '99'}
+    pronouns = {1: 'её'}
+    containers = {
+        **dict.fromkeys([1] + list(range(21, 92, 10)), 'бутылка'),
+        **dict.fromkeys(
+            [o + 10*int(d) for o, d in zip(
+                [2, 3, 4]*10,
+                [i for i in '023456789' for _ in 'rep'])],
+            'бутылки'
+        )
+    }
 
-Транзакции
->> BEGIN
->> SET A 10
->> BEGIN
->> SET A 20
->> SET A 30
->> GET A
-30
->> ROLLBACK
->> GET A
-10
->> COMMIT
->> GET A
-10
-"""
-db = dict()
-wal = list()
+    def verse(self, num):
+        return (
+            f'{self.quantity(num).capitalize()} {self.container(num)} пива на стене, '
+            f'{self.quantity(num)} {self.container(num)} пива!\n'
+            f'{self.action(num)}, '
+            f'{self.quantity(num - 1)} {self.container(num - 1)} пива на стене\n'
+        )
 
+    def action(self, num):
+        return self.actions.get(num, f'Возьми {self.pronoun(num)}, передай мне')
 
-def get_db(params):
-    return db.get(params[0], 'NULL')
+    def quantity(self, num):
+        return self.quantities.get(num, f'{num}')
 
-def set_db(params):
-    return db.update({params[0]: params[1]})
+    def pronoun(self, num):
+        return self.pronouns.get(num, 'одну')
 
-def unset_db(params):
-    db.pop(params[0], None)
-    return None
+    def container(self, num):
+        return self.containers.get(num, 'бутылок')
 
-def counts_db(params):
-    return sum(v == params[0] for v in db.values()) or '0'
+    def verses(self, upper, lower):
+        return '\n'.join(filter(bool, [self.verse(num) for num in reversed(range(lower, upper + 1))]))
 
-def get_wal(params):
-    set_com = f'SET {params[0]} '
-    for log in reversed(wal):
-        for com in reversed(log):
-            if com == f'UNSET {params[0]}':
-                return 'MULL'
-            if com.startswith(set_com):
-                return com.lstrip(set_com)
-    return get_db(params)
-
-def set_wal(params):
-    return wal[-1].append(f'SET {params[0]} {params[1]}')
-
-def unset_wal(params):
-    return wal[-1].append(f'UNSET {params[0]}')
-
-def begin(*args):
-    commands.update({
-        'GET': get_wal,
-        'SET': set_wal,
-        'UNSET': unset_wal,
-    })
-    return wal.append([])
-
-def rollback(*args):
-    if wal:
-        wal.pop(-1)
-    return None
-
-def commit(*args):
-    commands.update({
-        'GET': get_db,
-        'SET': set_db,
-        'UNSET': unset_db,
-    })
-    for log in reversed(wal):
-        for com in reversed(log):
-            execute(com)
-    return wal.clear()
-
-def nop(*args): pass
-
-commands = {
-    'GET': get_db,
-    'SET': set_db,
-    'UNSET': unset_db,
-    'COUNTS': counts_db,
-    'END': nop,
-    '': nop,
-    'BEGIN': begin,
-    'ROLLBACK': rollback,
-    'COMMIT': commit
-}
-
-
-def execute(com_str):
-    op, *params = com_str.split()
-    op = op.upper()
-    if op == 'END':
-        return False
-    if res := commands.get(op, lambda *args: 'unknown command')(params):
-        print(res)
-    return True
-
-
-def run():
-    try:
-        while execute(input('>> ').strip()):
-            pass
-    except EOFError:
-        pass
-
-
-if __name__ == '__main__':
-    import sys
-    from io import StringIO
-
-    sio = StringIO()
-    with open('inp.txt', 'rt', encoding='utf-8') as f:
-        sys.stdin = f
-        sys.stdout = sio
-
-        run()
-
-    sys.stdin = sys.__stdin__
-    sys.stdout = sys.__stdout__
-    print(""">> NULL
->> >> 10
->> 1
->> >> >> 2
->> >> NULL
->> """ == sio.getvalue())
+    @property
+    def song(self):
+        return self.verses(99, 0)
