@@ -1,17 +1,38 @@
 from pyexpect import expect
-from fiddle import Bottles
+from bottles_oop import Bottles
 
 b = Bottles()
 
 
-def test_first_verse():
+def test_verse_99():
     expected = '''99 бутылок пива на стене, 99 бутылок пива!
 Возьми одну, передай мне, 98 бутылок пива на стене.
 '''
     expect(b.verse(99)).to_equal(expected)
 
 
-def test_another_verse():
+def test_verse_93():
+    expected = '''93 бутылки пива на стене, 93 бутылки пива!
+Возьми одну, передай мне, 92 бутылки пива на стене.
+'''
+    expect(b.verse(93)).to_equal(expected)
+
+
+def test_verse_92():
+    expected = '''92 бутылки пива на стене, 92 бутылки пива!
+Возьми одну, передай мне, 91 бутылка пива на стене.
+'''
+    expect(b.verse(92)).to_equal(expected)
+
+
+def test_verse_91():
+    expected = '''91 бутылка пива на стене, 91 бутылка пива!
+Возьми одну, передай мне, 90 бутылок пива на стене.
+'''
+    expect(b.verse(91)).to_equal(expected)
+
+
+def test_verse_89():
     expected = '''89 бутылок пива на стене, 89 бутылок пива!
 Возьми одну, передай мне, 88 бутылок пива на стене.
 '''
@@ -39,7 +60,7 @@ def test_verse_0():
     expect(b.verse(0)).to_equal(expected)
 
 
-def test_a_couple_verses():
+def test_two_verses():
     expected = '''99 бутылок пива на стене, 99 бутылок пива!
 Возьми одну, передай мне, 98 бутылок пива на стене.
 
@@ -49,7 +70,7 @@ def test_a_couple_verses():
     expect(b.verses(99, 98)).to_equal(expected)
 
 
-def test_a_few_verses():
+def test_three_verses():
     expected = '''2 бутылки пива на стене, 2 бутылки пива!
 Возьми одну, передай мне, последняя бутылка пива на стене.
 
@@ -60,7 +81,3 @@ def test_a_few_verses():
 Сходи в магазин, купи ещё, 99 бутылок пива на стене.
 '''
     expect(b.verses(2, 0)).to_equal(expected)
-
-
-def test_the_whole_song():
-    expect(b.verses(99, 0)).to_equal(b.song)

@@ -1,10 +1,10 @@
 from pyexpect import expect
-from fiddle import Bottles
+from bottles_oop import Bottles
 
 b = Bottles()
 
 
-def test_whole_song():
+def test_the_whole_song():
     expected = '''99 бутылок пива на стене, 99 бутылок пива!
 Возьми одну, передай мне, 98 бутылок пива на стене.
 
