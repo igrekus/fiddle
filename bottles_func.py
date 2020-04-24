@@ -2,9 +2,7 @@ qty = {0: 'нет', 1: 'последняя', -1: '99'}
 bottle = {
     **dict.fromkeys([1] + list(range(21, 92, 10)), 'бутылка'),
     **dict.fromkeys(
-        [o + 10 * int(d) for o, d in zip(
-            [2, 3, 4] * 10,
-            [i for i in '023456789' for _ in 'rep'])],
+        [o + 10 * int(d) for o, d in zip([2, 3, 4] * 10, [i for i in '023456789' for _ in 'rep'])],
         'бутылки'
     )
 }
