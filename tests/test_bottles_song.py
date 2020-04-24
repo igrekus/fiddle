@@ -1,5 +1,6 @@
 from pyexpect import expect
-from bottles_oop import song
+# from bottles_oop import song
+from bottles_func import song
 
 
 def test_the_whole_song():
