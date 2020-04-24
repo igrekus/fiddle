@@ -1,7 +1,5 @@
 from pyexpect import expect
-from bottles_oop import Bottles
-
-b = Bottles()
+from bottles_oop import song
 
 
 def test_the_whole_song():
@@ -305,4 +303,4 @@ def test_the_whole_song():
 Нет бутылок пива на стене, нет бутылок пива!
 Сходи в магазин, купи ещё, 99 бутылок пива на стене.
 '''
-    expect(b.song).to_equal(expected)
+    expect(song()).to_equal(expected)

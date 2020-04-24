@@ -1,63 +1,40 @@
 from pyexpect import expect
-from bottles_oop import Bottles
-
-b = Bottles()
+from bottles_oop import verses
 
 
 def test_verse_99():
     expected = '''99 бутылок пива на стене, 99 бутылок пива!
 Возьми одну, передай мне, 98 бутылок пива на стене.
 '''
-    expect(b.verse(99)).to_equal(expected)
-
-
-def test_verse_93():
-    expected = '''93 бутылки пива на стене, 93 бутылки пива!
-Возьми одну, передай мне, 92 бутылки пива на стене.
-'''
-    expect(b.verse(93)).to_equal(expected)
-
-
-def test_verse_92():
-    expected = '''92 бутылки пива на стене, 92 бутылки пива!
-Возьми одну, передай мне, 91 бутылка пива на стене.
-'''
-    expect(b.verse(92)).to_equal(expected)
-
-
-def test_verse_91():
-    expected = '''91 бутылка пива на стене, 91 бутылка пива!
-Возьми одну, передай мне, 90 бутылок пива на стене.
-'''
-    expect(b.verse(91)).to_equal(expected)
+    expect(verses(99, 99)).to_equal(expected)
 
 
 def test_verse_89():
     expected = '''89 бутылок пива на стене, 89 бутылок пива!
 Возьми одну, передай мне, 88 бутылок пива на стене.
 '''
-    expect(b.verse(89)).to_equal(expected)
+    expect(verses(89, 89)).to_equal(expected)
 
 
 def test_verse_2():
     expected = '''2 бутылки пива на стене, 2 бутылки пива!
 Возьми одну, передай мне, последняя бутылка пива на стене.
 '''
-    expect(b.verse(2)).to_equal(expected)
+    expect(verses(2, 2)).to_equal(expected)
 
 
 def test_verse_1():
     expected = '''Последняя бутылка пива на стене, последняя бутылка пива!
 Возьми её, передай мне, нет бутылок пива на стене.
 '''
-    expect(b.verse(1)).to_equal(expected)
+    expect(verses(1, 1)).to_equal(expected)
 
 
 def test_verse_0():
     expected = '''Нет бутылок пива на стене, нет бутылок пива!
 Сходи в магазин, купи ещё, 99 бутылок пива на стене.
 '''
-    expect(b.verse(0)).to_equal(expected)
+    expect(verses(0, 0)).to_equal(expected)
 
 
 def test_two_verses():
@@ -67,7 +44,7 @@ def test_two_verses():
 98 бутылок пива на стене, 98 бутылок пива!
 Возьми одну, передай мне, 97 бутылок пива на стене.
 '''
-    expect(b.verses(99, 98)).to_equal(expected)
+    expect(verses(99, 98)).to_equal(expected)
 
 
 def test_three_verses():
@@ -80,4 +57,4 @@ def test_three_verses():
 Нет бутылок пива на стене, нет бутылок пива!
 Сходи в магазин, купи ещё, 99 бутылок пива на стене.
 '''
-    expect(b.verses(2, 0)).to_equal(expected)
+    expect(verses(2, 0)).to_equal(expected)

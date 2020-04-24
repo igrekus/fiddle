@@ -39,3 +39,14 @@ class Bottles:
     @property
     def song(self):
         return self.verses(99, 0)
+
+
+bottles = Bottles()
+
+
+def song():
+    return bottles.song
+
+
+def verses(upper, lower):
+    return bottles.verses(upper, lower)
