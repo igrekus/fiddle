@@ -1,52 +1,64 @@
-class Bottles:
-    def verse(self, num):
-        return (
-            f'{self.quantity(num).capitalize()} {self.container(num)} пива на стене, '
-            f'{self.quantity(num)} {self.container(num)} пива!\n'
-            f'{self.action(num)}, '
-            f'{self.quantity(num - 1)} {self.container(num - 1)} пива на стене.\n')
-
-    def action(self, num):
-        if num == 0:
-            return 'Сходи в магазин, купи ещё'
-        return f'Возьми {self.pronoun(num)}, передай мне'
-
-    def quantity(self, num):
-        if num == 0:
-            return 'нет'
-        elif num == 1:
-            return 'последняя'
-        elif num == -1:
-            return '99'
-        return f'{num}'
-
-    def pronoun(self, num):
-        if num == 1:
-            return 'её'
-        return 'одну'
-
-    def container(self, num):
-        if num in (1, 21, 31, 41, 51, 61, 71, 81, 91):
-            return 'бутылка'
-        elif num in (2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44, 52, 53,
-                     54, 62, 63, 64, 72, 73, 74, 82, 83, 84, 92, 93, 94):
-            return 'бутылки'
-        return 'бутылок'
-
-    def verses(self, upper, lower):
-        return '\n'.join(self.verse(num) for num in reversed(range(lower, upper + 1))).strip()
-
-    @property
-    def song(self):
-        return self.verses(99, 0)
+from dataclasses import dataclass, field
+from functools import singledispatchmethod
 
 
-bottles = Bottles()
+def _default_field(obj):
+    return field(default_factory=lambda: obj)
+
+
+@dataclass
+class Pronoun:
+    num: int
+    values: dict = _default_field({1: 'её'})
+    def __str__(self): return self.values.get(self.num, 'одну')
+
+
+@dataclass
+class Action:
+    num: int
+    values: dict = _default_field({0: 'Сходи в магазин, купи ещё'})
+    def __str__(self): return self.values.get(self.num, f'Возьми {Pronoun(self.num)}, передай мне')
+
+
+@dataclass
+class Quantity:
+    num: int
+    values: dict = _default_field({0: 'нет', 1: 'последняя', -1: '99'})
+    def __str__(self): return self.values.get(self.num, f'{self.num}')
+
+
+@dataclass
+class Container:
+    num: int
+    values: dict = _default_field({
+        **dict.fromkeys([1] + list(range(21, 92, 10)), 'бутылка'),
+        **dict.fromkeys([o + 10 * int(d)
+                         for o, d in
+                         zip([2, 3, 4] * 9, [i for i in '023456789' for _ in 'rep'])],
+                        'бутылки')
+    })
+    def __str__(self): return self.values.get(self.num, f'бутылок')
+
+
+class Song:
+    @singledispatchmethod
+    def __getitem__(self, item: slice):
+        return '\n'.join(self[n] for n in range(item.start, item.stop - 1, -1)).strip()
+
+    @__getitem__.register
+    def _(self, item: int):
+        return (f'{f"{Quantity(item)}".capitalize()} {Container(item)} пива на стене, '
+                f'{Quantity(item)} {Container(item)} пива!\n'
+                f'{Action(item)}, '
+                f'{Quantity(item - 1)} {Container(item - 1)} пива на стене.\n')
+
+    def __str__(self):
+        return self[99:0]
 
 
 def song() -> str:
-    return bottles.song
+    return str(Song())
 
 
 def verses(upper: int, lower: int) -> str:
-    return bottles.verses(upper, lower)
+    return Song()[upper:lower]

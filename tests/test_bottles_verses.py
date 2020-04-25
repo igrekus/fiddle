@@ -1,6 +1,6 @@
 from pyexpect import expect
-# from bottles_oop import verses
-from bottles_func import verses
+from bottles_oop import verses
+# from bottles_func import verses
 
 
 def test_verse_99():
