@@ -1,40 +1,33 @@
-class Bottles:
-    actions = {0: 'Сходи в магазин, купи ещё'}
-    quantities = {0: 'нет', 1: 'последняя', -1: '99'}
-    pronouns = {1: 'её'}
-    containers = {
-        **dict.fromkeys([1] + list(range(21, 92, 10)), 'бутылка'),
-        **dict.fromkeys(
-            [o + 10*int(d) for o, d in zip(
-                [2, 3, 4]*10,
-                [i for i in '023456789' for _ in 'rep'])],
-            'бутылки'
-        )
-    }
+"""
+#task Написать функцию def flatten(a_list:list, depth:int=0)->list
+которая принимает на вход список, который может иметь
+любую вложенность (список в списке), а также второй параметр - глубину распаковки.
+Функция должна вернуть список, где
+вложенные элементы соответствующего уровня распакованы,
+то есть вложенное превращается в плоское.
+Если второй аргумент
+не передан, то возвращает одномерный список, то есть все вложенные списки распакованы.
 
-    def verse(self, num):
-        return (
-            f'{self.quantity(num).capitalize()} {self.container(num)} пива на стене, '
-            f'{self.quantity(num)} {self.container(num)} пива!\n'
-            f'{self.action(num)}, '
-            f'{self.quantity(num - 1)} {self.container(num - 1)} пива на стене\n'
-        )
+Примеры:
+flatten([1, [2]) == [1, 2]
+flatten([1, [2, [3]]], depth=1) == [1, 2, [3]]
+Исключений не кидаем, предполагается что глубина всегда положительна (если указана), предполагаем что могут быть
+только вложенные списки (не кортежи или другие контейнеры)
+Импортировать ничего нельзя, сигнатуру функции не менять, решения кидать мне в личку в виде модуля пайтон,
+все участники получат все варианты решений в следующую субботу!
+"""
 
-    def action(self, num):
-        return self.actions.get(num, f'Возьми {self.pronoun(num)}, передай мне')
 
-    def quantity(self, num):
-        return self.quantities.get(num, f'{num}')
+def _recur(it, d):
+    if d == -1:
+        yield it
+    else:
+        for i in it:
+            if isinstance(i, list):
+                yield from _recur(i, d - 1)
+            else:
+                yield i
 
-    def pronoun(self, num):
-        return self.pronouns.get(num, 'одну')
 
-    def container(self, num):
-        return self.containers.get(num, 'бутылок')
-
-    def verses(self, upper, lower):
-        return '\n'.join(filter(bool, [self.verse(num) for num in reversed(range(lower, upper + 1))]))
-
-    @property
-    def song(self):
-        return self.verses(99, 0)
+def flatten(a_list, depth=0):
+    return list(_recur(a_list, depth if depth else float('inf')))
