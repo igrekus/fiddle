@@ -6,7 +6,13 @@ class Animal:
         self.name = name
     @classmethod
     def find(cls, id):
-        return animal_db.get(id, None)
+        return animal_db.get(id)
+    def __repr__(self):
+        return f'<{self.__class__.__name__}> ({self.name=})'
+
+
+class MissingAnimal:
+    name = 'no animal'
     def __repr__(self):
         return f'<{self.__class__.__name__}> ({self.name=})'
 
@@ -18,10 +24,7 @@ animal_db = {
 }
 
 
-animals = [Animal.find(id) for id in ids]
+animals = [Animal.find(id) or MissingAnimal() for id in ids]
 # animals = filter(bool, animals)   # if None is really nothing, filter it our
 for an in animals:
-    if an:
-        print(an.name)
-    else:
-        print('no animal')
+    print(an.name)
