@@ -17,6 +17,12 @@ class MissingAnimal:
         return f'<{self.__class__.__name__}> ({self.name=})'
 
 
+class GuaranteedAnimal:
+    @classmethod
+    def find(cls, id):
+        return Animal.find(id) or MissingAnimal()
+
+
 animal_db = {
     'pig': Animal('pig'),
     'sheep': Animal('sheep'),
@@ -24,7 +30,7 @@ animal_db = {
 }
 
 
-animals = [Animal.find(id) or MissingAnimal() for id in ids]
+animals = [GuaranteedAnimal.find(id) for id in ids]
 # animals = filter(bool, animals)   # if None is really nothing, filter it our
 for an in animals:
     print(an.name)
