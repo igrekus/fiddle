@@ -1,33 +1,24 @@
-"""
-#task Написать функцию def flatten(a_list:list, depth:int=0)->list
-которая принимает на вход список, который может иметь
-любую вложенность (список в списке), а также второй параметр - глубину распаковки.
-Функция должна вернуть список, где
-вложенные элементы соответствующего уровня распакованы,
-то есть вложенное превращается в плоское.
-Если второй аргумент
-не передан, то возвращает одномерный список, то есть все вложенные списки распакованы.
-
-Примеры:
-flatten([1, [2]) == [1, 2]
-flatten([1, [2, [3]]], depth=1) == [1, 2, [3]]
-Исключений не кидаем, предполагается что глубина всегда положительна (если указана), предполагаем что могут быть
-только вложенные списки (не кортежи или другие контейнеры)
-Импортировать ничего нельзя, сигнатуру функции не менять, решения кидать мне в личку в виде модуля пайтон,
-все участники получат все варианты решений в следующую субботу!
-"""
+ids = ['pig', '', 'sheep']
 
 
-def _recur(it, d):
-    if d == -1:
-        yield it
-    else:
-        for i in it:
-            if isinstance(i, list):
-                yield from _recur(i, d - 1)
-            else:
-                yield i
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    @classmethod
+    def find(cls, id):
+        return animal_db.get(id, None)
+    def __repr__(self):
+        return f'<{self.__class__.__name__}> ({self.name=})'
 
 
-def flatten(a_list, depth=0):
-    return list(_recur(a_list, depth if depth else float('inf')))
+animal_db = {
+    'pig': Animal('pig'),
+    'sheep': Animal('sheep'),
+    'dog': Animal('dog')
+}
+
+
+animals = [Animal.find(id) for id in ids]
+# animals = filter(bool, animals)   # if None is really nothing, filter it our
+for an in animals:
+    print(an.name)
