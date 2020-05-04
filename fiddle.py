@@ -21,4 +21,7 @@ animal_db = {
 animals = [Animal.find(id) for id in ids]
 # animals = filter(bool, animals)   # if None is really nothing, filter it our
 for an in animals:
-    print(an.name)
+    if an:
+        print(an.name)
+    else:
+        print('no animal')
