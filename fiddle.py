@@ -1,93 +1,28 @@
+class Song:
+    data = [
+        'the horse and the hound and the horn,\nThat belong to ',
+        'the farmer sowing his corn,\nThat kept ',
+        'the rooster that crow\'d in the morn,\nThat waked ',
+        'the priest all shaven and shorn,\nThat married ',
+        'the man all tattered and torn,\nThat kissed ',
+        'the maiden all forlorn,\nThat milked ',
+        'the cow with the crumpled horn,\nThat tossed ',
+        'the dog,\nThat worried ',
+        'the cat,\nThat killed ',
+        'the rat,\nThat ate ',
+        'the malt\nThat lay in ',
+        'the house that Jack built'
+    ]
+
+    def recite(self):
+        return '\n'.join(self.line(i) for i in range(1, len(self.data) + 1))
+
+    def line(self, num):
+        return f'This is {self._phrase(num)}.\n'
+
+    def _phrase(self, num):
+        return ''.join(self.data[-num:])
+
+
 def song():
-    return """
-This is the house that Jack built.
-
-This is the malt
-That lay in the house that Jack built.
-
-This is the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the rooster that crow'd in the morn,
-That waked the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the farmer sowing his corn,
-That kept the rooster that crow'd in the morn,
-That waked the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the horse and the hound and the horn 
-that belong to the farmer sowing his corn,
-That kept the rooster that crow'd in the morn,
-That waked the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-"""
-
+    return Song().recite()
