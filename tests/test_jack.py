@@ -1,4 +1,9 @@
-original_song = """This is the house that Jack built.
+from pyexpect import expect
+from fiddle import song
+
+
+def test_whole_song():
+    expected = """This is the house that Jack built.
 
 This is the malt
 That lay in the house that Jack built.
@@ -89,9 +94,4 @@ That ate the malt
 That lay in the house that Jack built.
 """
 
-from pyexpect import expect
-from fiddle import song
-
-
-def test_whole_song():
-    expect(song()).to_equal(original_song)
+    expect(song()).to_equal(expected)
