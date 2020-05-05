@@ -1,5 +1,4 @@
-original_song = """
-This is the house that Jack built.
+original_song = """This is the house that Jack built.
 
 This is the malt
 That lay in the house that Jack built.
@@ -76,8 +75,8 @@ That killed the rat,
 That ate the malt
 That lay in the house that Jack built.
 
-This is the horse and the hound and the horn 
-that belong to the farmer sowing his corn,
+This is the horse and the hound and the horn,
+That belong to the farmer sowing his corn,
 That kept the rooster that crow'd in the morn,
 That waked the priest all shaven and shorn,
 That married the man all tattered and torn,
