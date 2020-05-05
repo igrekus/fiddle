@@ -26,3 +26,7 @@ class Song:
 
 def song():
     return Song().recite()
+
+
+def line(num):
+    return Song().line(num)
