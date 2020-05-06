@@ -45,9 +45,9 @@ class Song:
         self.data = self._orderer.order(self.data)
 
     def recite(self):
-        return '\n'.join(self.line(i) for i in range(1, len(self.data) + 1))
+        return '\n'.join(self._line(i) for i in range(1, len(self.data) + 1))
 
-    def line(self, num):
+    def _line(self, num):
         return f'This is {self._phrase(num).strip()}.\n'
 
     def _parts(self, num):
