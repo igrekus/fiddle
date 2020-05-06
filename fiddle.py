@@ -1,3 +1,4 @@
+import itertools
 import random
 
 
@@ -35,7 +36,11 @@ class RandomSong(Song):
         random.shuffle(self.data)
 
 
-def song(rnd=False):
+class EchoSong(Song):
+    def _parts(self, num):
+        return itertools.chain(*[[l, r] for l, r in zip(super()._parts(num), super()._parts(num))])
+
+
     return Song().recite() if not rnd else RandomSong().recite()
 
 
