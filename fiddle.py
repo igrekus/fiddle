@@ -14,7 +14,7 @@ class Song:
         'the cat,\nThat killed ',
         'the rat,\nThat ate ',
         'the malt\nThat lay in ',
-        'the house that Jack built'
+        'the house that Jack built '
     ]
 
     def recite(self):
