@@ -188,7 +188,7 @@ def test_echo_random_song():
     That milked the maiden all forlorn,
     That milked the farmer sowing his corn,
     That kept the farmer sowing his corn,
-    That kept.\n""")
+    That kept.""")
     sf = random.shuffle
     random.shuffle = shuffle
     expect(song(rnd=True, echo=True)).to_equal(expected)

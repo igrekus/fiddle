@@ -93,5 +93,5 @@ def test_whole_song():
     That worried the cat,
     That killed the rat,
     That ate the malt
-    That lay in the house that Jack built.\n""")
+    That lay in the house that Jack built.""")
     expect(song()).to_equal(expected)

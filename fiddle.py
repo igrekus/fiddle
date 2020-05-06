@@ -45,10 +45,10 @@ class Song:
         self.data = self._orderer.order(self.data)
 
     def recite(self):
-        return '\n'.join(self._line(i) for i in range(1, len(self.data) + 1))
+        return '\n\n'.join(self._line(i) for i in range(1, len(self.data) + 1))
 
     def _line(self, num):
-        return f'This is {self._phrase(num).strip()}.\n'
+        return f'This is {self._phrase(num).strip()}.'
 
     def _parts(self, num):
         return self._formatter.format(self.data[-num:])
@@ -62,3 +62,5 @@ def song(rnd=False, echo=False):
         orderer=DefaultOrder() if not rnd else RandomOrder(),
         formatter=DefaultFormat() if not echo else EchoFormat()
     ).recite()
+
+print(song())

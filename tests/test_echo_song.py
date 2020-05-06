@@ -159,5 +159,5 @@ def test_whole_song():
     That ate the rat,
     That ate the malt
     That lay in the malt
-    That lay in the house that Jack built the house that Jack built.\n""")
+    That lay in the house that Jack built the house that Jack built.""")
     expect(song(echo=True)).to_equal(expected)
