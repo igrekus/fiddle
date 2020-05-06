@@ -3,7 +3,7 @@ import random
 from textwrap import dedent
 from pyexpect import expect
 
-from fiddle import RandomSong
+from fiddle import song
 
 new = [
     'the cat,\nThat killed ', 'the cow with the crumpled horn,\nThat tossed ', 'the rat,\nThat ate ',
@@ -119,6 +119,5 @@ def test_random_song():
     That kept.\n""")
     sf = random.shuffle
     random.shuffle = shuffle
-    expect(RandomSong().recite()).to_equal(expected)
+    expect(song(rnd=True)).to_equal(expected)
     random.shuffle = sf
-
