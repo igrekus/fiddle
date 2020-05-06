@@ -1,3 +1,6 @@
+import random
+
+
 class Song:
     data = [
         'the horse and the hound and the horn,\nThat belong to ',
@@ -18,15 +21,23 @@ class Song:
         return '\n'.join(self.line(i) for i in range(1, len(self.data) + 1))
 
     def line(self, num):
-        return f'This is {self._phrase(num)}.\n'
+        return f'This is {self._phrase(num).strip()}.\n'
 
     def _phrase(self, num):
         return ''.join(self.data[-num:])
 
 
-def song():
-    return Song().recite()
+class RandomSong(Song):
+    def __init__(self):
+        random.shuffle(self.data)
+
+
+def song(rnd=False):
+    return Song().recite() if not rnd else RandomSong().recite()
 
 
 def line(num):
     return Song().line(num)
+
+
+print(song(rnd=True))
