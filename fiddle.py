@@ -58,18 +58,7 @@ class Song:
 
 
 def song(rnd=False, echo=False):
-    if rnd and not echo:
-        return Song(orderer=RandomOrder()).recite()
-    elif not rnd and echo:
-        return Song(formatter=EchoFormat()).recite()
-    elif rnd and echo:
-        return Song(orderer=RandomOrder(), formatter=EchoFormat()).recite()
-    else:
-        return Song().recite()
-
-
-def line(num):
-    return Song().line(num)
-
-
-print(song(echo=True))
+    return Song(
+        orderer=DefaultOrder() if not rnd else RandomOrder(),
+        formatter=DefaultFormat() if not echo else EchoFormat()
+    ).recite()
