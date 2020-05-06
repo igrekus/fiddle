@@ -14,8 +14,18 @@ class RandomOrder:
         return d
 
 
+class DefaultFormat:
+    def format(self, parts):
+        return parts
+
+
+class EchoFormat:
+    def format(self, parts):
+        return itertools.chain(*[[l, r] for l, r in zip(parts, parts)])
+
+
 class Song:
-    def __init__(self, orderer=None):
+    def __init__(self, orderer=None, formatter=None):
         self.data = [
             'the horse and the hound and the horn,\nThat belong to ',
             'the farmer sowing his corn,\nThat kept ',
@@ -31,6 +41,7 @@ class Song:
             'the house that Jack built '
         ]
         self._orderer = DefaultOrder() if orderer is None else orderer
+        self._formatter = DefaultFormat() if formatter is None else formatter
         self.data = self._orderer.order(self.data)
 
     def recite(self):
@@ -40,34 +51,19 @@ class Song:
         return f'This is {self._phrase(num).strip()}.\n'
 
     def _parts(self, num):
-        return self.data[-num:]
+        return self._formatter.format(self.data[-num:])
 
     def _phrase(self, num):
         return ''.join(self._parts(num))
-
-
-class EchoSong(Song):
-    def __init__(self):
-        super().__init__()
-
-    def _parts(self, num):
-        return itertools.chain(*[[l, r] for l, r in zip(super()._parts(num), super()._parts(num))])
-
-
-class EchoRandomSong(Song):
-    def __init__(self):
-        super().__init__(orderer=RandomOrder())
-    def _parts(self, num):
-        return itertools.chain(*[[l, r] for l, r in zip(super()._parts(num), super()._parts(num))])
 
 
 def song(rnd=False, echo=False):
     if rnd and not echo:
         return Song(orderer=RandomOrder()).recite()
     elif not rnd and echo:
-        return EchoSong().recite()
+        return Song(formatter=EchoFormat()).recite()
     elif rnd and echo:
-        return EchoRandomSong().recite()
+        return Song(orderer=RandomOrder(), formatter=EchoFormat()).recite()
     else:
         return Song().recite()
 
