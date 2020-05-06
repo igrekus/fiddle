@@ -43,11 +43,18 @@ class EchoSong(Song):
         return itertools.chain(*[[l, r] for l, r in zip(super()._parts(num), super()._parts(num))])
 
 
+class EchoRandomSong(RandomSong):
+    def _parts(self, num):
+        return itertools.chain(*[[l, r] for l, r in zip(super()._parts(num), super()._parts(num))])
+
+
 def song(rnd=False, echo=False):
     if rnd and not echo:
         return RandomSong().recite()
     elif not rnd and echo:
         return EchoSong().recite()
+    elif rnd and echo:
+        return EchoRandomSong().recite()
     else:
         return Song().recite() if not rnd else RandomSong().recite()
 
