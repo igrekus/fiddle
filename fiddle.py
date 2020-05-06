@@ -23,8 +23,11 @@ class Song:
     def line(self, num):
         return f'This is {self._phrase(num).strip()}.\n'
 
+    def _parts(self, num):
+        return self.data[-num:]
+
     def _phrase(self, num):
-        return ''.join(self.data[-num:])
+        return ''.join(self._parts(num))
 
 
 class RandomSong(Song):
