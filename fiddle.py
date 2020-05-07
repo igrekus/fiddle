@@ -57,10 +57,8 @@ class Song:
         return ''.join(self._parts(num))
 
 
-def song(rnd=False, echo=False):
+def song(rnd=False, double=False):
     return Song(
         orderer=DefaultOrder() if not rnd else RandomOrder(),
-        formatter=DefaultFormat() if not echo else EchoFormat()
+        formatter=DefaultFormat() if not double else EchoFormat()
     ).recite()
-
-print(song())

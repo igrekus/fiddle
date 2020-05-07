@@ -191,5 +191,5 @@ def test_echo_random_song():
     That kept.""")
     sf = random.shuffle
     random.shuffle = shuffle
-    expect(song(rnd=True, echo=True)).to_equal(expected)
+    expect(song(rnd=True, double=True)).to_equal(expected)
     random.shuffle = sf
