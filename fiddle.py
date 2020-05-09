@@ -48,8 +48,8 @@ class Song:
         self._formatter = formatter
         self.data = self._orderer.order(self.data)
 
-    def recite(self):
-        return '\n\n'.join(self._line(i) for i in range(1, len(self.data) + 1))
+    def __str__(self):
+        return '\n\n'.join(self._line(i) for i in range(1, len(self) + 1))
 
     def _line(self, num):
         return f'This is {self._phrase(num).strip()}.'
@@ -59,6 +59,9 @@ class Song:
 
     def _phrase(self, num):
         return ''.join(self._parts(num))
+
+    def __len__(self):
+        return self.data.__len__()
 
 
 def song(rnd=False, double=False):
