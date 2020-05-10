@@ -43,17 +43,9 @@ def _line(data, format, num):
     return f'This is {_phrase(data, format, num).strip()}.'
 
 
-order = None
-format = None
-
-
 def _song(data, format):
     return '\n\n'.join(_line(data, format, i) for i in range(1, len(data) + 1))
 
 
 def song(rnd=False, double=False):
-    global order, format, data
-    order = orders[rnd]
-    format = formats[double]
-    d = order(data)
-    return _song(data=d, format=format)
+    return _song(data=orders[rnd](data), format=formats[double])
