@@ -19,14 +19,14 @@ class DefaultFormat:
         return parts
 
 
-class EchoFormat:
+class DoubleFormat:
     def format(self, parts):
         return itertools.chain(*[[l, r] for l, r in zip(parts, parts)])
 
 
 class Song:
     orderers = {True: RandomOrder, False: DefaultOrder}
-    formatters = {True: EchoFormat, False: DefaultFormat}
+    formatters = {True: DoubleFormat, False: DefaultFormat}
 
     def __init__(self, orderer, formatter):
         self.data = [
