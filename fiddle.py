@@ -3,9 +3,7 @@ import random
 
 
 def _random_order(data):
-    d = list(data)
-    random.shuffle(d)
-    return d
+    return sorted(data, key=lambda x: random.randint(0, 100))
 
 
 def _double_format(parts): return itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(parts, parts)])
