@@ -24,11 +24,10 @@ class EchoFormat:
         return itertools.chain(*[[l, r] for l, r in zip(parts, parts)])
 
 
-orderers = {True: RandomOrder, False: DefaultOrder}
-formatters = {True: EchoFormat, False: DefaultFormat}
-
-
 class Song:
+    orderers = {True: RandomOrder, False: DefaultOrder}
+    formatters = {True: EchoFormat, False: DefaultFormat}
+
     def __init__(self, orderer, formatter):
         self.data = [
             'the horse and the hound and the horn,\nThat belong to ',
@@ -65,4 +64,4 @@ class Song:
 
 
 def song(rnd=False, double=False):
-    return str(Song(orderer=orderers[rnd](), formatter=formatters[double]()))
+    return str(Song(orderer=Song.orderers[rnd](), formatter=Song.formatters[double]()))
