@@ -47,14 +47,8 @@ order = None
 format = None
 
 
-class Song:
-    def __init__(self, data, order, format):
-        self._order = order
-        self._format = format
-        self.data = data
-
-    def __str__(self):
-        return '\n\n'.join(_line(self.data, format, i) for i in range(1, len(self.data) + 1))
+def _song(data, format):
+    return '\n\n'.join(_line(data, format, i) for i in range(1, len(data) + 1))
 
 
 def song(rnd=False, double=False):
@@ -62,4 +56,4 @@ def song(rnd=False, double=False):
     order = orders[rnd]
     format = formats[double]
     d = order(data)
-    return str(Song(data=d, order=order, format=format))
+    return _song(data=d, format=format)
