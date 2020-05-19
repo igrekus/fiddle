@@ -1,0 +1,218 @@
+Требование 1
+
+Фрилансеру Василию прилетел привлекательный заказ от курсов по изучению английского языка "Быстро бесплатно без СМС".
+Заказчик просит написать функцию, возвращающую текст известной английской детской песни "This is the house that Jack built" в виде UTF-8 строки.
+
+"Какого хрена вы просто не скопируете текст песни из гугла?" -- подумал Василий, но промолчал, увидев
+круглую сумму в графе "оплата", махнул рукой и согласился, работы тут всё равно минут на десять.
+
+Выполненный заказ должен представлять из себя один .py модуль (файл) с функцией, играющей роль публичного API и имеющей сигнатуру:
+
+    def song() -> str:
+        ...
+
+Куплеты должны отделяться пустой строкой, пустая строка после последнего куплета не нужна.
+
+Текст песни:
+
+    This is the house that Jack built.
+
+    This is the malt
+    That lay in the house that Jack built.
+
+    This is the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the maiden all forlorn,
+    That milked the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the man all tattered and torn,
+    That kissed the maiden all forlorn,
+    That milked the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the priest all shaven and shorn,
+    That married the man all tattered and torn,
+    That kissed the maiden all forlorn,
+    That milked the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the rooster that crow'd in the morn,
+    That waked the priest all shaven and shorn,
+    That married the man all tattered and torn,
+    That kissed the maiden all forlorn,
+    That milked the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the farmer sowing his corn,
+    That kept the rooster that crow'd in the morn,
+    That waked the priest all shaven and shorn,
+    That married the man all tattered and torn,
+    That kissed the maiden all forlorn,
+    That milked the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+    This is the horse and the hound and the horn,
+    That belong to the farmer sowing his corn,
+    That kept the rooster that crow'd in the morn,
+    That waked the priest all shaven and shorn,
+    That married the man all tattered and torn,
+    That kissed the maiden all forlorn,
+    That milked the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the cat,
+    That killed the rat,
+    That ate the malt
+    That lay in the house that Jack built.
+
+Помогите фрилансеру Василию не загнуться от голода.
+
+---
+
+Требование 2
+
+Через неделю тот же заказчик связался с фрилансером Василием и предложил внести доработку в предыдущий заказ за неплохую сумму.
+На этот раз, заказчик просит добавить к существующему API написанного Василием модуля новую функцию, которая будет возвращать текст песни,
+предварительно удвоив каждый из сюжетных ходов:
+
+    This is the house that Jack built the house that Jack built.
+
+    This is the malt
+    That lay in the malt
+    That lay in the house that Jack built the house that Jack built.
+
+    This is the rat,
+    That ate the rat,
+    That ate the malt
+    That lay in the malt
+    That lay in the house that Jack built the house that Jack built.
+
+    ...
+
+Функция должна иметь сигнатуру:
+
+    def double_song() -> str
+        ...
+
+Василий подумал: "Ничего не понял и конкурс какой-то неинтересный", но выпендриваться не стал и согласился, вспомнив,
+как всю неделю он вкусно жрал пюрешку Бигбон вместо своих обычных фриланс-пакетов быстрой лапши.
+
+Помогите фрилансеру Василию пожить ещё немного.
+
+---
+
+Требование 3
+
+Двумя неделями позже фрилансер Василий увидел уведомление о сообщении от "Англ. без смс пишет..." в мессенжере,
+и, подавив в себе нехорошее предчувствие, открыл телегу.
+На этот раз заказчик просит доработать API, добавив новую функцию с сигнатурой
+
+    def random_song() -> str
+        ...
+
+Функция будет возвращать текст песни со случайным образом перемешанной последовательностью событий,
+сохраняя при этом общее форматирования текста, например:
+
+    This is the cow with the crumpled horn,
+    That tossed.
+
+    This is the malt
+    That lay in the cow with the crumpled horn,
+    That tossed.
+
+    This is the priest all shaven and shorn,
+    That married the malt
+    That lay in the cow with the crumpled horn,
+    That tossed.
+
+"Что за бред? Ведь получится бессвязная ахинея!" -- бабахнул задом об стул Василий, но вспомнил на зубах вкус куриных наггетсов,
+которые он смог наконец-то попробовать, неохотно согласился.
+
+Помогите Василию справиться с очередными доработками в ТЗ.
+
+---
+
+Финальное требование
+
+Однажды вечером, поправившийся на жирных Бигмаках Василий, теперь уже солидный и успешный самозанятый с ИП,
+сидел и клепал очередную CRUD-форму на Реакте, когда в тележеньку ему постучал молчавший полгода аккаунт тех самых курсов,
+с работы на которых началась его карьера. "#%@#$. Только не @!%#$^& легаси, пусть и мой." -- подумал Василий,
+но нелёгкая фрилансерская жизнь научила его, что вменяемого и щедрого заказчика надо беречь и облизывать.
+
+- Василий, помнишь, ты делал для нас апишку с английскими песнями? Ты не поверишь, но нас купил тот самый ИзиИелтс и мы теперь у них топовый отдел.
+  Прости, что отвлекаю, но от нас требуют заменить твой API на стандартный из гайдлайнов, ну а кто с этим справится лучше, чем его автор? Выручишь?"
+- Не вопрос, дружище, я тебе многим обязан. -- ответил Василий и погрузился в чтение присланного ТЗ.
+
+ТЗ требует переделать публичный API модуля, удалив из него функции random_song() и double_song()
+и добавив в исходную функцию song() два bool параметра-переключателя режимов формирования текста песни,
+соответствующих удаляемым функциям:
+
+    def song(rnd: bool=False, double: bool=False) -> str:
+        ...
+
+Все комбинации параметров должны работать правильно:
+
+    song(rnd=False, double=False) -> текст песни в соответствии с ТЗ-1
+    song(rnd=False, double=True) -> текст песгни в соответствии с ТЗ-2
+    song(rnd=True, double=False) -> текст песгни в соответствии с ТЗ-3
+    song(rnd=True, double=True) -> текст песни, модифицированный согласно ТЗ-2 и ТЗ-3 одновременно
+
+Пример:
+
+    This is the maiden all forlorn,
+    That milked the maiden all forlorn,
+    That milked.
+
+    This is the farmer sowing his corn,
+    That kept the farmer sowing his corn,
+    That kept the maiden all forlorn,
+    That milked the maiden all forlorn,
+    That milked.
+
+    This is the house that Jack built the house that Jack built the farmer sowing his corn,
+    That kept the farmer sowing his corn,
+    That kept the maiden all forlorn,
+    That milked the maiden all forlorn,
+    That milked.
+
+Помогите Василию отрефакторить его говнокод.
