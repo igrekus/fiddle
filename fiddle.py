@@ -1,42 +1,60 @@
-import itertools
-import random
+"""
+#task Для транспортирования материалов из цеха А в цех В используется конвейер.
+Материалы упаковываются в одинаковые контейнеры и размещаются на ленте один за одним в порядке изготовления в цехе А.
+Каждый контейнер имеет степень срочности обработки в цехе В - флоат значение, где наименьшее означает наивысший приоритет.
+То есть приоритет 1.0 должен выполняться раньше, чем 9.0.
+Для упорядочивания контейнеров по степени срочности используют накопитель,
+который находится в конце конвейера перед входом в цех В.
+
+Накопитель работает пошагово, на каждом шаге возможны следующие действия:
+ - накопитель перемещает первый контейнер из ленты в цех В;
+ - накопитель перемещает первый контейнер из строки в склад
+ (в складе каждый следующий контейнер помещается на предыдущий);
+ - накопитель перемещает верхний контейнер из склада в цех В.
+
+Напишите программу, которая по последовательности контейнеров определит, можно ли упорядочить их по степени срочности
+пользуясь описанным накопителем. Предполагается, что всегда приходит на вход список с валидными значениями или пустой.
+Сигнатуру функции не менять def work(tasks: list) -> bool: принимает на вход список флоат и возвращает булин
+Ничего не импортируем, исключения не кидать, решения шлем мне в личку модулем питона.
+
+Примеры:
+work(2.9, 2.1) == True
+work(5.6, 9.0, 2.0) ==False
+
+Алексей admin
+Сразу скажу, кроме разных способов есть 2 концептуальных подхода к решению -можно в лоб,
+создав соответствующие структуры данных, а можно по-хитрому, раскурив алгоритм.
+Новичкам, кому задача кажется сложной - можете написать в личку, дам задачку попроще.
+"""
 
 
-def _random(it): return sorted(it, key=lambda x: random.randint(0, 100))
-def _double(it): return itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
-def _id(it): return it
+def _is_sortable(triplet: tuple):
+    e1, e2, e3 = triplet
+    return False if e3 < e1 < e2 else True
 
 
-order = {True: _random, False: _id}
-format = {True: _double, False: _id}
+def _triplets(lst):
+    return ((lst[i], lst[i + 1], lst[i + 2]) for i in range(len(lst) - 2))
 
 
-def _recite(data, fmt):
-    return '\n\n'.join(
-        'This is {}.'.format(
-            ''.join(
-                fmt(data[-i:])
-            ).strip()
-        )
-        for i in range(1, len(data) + 1)
-    )
+def work(tasks: list) -> bool:
+    return True if len(tasks) < 3 else all(_is_sortable(t) for t in _triplets(tasks))
 
 
-def song(rnd=False, double=False):
-    return _recite(
-        data=order[rnd]([
-            "the horse and the hound and the horn,\nThat belong to ",
-            "the farmer sowing his corn,\nThat kept ",
-            "the rooster that crow'd in the morn,\nThat waked ",
-            "the priest all shaven and shorn,\nThat married ",
-            "the man all tattered and torn,\nThat kissed ",
-            "the maiden all forlorn,\nThat milked ",
-            "the cow with the crumpled horn,\nThat tossed ",
-            "the dog,\nThat worried ",
-            "the cat,\nThat killed ",
-            "the rat,\nThat ate ",
-            "the malt\nThat lay in ",
-            "the house that Jack built "
-        ]),
-        fmt=format[double]
-    )
+# def work(tasks: list) -> bool:
+#     k_stack = [-1_000_000_000]
+#     for task in tasks:
+#         if task < k_stack[-1]:
+#             return False
+#         else:
+#             while k_stack and task > k_stack[-1]:
+#                 v = k_stack.pop()
+#             k_stack.append(task)
+#             k_stack.append(v)
+#     return True
+
+
+print(work([2.9, 2.1]))
+print(work([5.6, 9.0, 2.0]))
+print(work([5.6]))
+print(work([]))
