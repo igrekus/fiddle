@@ -49,9 +49,8 @@ class Stack:
         return min(self.container)
 
 
-def _stack_sort(inp: list):
+def _stack_sort(input_queue: list):
     stack = Stack()
-    input_queue = list(inp)
     min_num = min(input_queue) if input_queue else 0
     output_queue = []
 
