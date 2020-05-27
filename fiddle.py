@@ -28,16 +28,8 @@ work(5.6, 9.0, 2.0) ==False
 """
 
 
-class Stack:
-    def __init__(self):
-        self.container = []
-
-    def __bool__(self):
-        return bool(self.container)
-
-
 def _stack_sort(input_queue: list):
-    stack = Stack()
+    stack = []
     min_num = min(input_queue) if input_queue else 0
     output_queue = []
 
@@ -48,19 +40,19 @@ def _stack_sort(input_queue: list):
             min_num = _select_new_min(min_num, input_queue, stack)
             continue
         _unroll_stack_if(current, output_queue, stack)
-        stack.container.append(current)
-    output_queue.extend(reversed(stack.container))
+        stack.append(current)
+    output_queue.extend(reversed(stack))
     return output_queue
 
 
 def _unroll_stack_if(current, output_queue, stack):
-    while stack and current > stack.container[-1]:
-        output_queue.append(stack.container.pop())
+    while stack and current > stack[-1]:
+        output_queue.append(stack.pop())
 
 
 def _select_new_min(min_num, input_queue, stack):
     try:
-        min_num = min(min(input_queue), min(stack.container))
+        min_num = min(min(input_queue), min(stack))
     except ValueError:
         pass
     return min_num
