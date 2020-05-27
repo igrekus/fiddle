@@ -35,12 +35,6 @@ class Stack:
     def __bool__(self):
         return bool(self.container)
 
-    def push(self, item):
-        self.container.append(item)
-
-    def pop(self):
-        return self.container.pop()
-
 
 def _stack_sort(input_queue: list):
     stack = Stack()
@@ -54,14 +48,14 @@ def _stack_sort(input_queue: list):
             min_num = _select_new_min(min_num, input_queue, stack)
             continue
         _unroll_stack_if(current, output_queue, stack)
-        stack.push(current)
+        stack.container.append(current)
     output_queue.extend(reversed(stack.container))
     return output_queue
 
 
 def _unroll_stack_if(current, output_queue, stack):
     while stack and current > stack.container[-1]:
-        output_queue.append(stack.pop())
+        output_queue.append(stack.container.pop())
 
 
 def _select_new_min(min_num, input_queue, stack):
