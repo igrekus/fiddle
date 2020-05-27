@@ -30,8 +30,8 @@ work(5.6, 9.0, 2.0) ==False
 
 def _stack_sort(input_queue: list):
     stack = []
-    min_num = min(input_queue) if input_queue else 0
     output_queue = []
+    min_num = min(input_queue)
 
     while input_queue:
         current = input_queue.pop(0)
@@ -59,4 +59,4 @@ def _select_new_min(min_num, input_queue, stack):
 
 
 def work(tasks):
-    return sorted(tasks) == _stack_sort(tasks)
+    return True if len(tasks) < 3 else sorted(tasks) == _stack_sort(tasks)
