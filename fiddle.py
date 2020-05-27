@@ -63,13 +63,8 @@ def _stack_sort(inp: list):
             continue
         _unroll_stack_if(current, output_queue, stack)
         stack.push(current)
-    _unroll_stack(output_queue, stack)
+    output_queue.extend(reversed(stack.container))
     return output_queue
-
-
-def _unroll_stack(output_queue, stack):
-    while stack:
-        output_queue.append(stack.pop())
 
 
 def _unroll_stack_if(current, output_queue, stack):
