@@ -32,8 +32,8 @@ class Stack:
     def __init__(self):
         self.container = []
 
-    def is_empty(self):
-        return len(self.container) == 0
+    def __bool__(self):
+        return bool(self.container)
 
     def push(self, item):
         self.container.append(item)
@@ -44,45 +44,48 @@ class Stack:
     def peek(self):
         return self.container[-1]
 
+    @property
+    def min(self):
+        return min(self.container)
 
-def _stack_sort(input_list: list):
+
+def _stack_sort(inp: list):
     stack = Stack()
-    ref_input = list(input_list)
-    output_list = []
-    while input_list:
-        current = input_list.pop(0)
-        if input_list:
-            if current > input_list[0]:
-                stack.push(current)
-                continue
-            else:
-                if stack.is_empty():
-                    output_list.append(current)
-                else:
-                    if stack.peek() >= current:
-                        output_list.append(current)
-                    else:
-                        stack.push(current)
+    input_queue = list(inp)
+    min_num = min(input_queue) if input_queue else 0
+    output_queue = []
+
+    while input_queue:
+        current = input_queue.pop(0)
+        if current == min_num:
+            output_queue.append(current)
+            if input_queue and min_num not in input_queue:
+                min_num = min(input_queue)
+            if stack and min_num > stack.min:
+                min_num = stack.min
         else:
-            output_list.append(current)
-    while not stack.is_empty():
-        current = stack.pop()
-        output_list.append(current)
-    print(ref_input, '->', output_list)
-    return output_list
+            while stack and current > stack.peek():
+                output_queue.append(stack.pop())
+            stack.push(current)
+    while stack:
+        output_queue.append(stack.pop())
+    return output_queue
 
 
 def work(tasks):
     return sorted(tasks) == _stack_sort(tasks)
 
 
-print(work([2.9, 2.1]))
-print(work([5.6, 9.0, 2.0]))
-print(work([9.0, 5.6, 2.0]))
-print(work([2.0, 5.6, 9.0]))
-print(work([5.6]))
-print(work([]))
-print(work([4, 2, 1, 3, 1]))
-print(work([2, 3, 5, 6, 4, 1, 2, 2, 4]))
-print(work([6, 5, 4, 3, 2, 1, 1]))
+print(work([2.9, 2.1]), 'true')
+print(work([5.6, 9.0, 2.0]), 'false')
+print(work([9.0, 5.6, 2.0]), 'true')
+print(work([2.0, 5.6, 9.0]), 'true')
+print(work([5.6]), 'true')
+print(work([]), 'true')
+print(work([4, 2, 1, 3, 1]), 'false')
+print(work([2, 3, 5, 6, 4, 1, 2, 2, 4]), 'false')
+print(work([6, 5, 4, 3, 2, 1, 1]), 'true')
 
+print(work([3, 2, 1, 1, 2, 2, 4]), 'true')
+print(work([3, 2, 1, 1, 2, 1, 4]), 'true')
+print(work([2, 2, 1, 5, 4, 3]), 'true')
