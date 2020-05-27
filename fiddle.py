@@ -59,33 +59,31 @@ def _stack_sort(inp: list):
         current = input_queue.pop(0)
         if current == min_num:
             output_queue.append(current)
-            if input_queue and min_num not in input_queue:
-                min_num = min(input_queue)
-            if stack and min_num > stack.min:
-                min_num = stack.min
-        else:
-            while stack and current > stack.peek():
-                output_queue.append(stack.pop())
-            stack.push(current)
+            min_num = _select_new_min(min_num, input_queue, stack)
+            continue
+        _unroll_stack_if(current, output_queue, stack)
+        stack.push(current)
+    _unroll_stack(output_queue, stack)
+    return output_queue
+
+
+def _unroll_stack(output_queue, stack):
     while stack:
         output_queue.append(stack.pop())
-    return output_queue
+
+
+def _unroll_stack_if(current, output_queue, stack):
+    while stack and current > stack.peek():
+        output_queue.append(stack.pop())
+
+
+def _select_new_min(min_num, input_queue, stack):
+    try:
+        min_num = min(min(input_queue), stack.min)
+    except ValueError:
+        pass
+    return min_num
 
 
 def work(tasks):
     return sorted(tasks) == _stack_sort(tasks)
-
-
-print(work([2.9, 2.1]), 'true')
-print(work([5.6, 9.0, 2.0]), 'false')
-print(work([9.0, 5.6, 2.0]), 'true')
-print(work([2.0, 5.6, 9.0]), 'true')
-print(work([5.6]), 'true')
-print(work([]), 'true')
-print(work([4, 2, 1, 3, 1]), 'false')
-print(work([2, 3, 5, 6, 4, 1, 2, 2, 4]), 'false')
-print(work([6, 5, 4, 3, 2, 1, 1]), 'true')
-
-print(work([3, 2, 1, 1, 2, 2, 4]), 'true')
-print(work([3, 2, 1, 1, 2, 1, 4]), 'true')
-print(work([2, 2, 1, 5, 4, 3]), 'true')
