@@ -28,33 +28,64 @@ work(5.6, 9.0, 2.0) ==False
 """
 
 
-def _is_sortable(triplet: tuple):
-    e1, e2, e3 = triplet
-    return False if e3 < e1 < e2 else True
+class Stack:
+    def __init__(self):
+        self.container = []
+
+    def __bool__(self):
+        return bool(self.container)
+
+    def push(self, item):
+        self.container.append(item)
+
+    def pop(self):
+        return self.container.pop()
+
+    def peek(self):
+        return self.container[-1]
+
+    @property
+    def min(self):
+        return min(self.container)
 
 
-def _triplets(lst):
-    return ((lst[i], lst[i + 1], lst[i + 2]) for i in range(len(lst) - 2))
+def _stack_sort(inp: list):
+    stack = Stack()
+    input_queue = list(inp)
+    min_num = min(input_queue) if input_queue else 0
+    output_queue = []
+
+    while input_queue:
+        current = input_queue.pop(0)
+        if current == min_num:
+            output_queue.append(current)
+            if input_queue and min_num not in input_queue:
+                min_num = min(input_queue)
+            if stack and min_num > stack.min:
+                min_num = stack.min
+        else:
+            while stack and current > stack.peek():
+                output_queue.append(stack.pop())
+            stack.push(current)
+    while stack:
+        output_queue.append(stack.pop())
+    return output_queue
 
 
-def work(tasks: list) -> bool:
-    return True if len(tasks) < 3 else all(_is_sortable(t) for t in _triplets(tasks))
+def work(tasks):
+    return sorted(tasks) == _stack_sort(tasks)
 
 
-# def work(tasks: list) -> bool:
-#     k_stack = [-1_000_000_000]
-#     for task in tasks:
-#         if task < k_stack[-1]:
-#             return False
-#         else:
-#             while k_stack and task > k_stack[-1]:
-#                 v = k_stack.pop()
-#             k_stack.append(task)
-#             k_stack.append(v)
-#     return True
+print(work([2.9, 2.1]), 'true')
+print(work([5.6, 9.0, 2.0]), 'false')
+print(work([9.0, 5.6, 2.0]), 'true')
+print(work([2.0, 5.6, 9.0]), 'true')
+print(work([5.6]), 'true')
+print(work([]), 'true')
+print(work([4, 2, 1, 3, 1]), 'false')
+print(work([2, 3, 5, 6, 4, 1, 2, 2, 4]), 'false')
+print(work([6, 5, 4, 3, 2, 1, 1]), 'true')
 
-
-print(work([2.9, 2.1]))
-print(work([5.6, 9.0, 2.0]))
-print(work([5.6]))
-print(work([]))
+print(work([3, 2, 1, 1, 2, 2, 4]), 'true')
+print(work([3, 2, 1, 1, 2, 1, 4]), 'true')
+print(work([2, 2, 1, 5, 4, 3]), 'true')
