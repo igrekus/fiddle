@@ -41,13 +41,6 @@ class Stack:
     def pop(self):
         return self.container.pop()
 
-    def peek(self):
-        return self.container[-1]
-
-    @property
-    def min(self):
-        return min(self.container)
-
 
 def _stack_sort(input_queue: list):
     stack = Stack()
@@ -67,13 +60,13 @@ def _stack_sort(input_queue: list):
 
 
 def _unroll_stack_if(current, output_queue, stack):
-    while stack and current > stack.peek():
+    while stack and current > stack.container[-1]:
         output_queue.append(stack.pop())
 
 
 def _select_new_min(min_num, input_queue, stack):
     try:
-        min_num = min(min(input_queue), stack.min)
+        min_num = min(min(input_queue), min(stack.container))
     except ValueError:
         pass
     return min_num
