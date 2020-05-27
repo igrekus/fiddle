@@ -28,33 +28,61 @@ work(5.6, 9.0, 2.0) ==False
 """
 
 
-def _is_sortable(triplet: tuple):
-    e1, e2, e3 = triplet
-    return False if e3 < e1 < e2 else True
+class Stack:
+    def __init__(self):
+        self.container = []
+
+    def is_empty(self):
+        return len(self.container) == 0
+
+    def push(self, item):
+        self.container.append(item)
+
+    def pop(self):
+        return self.container.pop()
+
+    def peek(self):
+        return self.container[-1]
 
 
-def _triplets(lst):
-    return ((lst[i], lst[i + 1], lst[i + 2]) for i in range(len(lst) - 2))
+def _stack_sort(input_list: list):
+    stack = Stack()
+    ref_input = list(input_list)
+    output_list = []
+    while input_list:
+        current = input_list.pop(0)
+        if input_list:
+            if current > input_list[0]:
+                stack.push(current)
+                continue
+            else:
+                if stack.is_empty():
+                    output_list.append(current)
+                else:
+                    if stack.peek() >= current:
+                        output_list.append(current)
+                    else:
+                        stack.push(current)
+        else:
+            output_list.append(current)
+    while not stack.is_empty():
+        current = stack.pop()
+        output_list.append(current)
+    print(ref_input, '->', output_list)
+    return output_list
 
 
-def work(tasks: list) -> bool:
-    return True if len(tasks) < 3 else all(_is_sortable(t) for t in _triplets(tasks))
-
-
-# def work(tasks: list) -> bool:
-#     k_stack = [-1_000_000_000]
-#     for task in tasks:
-#         if task < k_stack[-1]:
-#             return False
-#         else:
-#             while k_stack and task > k_stack[-1]:
-#                 v = k_stack.pop()
-#             k_stack.append(task)
-#             k_stack.append(v)
-#     return True
+def work(tasks):
+    return sorted(tasks) == _stack_sort(tasks)
 
 
 print(work([2.9, 2.1]))
 print(work([5.6, 9.0, 2.0]))
+print(work([9.0, 5.6, 2.0]))
+print(work([2.0, 5.6, 9.0]))
 print(work([5.6]))
 print(work([]))
+print(work([4, 2, 1, 3, 1]))
+print(work([2, 3, 5, 6, 4, 1, 2, 2, 4]))
+print(work([6, 5, 4, 3, 2, 1, 1]))
+
