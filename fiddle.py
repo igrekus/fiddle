@@ -28,64 +28,35 @@ work(5.6, 9.0, 2.0) ==False
 """
 
 
-class Stack:
-    def __init__(self):
-        self.container = []
-
-    def __bool__(self):
-        return bool(self.container)
-
-    def push(self, item):
-        self.container.append(item)
-
-    def pop(self):
-        return self.container.pop()
-
-    def peek(self):
-        return self.container[-1]
-
-    @property
-    def min(self):
-        return min(self.container)
+def work(tasks):
+    return len(tasks) < 3 or sorted(tasks) == _stack_sorted(tasks)
 
 
-def _stack_sort(inp: list):
-    stack = Stack()
-    input_queue = list(inp)
-    min_num = min(input_queue) if input_queue else 0
-    output_queue = []
+def _stack_sorted(input_queue):
+    stack = list()
+    output_queue = list()
+    min_ = min(input_queue)
 
     while input_queue:
         current = input_queue.pop(0)
-        if current == min_num:
-            output_queue.append(current)
-            if input_queue and min_num not in input_queue:
-                min_num = min(input_queue)
-            if stack and min_num > stack.min:
-                min_num = stack.min
-        else:
-            while stack and current > stack.peek():
-                output_queue.append(stack.pop())
-            stack.push(current)
-    while stack:
-        output_queue.append(stack.pop())
+        if current == min_:
+            output_queue += [current]
+            min_ = _new_min_from(min_, input_queue, stack)
+            continue
+
+        output_queue += _unwind(stack, until=current)
+        stack += [current]
+
+    output_queue += reversed(stack)
     return output_queue
 
 
-def work(tasks):
-    return sorted(tasks) == _stack_sort(tasks)
+def _new_min_from(min_, input_queue, stack):
+    return min(min(input_queue, default=min_), min(stack, default=min_))
 
 
-print(work([2.9, 2.1]), 'true')
-print(work([5.6, 9.0, 2.0]), 'false')
-print(work([9.0, 5.6, 2.0]), 'true')
-print(work([2.0, 5.6, 9.0]), 'true')
-print(work([5.6]), 'true')
-print(work([]), 'true')
-print(work([4, 2, 1, 3, 1]), 'false')
-print(work([2, 3, 5, 6, 4, 1, 2, 2, 4]), 'false')
-print(work([6, 5, 4, 3, 2, 1, 1]), 'true')
-
-print(work([3, 2, 1, 1, 2, 2, 4]), 'true')
-print(work([3, 2, 1, 1, 2, 1, 4]), 'true')
-print(work([2, 2, 1, 5, 4, 3]), 'true')
+def _unwind(stack, until=None):
+    unwound = list()
+    while stack and until > stack[-1]:
+        unwound += [stack.pop()]
+    return unwound
