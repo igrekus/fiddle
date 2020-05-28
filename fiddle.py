@@ -28,35 +28,35 @@ work(5.6, 9.0, 2.0) ==False
 """
 
 
-def _stack_sort(input_queue: list):
-    stack = []
-    output_queue = []
-    min_num = min(input_queue)
+def work(tasks):
+    return len(tasks) < 3 or sorted(tasks) == _stack_sorted(tasks)
+
+
+def _stack_sorted(input_queue):
+    stack = list()
+    output_queue = list()
+    min_ = min(input_queue)
 
     while input_queue:
         current = input_queue.pop(0)
-        if current == min_num:
-            output_queue.append(current)
-            min_num = _select_new_min(min_num, input_queue, stack)
+        if current == min_:
+            output_queue += [current]
+            min_ = _new_min_from(min_, input_queue, stack)
             continue
-        _unroll_stack_if(current, output_queue, stack)
-        stack.append(current)
-    output_queue.extend(reversed(stack))
+
+        output_queue += _unwind(stack, until=current)
+        stack += [current]
+
+    output_queue += reversed(stack)
     return output_queue
 
 
-def _unroll_stack_if(current, output_queue, stack):
-    while stack and current > stack[-1]:
-        output_queue.append(stack.pop())
+def _new_min_from(min_, input_queue, stack):
+    return min(min(input_queue, default=min_), min(stack, default=min_))
 
 
-def _select_new_min(min_num, input_queue, stack):
-    try:
-        min_num = min(min(input_queue), min(stack))
-    except ValueError:
-        pass
-    return min_num
-
-
-def work(tasks):
-    return True if len(tasks) < 3 else sorted(tasks) == _stack_sort(tasks)
+def _unwind(stack, until=None):
+    unwound = list()
+    while stack and until > stack[-1]:
+        unwound += [stack.pop()]
+    return unwound
