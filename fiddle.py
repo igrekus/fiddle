@@ -1,62 +1,17 @@
-"""
-#task Для транспортирования материалов из цеха А в цех В используется конвейер.
-Материалы упаковываются в одинаковые контейнеры и размещаются на ленте один за одним в порядке изготовления в цехе А.
-Каждый контейнер имеет степень срочности обработки в цехе В - флоат значение, где наименьшее означает наивысший приоритет.
-То есть приоритет 1.0 должен выполняться раньше, чем 9.0.
-Для упорядочивания контейнеров по степени срочности используют накопитель,
-который находится в конце конвейера перед входом в цех В.
-
-Накопитель работает пошагово, на каждом шаге возможны следующие действия:
- - накопитель перемещает первый контейнер из ленты в цех В;
- - накопитель перемещает первый контейнер из строки в склад
- (в складе каждый следующий контейнер помещается на предыдущий);
- - накопитель перемещает верхний контейнер из склада в цех В.
-
-Напишите программу, которая по последовательности контейнеров определит, можно ли упорядочить их по степени срочности
-пользуясь описанным накопителем. Предполагается, что всегда приходит на вход список с валидными значениями или пустой.
-Сигнатуру функции не менять def work(tasks: list) -> bool: принимает на вход список флоат и возвращает булин
-Ничего не импортируем, исключения не кидать, решения шлем мне в личку модулем питона.
-
-Примеры:
-work(2.9, 2.1) == True
-work(5.6, 9.0, 2.0) ==False
-
-Алексей admin
-Сразу скажу, кроме разных способов есть 2 концептуальных подхода к решению -можно в лоб,
-создав соответствующие структуры данных, а можно по-хитрому, раскурив алгоритм.
-Новичкам, кому задача кажется сложной - можете написать в личку, дам задачку попроще.
-"""
+s1 = '123456789'
+s2 = '123567894'
 
 
-def work(tasks):
-    return len(tasks) < 3 or sorted(tasks) == _stack_sorted(tasks)
+def _recur(seq):
+    if len(list(seq)) == 2:
+        first, last = seq
+        return first < last and last - first == 1
+    head, next, *tail = seq
+    return head < next and next - head == 1 and _recur([next] + tail)
 
 
-def _stack_sorted(input_queue):
-    stack = list()
-    output_queue = list()
-    min_ = min(input_queue)
-
-    while input_queue:
-        current = input_queue.pop(0)
-        if current == min_:
-            output_queue += [current]
-            min_ = _new_min_from(min_, input_queue, stack)
-            continue
-
-        output_queue += _unwind(stack, until=current)
-        stack += [current]
-
-    output_queue += reversed(stack)
-    return output_queue
+def check(seq, n: int) -> bool:
+    return _recur(list(map(int, seq)))
 
 
-def _new_min_from(min_, input_queue, stack):
-    return min(min(input_queue, default=min_), min(stack, default=min_))
-
-
-def _unwind(stack, until=None):
-    unwound = list()
-    while stack and until > stack[-1]:
-        unwound += [stack.pop()]
-    return unwound
+print(check(s1, 1))
