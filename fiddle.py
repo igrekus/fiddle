@@ -23,11 +23,9 @@ def _group_by(it, n):
 
 def check(seq, n: int) -> bool:
     try:
-        seq = _group_by(seq, n)
+        return _recur(list(map(int, _group_by(seq, n))))
     except TypeError:
         return False
-    return _recur(list(map(int, seq)))
 
 
-print(check(s5, 4))
-# print(list(group_by(s2, 2)))
+print(check(s5, 3))
