@@ -4,7 +4,7 @@ __all__ = ['ascending']
 
 
 def ascending(value: str) -> bool:
-    return any(_check(value, i) for i in range(1, len(value) // 2))
+    return any(_check(value, i) for i in range(1, len(value) // 2 + 1))
 
 
 def _check(seq, n):

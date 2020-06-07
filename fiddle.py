@@ -22,7 +22,7 @@ __all__ = ['ascending']
 
 
 def ascending(value: str) -> bool:
-    return any(_check(value, i) for i in range(1, len(value) // 2))
+    return any(_check(value, i) for i in range(1, len(value) // 2 + 1))
 
 
 def _check(seq, n):
@@ -64,3 +64,6 @@ def _right(it, border):
 
 def _index(it, border):
     return it.index(border) + len(border) - 1
+
+
+print("ascending('2324256') -> ", ascending("2324256"))
