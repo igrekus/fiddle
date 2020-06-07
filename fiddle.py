@@ -30,7 +30,7 @@ def _recur(seq):
     return _is_consequent(one, two) and _recur([two] + rest) if rest else _is_consequent(one, two)
 
 
-def _group_by(it, n):
+def _make_groups(it, n):
     return [''.join(el) for el in zip_longest(*([iter(it)] * n), fillvalue=None)]
 
 
@@ -40,7 +40,7 @@ def _index(it, border):
 
 def _group(it, n):
     border = f'8{"9" * n}1'
-    return _group_by(it[:_index(it, border)], n) + _group_by(it[_index(it, border):], n + 1) if border in it else _group_by(it, n)
+    return _make_groups(it[:_index(it, border)], n) + _make_groups(it[_index(it, border):], n + 1) if border in it else _make_groups(it, n)
 
 
 def _check(seq, n):
