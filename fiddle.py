@@ -34,11 +34,7 @@ def _check(seq, n):
 
 def _recur(seq):
     one, two, *rest = seq
-    return _is_consequent(one, two) and _recur([two] + rest) if rest else _is_consequent(one, two)
-
-
-def _is_consequent(one, two):
-    return two - one == 1
+    return two - one == 1 and _recur([two] + rest) if rest else two - one == 1
 
 
 def _group(it, n):
