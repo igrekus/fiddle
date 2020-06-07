@@ -31,7 +31,7 @@ def _recur(seq):
 
 
 def _make_groups(it, n):
-    return [''.join(el) for el in zip_longest(*([iter(it)] * n), fillvalue=None)]
+    return [''.join(el) for el in zip_longest(*([iter(it)] * n))]
 
 
 def _index(it, border):
