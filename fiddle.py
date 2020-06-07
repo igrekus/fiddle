@@ -38,9 +38,17 @@ def _index(it, border):
     return it.index(border) + len(border) - 1
 
 
+def _left(it, border):
+    return it[:_index(it, border)]
+
+
+def _right(it, border):
+    return it[_index(it, border):]
+
+
 def _group(it, n):
     border = f'8{"9" * n}1'
-    return _make_groups(it[:_index(it, border)], n) + _make_groups(it[_index(it, border):], n + 1) if border in it else _make_groups(it, n)
+    return _make_groups(_left(it, border), n) + _make_groups(_right(it, border), n + 1) if border in it else _make_groups(it, n)
 
 
 def _check(seq, n):
