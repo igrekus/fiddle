@@ -93,3 +93,15 @@ def test_1000s_border():
 
     expect(ascending(consec1)).to_be(True)
     expect(ascending(non_consec1)).to_be(False)
+
+
+def test_close_border():
+    expect(ascending('910')).to_be(True)
+
+    expect(ascending('991')).to_be(False)
+    expect(ascending('9910')).to_be(False)
+    expect(ascending('99100')).to_be(True)
+
+    expect(ascending('991000')).to_be(False)
+    expect(ascending('9991000')).to_be(True)
+    expect(ascending('999100')).to_be(False)
