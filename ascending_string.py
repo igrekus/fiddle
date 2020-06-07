@@ -42,4 +42,3 @@ def _right(it, border):
 
 def _index(it, border):
     return it.index(border) + len(border) - 1
-
