@@ -1,5 +1,5 @@
 from pyexpect import expect
-from fiddle import check
+from fiddle import ascending
 
 
 def test_1s():
@@ -8,11 +8,11 @@ def test_1s():
     non_consec1 = '123567894'
     non_consec2 = '45289'
 
-    expect(check(consec1, 1)).to_be(True)
-    expect(check(consec2, 1)).to_be(True)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(consec2)).to_be(True)
 
-    expect(check(non_consec1, 1)).to_be(False)
-    expect(check(non_consec2, 1)).to_be(False)
+    expect(ascending(non_consec1)).to_be(False)
+    expect(ascending(non_consec2)).to_be(False)
 
 
 def test_10s():
@@ -21,10 +21,10 @@ def test_10s():
     non_consec1 = '22232420'
     non_consec2 = '9998'
 
-    expect(check(consec1, 2)).to_be(True)
-    expect(check(consec2, 2)).to_be(True)
-    expect(check(non_consec1, 2)).to_be(False)
-    expect(check(non_consec2, 2)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(consec2)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
+    expect(ascending(non_consec2)).to_be(False)
 
 
 def test_100s():
@@ -33,10 +33,10 @@ def test_100s():
     non_consec1 = '111112113114115119'
     non_consec2 = '111112113114110'
 
-    expect(check(consec1, 3)).to_be(True)
-    expect(check(consec2, 3)).to_be(True)
-    expect(check(non_consec1, 3)).to_be(False)
-    expect(check(non_consec2, 3)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(consec2)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
+    expect(ascending(non_consec2)).to_be(False)
 
 
 def test_1000s():
@@ -45,10 +45,10 @@ def test_1000s():
     non_consec1 = '23452346234912340'
     non_consec2 = '123412351230'
 
-    expect(check(consec1, 4)).to_be(True)
-    expect(check(consec2, 4)).to_be(True)
-    expect(check(non_consec1, 4)).to_be(False)
-    expect(check(non_consec2, 4)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(consec2)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
+    expect(ascending(non_consec2)).to_be(False)
 
 
 def test_10000s():
@@ -57,39 +57,39 @@ def test_10000s():
     non_consec1 = '55555555565555755559'
     non_consec2 = '555555555655552'
 
-    expect(check(consec1, 5)).to_be(True)
-    expect(check(consec2, 5)).to_be(True)
-    expect(check(non_consec1, 5)).to_be(False)
-    expect(check(non_consec2, 5)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(consec2)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
+    expect(ascending(non_consec2)).to_be(False)
 
 
 def test_1s_border():
     consec1 = '45678910111213'
     non_consec1 = '6789101113'
 
-    expect(check(consec1, 1)).to_be(True)
-    expect(check(non_consec1, 1)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
 
 
 def test_10s_border():
     consec1 = '979899100101102103104'
     non_consec1 = '97989910099'
 
-    expect(check(consec1, 2)).to_be(True)
-    expect(check(non_consec1, 2)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
 
 
 def test_100s_border():
     consec1 = '99799899910001001100210031004'
     non_consec1 = '99799810001001'
 
-    expect(check(consec1, 3)).to_be(True)
-    expect(check(non_consec1, 3)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
 
 
 def test_1000s_border():
     consec1 = '999899991000010001'
     non_consec1 = '9998999910000999'
 
-    expect(check(consec1, 4)).to_be(True)
-    expect(check(non_consec1, 4)).to_be(False)
+    expect(ascending(consec1)).to_be(True)
+    expect(ascending(non_consec1)).to_be(False)
