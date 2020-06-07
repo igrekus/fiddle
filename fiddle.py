@@ -1,10 +1,6 @@
 from itertools import zip_longest
 
-s1 = '0123456789'
-s2 = '123567894'
-s3 = '5152535455'
-s4 = '100101102103104'
-s5 = '1111111211131114111511161117111811191120'
+__all__ = ['ascending']
 
 
 def _is_consequent(one, two):
@@ -12,7 +8,6 @@ def _is_consequent(one, two):
 
 
 def _recur(seq):
-    print(seq)
     one, two, *rest = seq
     return _is_consequent(one, two) and _recur([two] + rest) if rest else _is_consequent(one, two)
 
@@ -21,11 +16,21 @@ def _group_by(it, n):
     return [''.join(el) for el in zip_longest(*([iter(it)] * n), fillvalue=None)]
 
 
-def check(seq, n: int) -> bool:
+def _index(it, border):
+    return it.index(border) + len(border) - 1
+
+
+def _group(it, n):
+    border = f'8{"9" * n}1'
+    return _group_by(it[:_index(it, border)], n) + _group_by(it[_index(it, border):], n + 1) if border in it else _group_by(it, n)
+
+
+def _check(seq, n):
     try:
-        return _recur(list(map(int, _group_by(seq, n))))
+        return _recur(map(int, _group(seq, n)))
     except TypeError:
         return False
 
 
-print(check(s5, 3))
+def ascending(value: str) -> bool:
+    return any(_check(value, i) for i in range(1, len(value) // 2))
