@@ -1,62 +1,66 @@
 """
-#task Для транспортирования материалов из цеха А в цех В используется конвейер.
-Материалы упаковываются в одинаковые контейнеры и размещаются на ленте один за одним в порядке изготовления в цехе А.
-Каждый контейнер имеет степень срочности обработки в цехе В - флоат значение, где наименьшее означает наивысший приоритет.
-То есть приоритет 1.0 должен выполняться раньше, чем 9.0.
-Для упорядочивания контейнеров по степени срочности используют накопитель,
-который находится в конце конвейера перед входом в цех В.
+#task Напишите функцию, которая возвращает True если строка, которая является аргументом функции содержит возрастающие И последовательные числа.
 
-Накопитель работает пошагово, на каждом шаге возможны следующие действия:
- - накопитель перемещает первый контейнер из ленты в цех В;
- - накопитель перемещает первый контейнер из строки в склад
- (в складе каждый следующий контейнер помещается на предыдущий);
- - накопитель перемещает верхний контейнер из склада в цех В.
-
-Напишите программу, которая по последовательности контейнеров определит, можно ли упорядочить их по степени срочности
-пользуясь описанным накопителем. Предполагается, что всегда приходит на вход список с валидными значениями или пустой.
-Сигнатуру функции не менять def work(tasks: list) -> bool: принимает на вход список флоат и возвращает булин
-Ничего не импортируем, исключения не кидать, решения шлем мне в личку модулем питона.
+    def ascending(value: str) -> bool:
 
 Примеры:
-work(2.9, 2.1) == True
-work(5.6, 9.0, 2.0) ==False
+    ascending("232425") == True, так как строку можно представить как 23, 24, 25 (следуют друг за другом по возрастанию)
+    ascending("2324256") == False, шестерка в конце ломает возрастающий ряд
+    ascending("444445") == True, так как строку можно представить как 444 и 445.
 
-Алексей admin
-Сразу скажу, кроме разных способов есть 2 концептуальных подхода к решению -можно в лоб,
-создав соответствующие структуры данных, а можно по-хитрому, раскурив алгоритм.
-Новичкам, кому задача кажется сложной - можете написать в личку, дам задачку попроще.
+Предполагается, что строка никогда не пустая и всегда содержит минимум 2 числа,
+например '10' -валидная строка. Максимальная длина строки 30 символов (но я бы не привязывался к этому числу)
+Сигнатуру функции не менять! Вот прямо совсем не менять(!), но можно использовать свои дополнительные функции и классы,
+ничего не импортируем, исключений не кидаем. Решение слать мне в личку модулем питона.
+
+ВСЕ, кто пришлет решения в следующую субботу получат все решения других участников для ознакомления.
 """
 
+from itertools import zip_longest
 
-def work(tasks):
-    return len(tasks) < 3 or sorted(tasks) == _stack_sorted(tasks)
-
-
-def _stack_sorted(input_queue):
-    stack = list()
-    output_queue = list()
-    min_ = min(input_queue)
-
-    while input_queue:
-        current = input_queue.pop(0)
-        if current == min_:
-            output_queue += [current]
-            min_ = _new_min_from(min_, input_queue, stack)
-            continue
-
-        output_queue += _unwind(stack, until=current)
-        stack += [current]
-
-    output_queue += reversed(stack)
-    return output_queue
+__all__ = ['ascending']
 
 
-def _new_min_from(min_, input_queue, stack):
-    return min(min(input_queue, default=min_), min(stack, default=min_))
+def ascending(value: str) -> bool:
+    return any(_check(value, i) for i in range(1, len(value) // 2))
 
 
-def _unwind(stack, until=None):
-    unwound = list()
-    while stack and until > stack[-1]:
-        unwound += [stack.pop()]
-    return unwound
+def _check(seq, n):
+    try:
+        return _recur(map(int, _group(seq, n)))
+    except TypeError:
+        return False
+
+
+def _recur(seq):
+    one, two, *rest = seq
+    return _is_consequent(one, two) and _recur([two] + rest) if rest else _is_consequent(one, two)
+
+
+def _is_consequent(one, two):
+    return two - one == 1
+
+
+def _group(it, n):
+    border = f'8{"9" * n}1'
+    return \
+        _make_groups(_left(it, border), n) + \
+        _make_groups(_right(it, border), n + 1) \
+        if border in it \
+        else _make_groups(it, n)
+
+
+def _make_groups(it, n):
+    return [''.join(el) for el in zip_longest(*([iter(it)] * n))]
+
+
+def _left(it, border):
+    return it[:_index(it, border)]
+
+
+def _right(it, border):
+    return it[_index(it, border):]
+
+
+def _index(it, border):
+    return it.index(border) + len(border) - 1
