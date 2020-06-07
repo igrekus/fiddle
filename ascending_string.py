@@ -24,7 +24,7 @@ def _is_consequent(one, two):
 
 
 def _group(it, n):
-    border = f'8{"9" * n}1'
+    border = f'{"9" * n}1'
     return \
         _make_groups(_left(it, border), n) + \
         _make_groups(_right(it, border), n + 1) \
