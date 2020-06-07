@@ -38,7 +38,7 @@ def _recur(seq):
 
 
 def _is_consequent(one, two):
-    return one < two and two - one == 1
+    return two - one == 1
 
 
 def _group(it, n):
