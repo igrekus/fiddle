@@ -1,50 +1,12 @@
-from string import ascii_uppercase
+def diamond(letter: str, background: str=' '):
+    ls = ''.join(chr(c) for c in range(ord('A'), ord(letter) + 1))
+
+    def _quarter(i, l):
+        return f'{background * (len(ls) - i - 1)}{l}{background * i}'
+
+    half = [_quarter(i, l) + _mirror(_quarter(i, l)) for i, l in enumerate(ls)]
+    return '\n'.join(half + _mirror(half)) + '\n'
 
 
 def _mirror(seq):
     return seq[-2::-1]
-
-
-def diamond(letter, bg=' '):
-    ls = ascii_uppercase[:ascii_uppercase.index(letter) + 1]
-    pad = len(ls)
-    if letter == ls[0]:
-        return ls[0]
-
-    elif letter == ls[1]:
-
-        out = []
-        for i, l in enumerate(ls):
-            part = bg * (pad - i - 1) + l + bg * i
-            out.append(part + _mirror(part))
-
-        out += _mirror(out)
-        return '\n'.join(out) + '\n'
-
-    elif letter == ls[2]:
-        out = ''
-
-        part = bg * (pad - 1) + ls[0] + bg * (pad - 3)
-        out += part + _mirror(part) + '\n'
-
-        part = bg * (pad - 2) + ls[1] + bg * (pad - 2)
-        out += part + _mirror(part) + '\n'
-
-        part = bg * (pad - 3) + ls[2] + bg * (pad - 1)
-        out += part + _mirror(part) + '\n'
-
-        part = bg * (pad - 2) + ls[1] + bg * (pad - 2)
-        out += part + _mirror(part) + '\n'
-
-        part = bg * (pad - 1) + ls[0] + bg * (pad - 3)
-        out += part + _mirror(part) + '\n'
-        return out
-
-    elif letter == ls[3]:
-        return f'{bg * (pad - 1)}{ls[0]}{bg * (pad - 1)}\n' \
-               f'{bg * (pad - 2)}{ls[1]}{bg * (pad - 3)}{ls[1]}{bg * (pad - 2)}\n' \
-               f'{bg * (pad - 3)}{ls[2]}{bg * (pad - 1)}{ls[2]}{bg * (pad - 3)}\n' \
-               f'{ls[3]}{bg * (pad + 1)}{ls[3]}\n' \
-               f'{bg * (pad - 3)}{ls[2]}{bg * (pad - 1)}{ls[2]}{bg * (pad - 3)}\n' \
-               f'{bg * (pad - 2)}{ls[1]}{bg * (pad - 3)}{ls[1]}{bg * (pad - 2)}\n' \
-               f'{bg * (pad - 1)}{ls[0]}{bg * (pad - 1)}\n'
