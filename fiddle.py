@@ -1,8 +1,8 @@
 from string import ascii_uppercase
 
 
-def _mirror(s: str):
-    return s[-2::-1]
+def _mirror(seq):
+    return seq[-2::-1]
 
 
 def diamond(letter, bg=' '):
@@ -10,18 +10,17 @@ def diamond(letter, bg=' '):
     pad = len(ls)
     if letter == ls[0]:
         return ls[0]
+
     elif letter == ls[1]:
-        out = ''
 
-        part = bg * (pad - 1) + ls[0] + bg * (pad - 2)
-        out += part + _mirror(part) + '\n'
+        out = []
+        for i, l in enumerate(ls):
+            part = bg * (pad - i - 1) + l + bg * i
+            out.append(part + _mirror(part))
 
-        part = bg * (pad - 2) + ls[1] + bg * (pad - 1)
-        out += part + _mirror(part) + '\n'
+        out += _mirror(out)
+        return '\n'.join(out) + '\n'
 
-        part = bg * (pad - 1) + ls[0] + bg * (pad - 2)
-        out += part + _mirror(part) + '\n'
-        return out
     elif letter == ls[2]:
         out = ''
 
