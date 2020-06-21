@@ -14,6 +14,7 @@ def diamond(letter: str, background: str=' '):
     _line_parts = partial(_apply_many, (_quarter, _compose(_mirror, _quarter)))
     _make_halfs = partial(_apply_many, (_id, _mirror))
     _make_line = _compose(partial(str.join, ''), _line_parts)
+    _make_lines = lambda seq: [_make_line(i, l) for i, l in enumerate(ls)]
     _make_pic = _compose(partial(str.join, '\n'), _flatten)
 
-    return _make_pic(_make_halfs([_make_line(i, l) for i, l in enumerate(ls)])) + '\n'
+    return _make_pic(_make_halfs(_make_lines(ls))) + '\n'
