@@ -34,8 +34,8 @@
 
 class GildedRose:
 
-    def __init__(self, items):
-        self.items = items
+    def __init__(self, items: list):
+        self.items: list = items
 
     def update_quality(self):
         for item in self.items:
@@ -69,10 +69,10 @@ class GildedRose:
 
 
 class Item:
-    def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
+    def __init__(self, name: str, sell_in: int, quality: int):
+        self.name: str = name
+        self.sell_in: int = sell_in
+        self.quality: int = quality
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.name}, {self.sell_in}, {self.quality}'
