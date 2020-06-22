@@ -1,21 +1,78 @@
-from functools import partial, reduce
-from itertools import chain
+# -*- coding: utf-8 -*-
+"""
+ТЗ:
+
+Фрилансеру Василию пришёл заказ от книжного магазина "Хорнс-н-Хуверс" на доработку их системы складского учёта. Суть такова...
+
+    - товары теряют актуальность по мере приближения срока годности
+    - у всех позиций есть свойство sell_in, описывающее, сколько дней отсталось до истечения срока годности
+    - у всех позиций есть свойство quality, описывающее ценность товара
+    - по истечению суток, система производит автоматический переучёт срока годности и показателя качества товара для всех позиций на складе
+
+Система достаточно простая, но есть пара ньюансов:
+
+    - по истечению срока годности, параметр quality уменьшается вдвое быстрее
+    - quality может быть нулевым, но не может быть отрицательным
+    - "Н. Вирт, Алгооитмы и Структуры Данных" с возрастом только хорошеет
+    - quality не может превышать 50
+    - "Марк Лутц, Изучаем Python, 3й том" - легендартный артефакт, не терят в качестве и продавать его нельзя
+    - quality 3го тома лутца равно 80 и никогда не меняется
+    - "Скидочный купон на Курс", также, как книга Вирта набирает ценность по мере истечения срока годности:
+        - на 1, если осталось больше 10 дней
+        - за 10 и менее дней до истечения срока ценность увеличивается на 2 в день
+        - за 5 и менее дней до истечения срока ценность увеличивается на 3 в день
+        - по истечению срока, ценность падает до нуля
+
+Поставщик впарил нам серию книг по фреймворкам, задачей Василия будет внесение доработок в систему:
+
+    - любоая литература со словом "фреймворк" в названии устаревает в 2 раза быстрее
+
+Василий может вносить любые изменения в код метода update_quality(), главное, чтобы существующий контракт не менялся.
+Класс Item трогать нельзя, так как его код писал психопат, который знает, где Василий живёт.
+"""
 
 
-def diamond(letter: str, background: str=' '):
-    ls = ''.join(map(chr, range(ord('A'), ord(letter) + 1)))
+class GildedRose:
 
-    _id = lambda x: x
-    _compose = lambda *funcs: reduce(lambda f, g: lambda *args: f(g(*args)), funcs, _id)
-    _apply_many = lambda fs, *args: (f(*args) for f in fs)
-    _mirror = lambda seq: seq[-2::-1]
-    _flatten = lambda args: chain(*args)
+    def __init__(self, items):
+        self.items = items
 
-    _make_quarter = lambda i, l: ''.join((background * (len(ls) - i - 1), l, background * i))
-    _make_line_parts = partial(_apply_many, (_make_quarter, _compose(_mirror, _make_quarter)))
-    _make_line = _compose(partial(str.join, ''), _make_line_parts)
-    _make_lines = lambda seq: [_make_line(i, l) for i, l in enumerate(ls)]
-    _make_pic_halfs = partial(_apply_many, (_id, _mirror))
-    _make_pic = _compose(partial(str.join, '\n'), _flatten)
+    def update_quality(self):
+        for item in self.items:
+            if item.name != "Н. Вирт, Алгооитмы и Структуры Данных" and item.name != "Скидочный купон на Курс":
+                if item.quality > 0:
+                    if item.name != "Марк Лутц, Изучаем Python, 3й том":
+                        item.quality = item.quality - 1
+            else:
+                if item.quality < 50:
+                    item.quality = item.quality + 1
+                    if item.name == "Скидочный купон на Курс":
+                        if item.sell_in < 11:
+                            if item.quality < 50:
+                                item.quality = item.quality + 1
+                        if item.sell_in < 6:
+                            if item.quality < 50:
+                                item.quality = item.quality + 1
+            if item.name != "Марк Лутц, Изучаем Python, 3й том":
+                item.sell_in = item.sell_in - 1
+            if item.sell_in < 0:
+                if item.name != "Н. Вирт, Алгооитмы и Структуры Данных":
+                    if item.name != "Скидочный купон на Курс":
+                        if item.quality > 0:
+                            if item.name != "Марк Лутц, Изучаем Python, 3й том":
+                                item.quality = item.quality - 1
+                    else:
+                        item.quality = item.quality - item.quality
+                else:
+                    if item.quality < 50:
+                        item.quality = item.quality + 1
 
-    return _make_pic(_make_pic_halfs(_make_lines(ls))) + '\n'
+
+class Item:
+    def __init__(self, name, sell_in, quality):
+        self.name = name
+        self.sell_in = sell_in
+        self.quality = quality
+
+    def __repr__(self):
+        return f'{self.name}, {self.sell_in}, {self.quality}'
