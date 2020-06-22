@@ -30,6 +30,7 @@
 Василий может вносить любые изменения в код метода update_quality(), главное, чтобы существующий контракт не менялся.
 Класс Item трогать нельзя, так как его код писал психопат, который знает, где Василий живёт.
 """
+from dataclasses import dataclass
 
 
 class HornsHooves:
@@ -68,11 +69,8 @@ class HornsHooves:
                         item.quality = item.quality + 1
 
 
+@dataclass()
 class Item:
-    def __init__(self, name: str, sell_in: int, quality: int):
-        self.name: str = name
-        self.sell_in: int = sell_in
-        self.quality: int = quality
-
-    def __repr__(self) -> str:
-        return f'{self.name}, {self.sell_in}, {self.quality}'
+    name: str = ''
+    sell_int: int = 0
+    quality: int = 0
