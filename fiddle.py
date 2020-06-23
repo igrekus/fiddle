@@ -48,6 +48,10 @@ class BookShop:
 
     def update_quality(self):
         for item in self.items:
+            if item.name == 'normal item':
+                self.normal_tick(item)
+                continue
+
             if item.name != "Д. Кнут, Искусство программирования" and item.name != "Скидочный купон на курс":
                 if item.quality > 0:
                     if item.name != "Марк Лутц, Изучаем Python, 3й том":
@@ -75,3 +79,12 @@ class BookShop:
                 else:
                     if item.quality < 50:
                         item.quality = item.quality + 1
+
+    def normal_tick(self, item):
+        if item.quality > 0:
+            if item.sell_in > 0:
+                item.quality -= 1
+            if item.sell_in <= 0:
+                item.quality -= 2
+        item.sell_in -= 1
+        return ''
