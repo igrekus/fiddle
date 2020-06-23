@@ -72,5 +72,5 @@ class BookShop:
 @dataclass()
 class Item:
     name: str = ''
-    sell_int: int = 0
+    sell_in: int = 0
     quality: int = 0
