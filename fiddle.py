@@ -33,7 +33,7 @@
 from dataclasses import dataclass
 
 
-class HornsHooves:
+class BookShop:
 
     def __init__(self, items: list):
         self.items: list = items

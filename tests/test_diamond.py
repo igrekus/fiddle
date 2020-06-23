@@ -1,5 +1,5 @@
 from pyexpect import expect
-from fiddle import diamond
+from fiddle import BookShop, Item
 
 
 def test_diamond_to_A():
