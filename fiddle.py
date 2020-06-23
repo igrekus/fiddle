@@ -34,6 +34,13 @@
 from dataclasses import dataclass
 
 
+@dataclass()
+class Item:
+    name: str = ''
+    sell_in: int = 0
+    quality: int = 0
+
+
 class BookShop:
 
     def __init__(self, items: list):
@@ -68,10 +75,3 @@ class BookShop:
                 else:
                     if item.quality < 50:
                         item.quality = item.quality + 1
-
-
-@dataclass()
-class Item:
-    name: str = ''
-    sell_in: int = 0
-    quality: int = 0
