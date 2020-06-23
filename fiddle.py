@@ -56,6 +56,10 @@ class BookShop:
                 self.knuth_tick(item)
                 continue
 
+            if item.name == 'Марк Лутц, Изучаем Python, 3й том':
+                self.lutz_tick(item)
+                continue
+
             if item.name != "Д. Кнут, Искусство программирования" and item.name != "Скидочный купон на курс":
                 if item.quality > 0:
                     if item.name != "Марк Лутц, Изучаем Python, 3й том":
@@ -100,3 +104,6 @@ class BookShop:
         item.quality += 1
         if item.sell_in <= 0 and item.quality < 50:
             item.quality += 1
+
+    def lutz_tick(self, item):
+        return
