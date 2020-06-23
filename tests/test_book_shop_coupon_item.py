@@ -2,7 +2,7 @@ from pyexpect import expect
 from fiddle import BookShop, Item
 
 
-def test_coupon_item_normal_day():
+def test_coupon_item_item_long_before_sell_date():
     shop = BookShop([Item('Скидочный купон на курс', sell_in=50, quality=48)])
 
     shop.update_quality()
@@ -10,31 +10,15 @@ def test_coupon_item_normal_day():
     expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=49, quality=49)])
 
 
-def test_coupon_item_max_quality():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=50, quality=50)])
+def test_coupon_item_medium_close_to_sell_date_upper_bound():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=10, quality=8)])
 
     shop.update_quality()
 
-    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=49, quality=50)])
+    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=9, quality=10)])
 
 
-def test_coupon_item_ten_days_to_sell_in():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=10, quality=40)])
-
-    shop.update_quality()
-
-    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=9, quality=42)])
-
-
-def test_coupon_item_ten_days_to_sell_in_almost_max_quality():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=10, quality=49)])
-
-    shop.update_quality()
-
-    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=9, quality=50)])
-
-
-def test_coupon_item_ten_days_to_sell_in_max_quality():
+def test_coupon_item_medium_close_to_sell_date_upper_bound_and_max_quality():
     shop = BookShop([Item('Скидочный купон на курс', sell_in=10, quality=50)])
 
     shop.update_quality()
@@ -42,23 +26,31 @@ def test_coupon_item_ten_days_to_sell_in_max_quality():
     expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=9, quality=50)])
 
 
-def test_coupon_item_five_days_to_sell_in():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=5, quality=40)])
+def test_coupon_item_medium_close_to_sell_date_lower_bound():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=6, quality=8)])
 
     shop.update_quality()
 
-    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=4, quality=43)])
+    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=5, quality=10)])
 
 
-def test_coupon_item_five_days_to_sell_in_almost_max_quality():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=5, quality=49)])
+def test_coupon_item_medium_close_to_sell_date_lower_bound_and_max_quality():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=6, quality=50)])
 
     shop.update_quality()
 
-    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=4, quality=50)])
+    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=5, quality=50)])
 
 
-def test_coupon_item_five_days_to_sell_in_max_quality():
+def test_coupon_item_very_close_to_sell_date_upper_bound():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=5, quality=7)])
+
+    shop.update_quality()
+
+    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=4, quality=10)])
+
+
+def test_coupon_item_very_close_to_sell_date_upper_bound_and_max_quality():
     shop = BookShop([Item('Скидочный купон на курс', sell_in=5, quality=50)])
 
     shop.update_quality()
@@ -66,17 +58,33 @@ def test_coupon_item_five_days_to_sell_in_max_quality():
     expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=4, quality=50)])
 
 
-def test_coupon_item_zero_days_to_sell_in_quality_stays():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=1, quality=47)])
+def test_coupon_item_very_close_to_sell_date_lower_bound():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=1, quality=7)])
+
+    shop.update_quality()
+
+    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=0, quality=10)])
+
+
+def test_coupon_item_very_close_to_sell_date_lower_bound_and_max_quality():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=1, quality=50)])
 
     shop.update_quality()
 
     expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=0, quality=50)])
 
 
-def test_coupon_item_past_sell_in_drop_quality_drops_to_zero():
-    shop = BookShop([Item('Скидочный купон на курс', sell_in=0, quality=50)])
+def test_coupon_item_on_sell_date():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=0, quality=10)])
 
     shop.update_quality()
 
     expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=-1, quality=0)])
+
+
+def test_coupon_item_after_sell_date():
+    shop = BookShop([Item('Скидочный купон на курс', sell_in=-1, quality=10)])
+
+    shop.update_quality()
+
+    expect(shop.items).to_equal([Item('Скидочный купон на курс', sell_in=-2, quality=0)])
