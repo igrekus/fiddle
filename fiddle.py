@@ -40,29 +40,23 @@ class Item:
     quality: int = 0
 
 
-def normal_tick(item):
+def _normal_tick(item):
     new_item = Item(item.name, item.sell_in - 1, item.quality)
-    if item.quality > 0:
+    if new_item.quality > 0:
         new_item.quality = item.quality - 1 if item.sell_in > 0 else item.quality - 2
-
-    item.name = new_item.name
-    item.sell_in = new_item.sell_in
-    item.quality = new_item.quality
+    return new_item
 
 
-def knuth_tick(item):
+def _knuth_tick(item):
     new_item = Item(item.name, item.sell_in - 1, item.quality)
     if new_item.quality < 50:
         new_item.quality += 1
     if new_item.sell_in <= 0 and new_item.quality < 50:
         new_item.quality += 1
-
-    item.name = new_item.name
-    item.sell_in = new_item.sell_in
-    item.quality = new_item.quality
+    return new_item
 
 
-def coupon_tick(item):
+def _coupon_tick(item):
     new_item = Item(item.name, item.sell_in - 1, item.quality)
     if new_item.quality < 50:
         new_item.quality += 1
@@ -73,20 +67,14 @@ def coupon_tick(item):
 
     if new_item.sell_in < 0:
         new_item.quality = 0
-
-    item.name = new_item.name
-    item.sell_in = new_item.sell_in
-    item.quality = new_item.quality
+    return new_item
 
 
-def framework_tick(item):
+def _framework_tick(item):
     new_item = Item(item.name, item.sell_in - 1, item.quality)
-    if item.quality > 0:
-        new_item.quality = item.quality - 2 if item.sell_in > 0 else item.quality - 4
-
-    item.name = new_item.name
-    item.sell_in = new_item.sell_in
-    item.quality = new_item.quality
+    if new_item.quality > 0:
+        new_item.quality = item.quality - 2 if new_item.sell_in > 0 else item.quality - 4
+    return new_item
 
 
 def _pick(item):
@@ -94,10 +82,10 @@ def _pick(item):
 
 
 tick_handlers = {
-    'Д. Кнут, Искусство программирования': knuth_tick,
+    'Д. Кнут, Искусство программирования': _knuth_tick,
     'Марк Лутц, Изучаем Python, 3й том': lambda _: _,
-    'Скидочный купон на курс': coupon_tick,
-    'фреймворк': framework_tick
+    'Скидочный купон на курс': _coupon_tick,
+    'фреймворк': _framework_tick
 }
 
 
@@ -106,5 +94,4 @@ class BookShop:
         self.items: list = items
 
     def update_quality(self):
-        for item in self.items:
-            tick_handlers.get(_pick(item), normal_tick)(item)
+        self.items = [tick_handlers.get(_pick(item), _normal_tick)(item) for item in self.items]
