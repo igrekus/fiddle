@@ -91,20 +91,15 @@ class CouponTick(Tick):
 
 
 class BookShop:
+    tick_handlers ={
+        'Д. Кнут, Искусство программирования': KnuthTick,
+        'Марк Лутц, Изучаем Python, 3й том': LutzTick,
+        'Скидочный купон на курс': CouponTick
+    }
 
     def __init__(self, items: list):
         self.items: list = items
 
     def update_quality(self):
         for item in self.items:
-            self.class_for(item.name)(item).tick()
-
-    def class_for(self, name):
-        if name == 'Д. Кнут, Искусство программирования':
-            return KnuthTick
-        elif name == 'Марк Лутц, Изучаем Python, 3й том':
-            return LutzTick
-        elif name == 'Скидочный купон на курс':
-            return CouponTick
-        else:
-            return NormalTick
+            self.tick_handlers.get(item.name, NormalTick)(item).tick()
