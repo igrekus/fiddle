@@ -41,10 +41,15 @@ class Item:
     quality: int = 0
 
 
-class NormalTick:
-    def __init__(self, item):
-        self.item = item
+class Tick:
+    def __init__(self, item: Item):
+        self.item: Item = item
 
+    def tick(self):
+        raise NotImplementedError
+
+
+class NormalTick(Tick):
     def tick(self):
         self.item.sell_in -= 1
         if self.item.quality == 0:
@@ -54,10 +59,7 @@ class NormalTick:
             self.item.quality -= 1
 
 
-class KnuthTick:
-    def __init__(self, item):
-        self.item = item
-
+class KnuthTick(Tick):
     def tick(self):
         self.item.sell_in -= 1
         if self.item.quality >= 50:
@@ -67,18 +69,12 @@ class KnuthTick:
             self.item.quality += 1
 
 
-class LutzTick:
-    def __init__(self, item):
-        self.item = item
-
+class LutzTick(Tick):
     def tick(self):
         pass
 
 
-class CouponTick:
-    def __init__(self, item):
-        self.item = item
-
+class CouponTick(Tick):
     def tick(self):
         self.item.sell_in -= 1
         if self.item.quality >= 50:
