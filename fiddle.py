@@ -41,6 +41,59 @@ class Item:
     quality: int = 0
 
 
+class NormalTick:
+    def __init__(self, item):
+        self.item = item
+
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality == 0:
+            return
+        self.item.quality -= 1
+        if self.item.sell_in <= 0:
+            self.item.quality -= 1
+
+
+class KnuthTick:
+    def __init__(self, item):
+        self.item = item
+
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality >= 50:
+            return
+        self.item.quality += 1
+        if self.item.sell_in <= 0 and self.item.quality < 50:
+            self.item.quality += 1
+
+
+class LutzTick:
+    def __init__(self, item):
+        self.item = item
+
+    def tick(self):
+        pass
+
+
+class CouponTick:
+    def __init__(self, item):
+        self.item = item
+
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality >= 50:
+            return
+        if self.item.sell_in < 0:
+            self.item.quality = 0
+            return
+        self.item.quality += 1
+        if self.item.sell_in < 10:
+            self.item.quality += 1
+        if self.item.sell_in < 5:
+            self.item.quality += 1
+        return
+
+
 class BookShop:
 
     def __init__(self, items: list):
@@ -62,35 +115,13 @@ class BookShop:
                 self.normal_tick(item)
 
     def normal_tick(self, item):
-        item.sell_in -= 1
-        if item.quality == 0:
-            return
-        item.quality -= 1
-        if item.sell_in <= 0:
-            item.quality -= 1
-        return
+        NormalTick(item).tick()
 
     def knuth_tick(self, item):
-        item.sell_in -= 1
-        if item.quality >= 50:
-            return
-        item.quality += 1
-        if item.sell_in <= 0 and item.quality < 50:
-            item.quality += 1
+        KnuthTick(item).tick()
 
     def lutz_tick(self, item):
-        return
+        LutzTick(item).tick()
 
     def coupon_tick(self, item):
-        item.sell_in -= 1
-        if item.quality >= 50:
-            return
-        if item.sell_in < 0:
-            item.quality = 0
-            return
-        item.quality += 1
-        if item.sell_in < 10:
-            item.quality += 1
-        if item.sell_in < 5:
-            item.quality += 1
-        return
+        CouponTick(item).tick()
