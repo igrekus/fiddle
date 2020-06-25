@@ -41,12 +41,11 @@ class Item:
     quality: int = 0
 
 
+@dataclass()
 class Tick:
-    def __init__(self, item: Item):
-        self.item: Item = item
+    item: Item
 
-    def tick(self):
-        pass
+    def tick(self): pass
 
 
 class NormalTick(Tick):
