@@ -46,7 +46,7 @@ class Tick:
         self.item: Item = item
 
     def tick(self):
-        raise NotImplementedError
+        pass
 
 
 class NormalTick(Tick):
@@ -70,8 +70,7 @@ class KnuthTick(Tick):
 
 
 class LutzTick(Tick):
-    def tick(self):
-        pass
+    pass
 
 
 class CouponTick(Tick):
