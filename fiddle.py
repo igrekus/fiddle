@@ -40,75 +40,64 @@ class Item:
     quality: int = 0
 
 
-@dataclass()
-class Tick:
-    item: Item
-
-    def tick(self): pass
-
-
-class NormalTick(Tick):
-    def tick(self):
-        self.item.sell_in -= 1
-        if self.item.quality == 0:
-            return
-        self.item.quality -= 1
-        if self.item.sell_in <= 0:
-            self.item.quality -= 1
-
-
-class KnuthTick(Tick):
-    def tick(self):
-        self.item.sell_in -= 1
-        if self.item.quality >= 50:
-            return
-        self.item.quality += 1
-        if self.item.sell_in <= 0 and self.item.quality < 50:
-            self.item.quality += 1
-
-
-class CouponTick(Tick):
-    def tick(self):
-        self.item.sell_in -= 1
-        if self.item.quality >= 50:
-            return
-        if self.item.sell_in < 0:
-            self.item.quality = 0
-            return
-        self.item.quality += 1
-        if self.item.sell_in < 10:
-            self.item.quality += 1
-        if self.item.sell_in < 5:
-            self.item.quality += 1
+def normal_tick(item):
+    item.sell_in -= 1
+    if item.quality == 0:
         return
+    item.quality -= 1
+    if item.sell_in <= 0:
+        item.quality -= 1
 
 
-class FrameworkTick(Tick):
-    def tick(self):
-        self.item.sell_in -= 1
-        if self.item.quality == 0:
-            return
-        self.item.quality -= 2
-        if self.item.sell_in <= 0:
-            self.item.quality -= 2
+def knuth_tick(item):
+    item.sell_in -= 1
+    if item.quality >= 50:
+        return
+    item.quality += 1
+    if item.sell_in <= 0 and item.quality < 50:
+        item.quality += 1
+
+
+def coupon_tick(item):
+    item.sell_in -= 1
+    if item.quality >= 50:
+        return
+    if item.sell_in < 0:
+        item.quality = 0
+        return
+    item.quality += 1
+    if item.sell_in < 10:
+        item.quality += 1
+    if item.sell_in < 5:
+        item.quality += 1
+    return
+
+
+def framework_tick(item):
+    item.sell_in -= 1
+    if item.quality == 0:
+        return
+    item.quality -= 2
+    if item.sell_in <= 0:
+        item.quality -= 2
+
+
+def _pick(item):
+    return 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
+
+
+tick_handlers = {
+    'Д. Кнут, Искусство программирования': knuth_tick,
+    'Марк Лутц, Изучаем Python, 3й том': lambda _: _,
+    'Скидочный купон на курс': coupon_tick,
+    'фреймворк': framework_tick
+}
 
 
 class BookShop:
-    tick_handlers = {
-        'Д. Кнут, Искусство программирования': KnuthTick,
-        'Марк Лутц, Изучаем Python, 3й том': Tick,
-        'Скидочный купон на курс': CouponTick,
-        'фреймворк': FrameworkTick
-    }
-
     def __init__(self, items: list):
         self.items: list = items
 
     def update_quality(self):
         for item in self.items:
-            self.tick_handlers.get(
-                'фреймворк'
-                if 'фреймворк' in item.name.lower()
-                else item.name,
-                NormalTick
-            )(item).tick()
+            tick_handlers.get(_pick(item), normal_tick)(item)
