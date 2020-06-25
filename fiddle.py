@@ -41,45 +41,52 @@ class Item:
 
 
 def normal_tick(item):
-    item.sell_in -= 1
-    if item.quality == 0:
-        return
-    item.quality -= 1
-    if item.sell_in <= 0:
-        item.quality -= 1
+    new_item = Item(item.name, item.sell_in - 1, item.quality)
+    if item.quality > 0:
+        new_item.quality = item.quality - 1 if item.sell_in > 0 else item.quality - 2
+
+    item.name = new_item.name
+    item.sell_in = new_item.sell_in
+    item.quality = new_item.quality
 
 
 def knuth_tick(item):
-    item.sell_in -= 1
-    if item.quality >= 50:
-        return
-    item.quality += 1
-    if item.sell_in <= 0 and item.quality < 50:
-        item.quality += 1
+    new_item = Item(item.name, item.sell_in - 1, item.quality)
+    if new_item.quality < 50:
+        new_item.quality += 1
+    if new_item.sell_in <= 0 and new_item.quality < 50:
+        new_item.quality += 1
+
+    item.name = new_item.name
+    item.sell_in = new_item.sell_in
+    item.quality = new_item.quality
 
 
 def coupon_tick(item):
-    item.sell_in -= 1
-    if item.quality >= 50:
-        return
-    if item.sell_in < 0:
-        item.quality = 0
-        return
-    item.quality += 1
-    if item.sell_in < 10:
-        item.quality += 1
-    if item.sell_in < 5:
-        item.quality += 1
-    return
+    new_item = Item(item.name, item.sell_in - 1, item.quality)
+    if new_item.quality < 50:
+        new_item.quality += 1
+        if new_item.sell_in < 10:
+            new_item.quality += 1
+        if new_item.sell_in < 5:
+            new_item.quality += 1
+
+    if new_item.sell_in < 0:
+        new_item.quality = 0
+
+    item.name = new_item.name
+    item.sell_in = new_item.sell_in
+    item.quality = new_item.quality
 
 
 def framework_tick(item):
-    item.sell_in -= 1
-    if item.quality == 0:
-        return
-    item.quality -= 2
-    if item.sell_in <= 0:
-        item.quality -= 2
+    new_item = Item(item.name, item.sell_in - 1, item.quality)
+    if item.quality > 0:
+        new_item.quality = item.quality - 2 if item.sell_in > 0 else item.quality - 4
+
+    item.name = new_item.name
+    item.sell_in = new_item.sell_in
+    item.quality = new_item.quality
 
 
 def _pick(item):
