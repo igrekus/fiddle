@@ -84,11 +84,22 @@ class CouponTick(Tick):
         return
 
 
+class FrameworkTick(Tick):
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality == 0:
+            return
+        self.item.quality -= 2
+        if self.item.sell_in <= 0:
+            self.item.quality -= 2
+
+
 class BookShop:
-    tick_handlers ={
+    tick_handlers = {
         'Д. Кнут, Искусство программирования': KnuthTick,
         'Марк Лутц, Изучаем Python, 3й том': Tick,
-        'Скидочный купон на курс': CouponTick
+        'Скидочный купон на курс': CouponTick,
+        'фреймворк': FrameworkTick
     }
 
     def __init__(self, items: list):
@@ -96,4 +107,9 @@ class BookShop:
 
     def update_quality(self):
         for item in self.items:
-            self.tick_handlers.get(item.name, NormalTick)(item).tick()
+            self.tick_handlers.get(
+                'фреймворк'
+                if 'фреймворк' in item.name.lower()
+                else item.name,
+                NormalTick
+            )(item).tick()
