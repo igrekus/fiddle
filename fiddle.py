@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-ТЗ:
+"""ТЗ:
 
 Фрилансер Василий получил от книжного магазина "Зелёный змий" заказ на доработку системы складского учёта. Суть такова...
 
@@ -27,9 +26,9 @@
 
     - любоая литература со словом "фреймворк" в названии устаревает в 2 раза быстрее
 
-Василий, несмотря на то, что фрилансер, калач уже тёрнтый и поэтому прекрасно понимает, что заказчик обычно не технарь и ТЗ пишет через задницу, поэтому __поведение системы придётся уточнять через анализ существующего кода__.
+Василий, будучи опытным фрилансером, прекрасно понимает, что ТЗ заказчик пишет всегда через задницу, поэтому __поведение системы придётся уточнять через анализ существующего кода__.
 Василий может вносить __любые__ изменения в код метода update_quality(), главное, чтобы существующий контракт не менялся.
-Класс Item __трогать нельзя__, так как его писал психопат, который знает, где Василий живёт.
+Класс Item __трогать нельзя__, так как его писал психопат, который знает, где Василий живёт. С дргой стороны, психопат код писать всё-такие умел и Item из БД приходит всегда валидный.
 """
 from dataclasses import dataclass
 
@@ -41,37 +40,75 @@ class Item:
     quality: int = 0
 
 
+@dataclass()
+class Tick:
+    item: Item
+
+    def tick(self): pass
+
+
+class NormalTick(Tick):
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality == 0:
+            return
+        self.item.quality -= 1
+        if self.item.sell_in <= 0:
+            self.item.quality -= 1
+
+
+class KnuthTick(Tick):
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality >= 50:
+            return
+        self.item.quality += 1
+        if self.item.sell_in <= 0 and self.item.quality < 50:
+            self.item.quality += 1
+
+
+class CouponTick(Tick):
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality >= 50:
+            return
+        if self.item.sell_in < 0:
+            self.item.quality = 0
+            return
+        self.item.quality += 1
+        if self.item.sell_in < 10:
+            self.item.quality += 1
+        if self.item.sell_in < 5:
+            self.item.quality += 1
+        return
+
+
+class FrameworkTick(Tick):
+    def tick(self):
+        self.item.sell_in -= 1
+        if self.item.quality == 0:
+            return
+        self.item.quality -= 2
+        if self.item.sell_in <= 0:
+            self.item.quality -= 2
+
+
 class BookShop:
+    tick_handlers = {
+        'Д. Кнут, Искусство программирования': KnuthTick,
+        'Марк Лутц, Изучаем Python, 3й том': Tick,
+        'Скидочный купон на курс': CouponTick,
+        'фреймворк': FrameworkTick
+    }
 
     def __init__(self, items: list):
         self.items: list = items
 
     def update_quality(self):
         for item in self.items:
-            if item.name != "Д. Кнут, Искусство программирования" and item.name != "Скидочный купон на курс":
-                if item.quality > 0:
-                    if item.name != "Марк Лутц, Изучаем Python, 3й том":
-                        item.quality = item.quality - 1
-            else:
-                if item.quality < 50:
-                    item.quality = item.quality + 1
-                    if item.name == "Скидочный купон на курс":
-                        if item.sell_in < 11:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-                        if item.sell_in < 6:
-                            if item.quality < 50:
-                                item.quality = item.quality + 1
-            if item.name != "Марк Лутц, Изучаем Python, 3й том":
-                item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if item.name != "Д. Кнут, Искусство программирования":
-                    if item.name != "Скидочный купон на курс":
-                        if item.quality > 0:
-                            if item.name != "Марк Лутц, Изучаем Python, 3й том":
-                                item.quality = item.quality - 1
-                    else:
-                        item.quality = item.quality - item.quality
-                else:
-                    if item.quality < 50:
-                        item.quality = item.quality + 1
+            self.tick_handlers.get(
+                'фреймворк'
+                if 'фреймворк' in item.name.lower()
+                else item.name,
+                NormalTick
+            )(item).tick()
