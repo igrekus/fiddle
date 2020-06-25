@@ -68,10 +68,6 @@ class KnuthTick(Tick):
             self.item.quality += 1
 
 
-class LutzTick(Tick):
-    pass
-
-
 class CouponTick(Tick):
     def tick(self):
         self.item.sell_in -= 1
@@ -91,7 +87,7 @@ class CouponTick(Tick):
 class BookShop:
     tick_handlers ={
         'Д. Кнут, Искусство программирования': KnuthTick,
-        'Марк Лутц, Изучаем Python, 3й том': LutzTick,
+        'Марк Лутц, Изучаем Python, 3й том': Tick,
         'Скидочный купон на курс': CouponTick
     }
 
