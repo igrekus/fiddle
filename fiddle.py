@@ -97,15 +97,14 @@ class BookShop:
 
     def update_quality(self):
         for item in self.items:
+            self.class_for(item.name)(item).tick()
 
-            if item.name == 'Д. Кнут, Искусство программирования':
-                KnuthTick(item).tick()
-
-            elif item.name == 'Марк Лутц, Изучаем Python, 3й том':
-                LutzTick(item).tick()
-
-            elif item.name == 'Скидочный купон на курс':
-                CouponTick(item).tick()
-
-            else:
-                NormalTick(item).tick()
+    def class_for(self, name):
+        if name == 'Д. Кнут, Искусство программирования':
+            return KnuthTick
+        elif name == 'Марк Лутц, Изучаем Python, 3й том':
+            return LutzTick
+        elif name == 'Скидочный купон на курс':
+            return CouponTick
+        else:
+            return NormalTick
