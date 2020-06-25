@@ -103,25 +103,13 @@ class BookShop:
         for item in self.items:
 
             if item.name == 'Д. Кнут, Искусство программирования':
-                self.knuth_tick(item)
+                KnuthTick(item).tick()
 
             elif item.name == 'Марк Лутц, Изучаем Python, 3й том':
-                self.lutz_tick(item)
+                LutzTick(item).tick()
 
             elif item.name == 'Скидочный купон на курс':
-                self.coupon_tick(item)
+                CouponTick(item).tick()
 
             else:
-                self.normal_tick(item)
-
-    def normal_tick(self, item):
-        NormalTick(item).tick()
-
-    def knuth_tick(self, item):
-        KnuthTick(item).tick()
-
-    def lutz_tick(self, item):
-        LutzTick(item).tick()
-
-    def coupon_tick(self, item):
-        CouponTick(item).tick()
+                NormalTick(item).tick()
