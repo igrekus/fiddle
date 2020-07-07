@@ -23,7 +23,7 @@ def fizzbuzz(num):
 
 @pipe
 def fbmap(stream):
-    yield from (fizzbuzz(el) for el in stream)
+    yield from map(fizzbuzz, stream)
 
 
 @pipe
