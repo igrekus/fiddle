@@ -34,10 +34,13 @@ def generate():
     while True:
         prime = primes.pop(0)
         for digit in digits:
-            temp = prime * 10 + digit
-            if _is_prime(temp):
-                primes.append(temp)
-                if _is_left_trunc(temp):
-                    out.append(temp)
-                    if len(out) == 11:
-                        return out
+            test = prime * 10 + digit
+            if not _is_prime(test):
+                continue
+            primes.append(test)
+            if not _is_left_trunc(test):
+                continue
+            out.append(test)
+            if len(out) == 11:
+                return out
+
