@@ -1,4 +1,5 @@
 import math
+from itertools import count
 
 
 def _make_sieve(n):
@@ -30,10 +31,9 @@ def generate() -> list:
     out = []
     o_app = out.append
     ln = out.__len__
-    i = 23
-    while True:
+
+    for i in count(start=23, step=2):
         if _is_prime(i) and _is_left_right_trunc(i):
             o_app(i)
             if ln() == 11:
                 return out
-        i += 2
