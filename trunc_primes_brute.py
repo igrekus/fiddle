@@ -30,10 +30,9 @@ sieve = _make_sieve(800_000)
 def generate() -> list:
     out = []
     o_app = out.append
-    ln = out.__len__
 
     for i in count(start=23, step=2):
         if _is_prime(i) and _is_left_right_trunc(i):
             o_app(i)
-            if ln() == 11:
+            if len(out) == 11:
                 return out
