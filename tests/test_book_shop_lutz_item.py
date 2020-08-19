@@ -1,5 +1,5 @@
 from pyexpect import expect
-from fiddle import BookShop, Item
+from book_shop_func import BookShop, Item
 
 
 def test_lutz_before_sell_date():
