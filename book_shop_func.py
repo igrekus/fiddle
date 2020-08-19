@@ -55,17 +55,18 @@ def _select(item):
     return 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
 
 
-class BookShop:
-    ticks = {
-        'Д. Кнут, Искусство программирования': _tick_knuth,
-        'Марк Лутц, Изучаем Python, 3й том': lambda x: x,
-        'Скидочный купон на курс': _tick_coupon,
-        'фреймворк': _tick_framework
-    }
+_ticks = {
+    'Д. Кнут, Искусство программирования': _tick_knuth,
+    'Марк Лутц, Изучаем Python, 3й том': lambda x: x,
+    'Скидочный купон на курс': _tick_coupon,
+    'фреймворк': _tick_framework
+}
 
+
+class BookShop:
     def __init__(self, items: list):
         self.items: list = items
 
     def update_quality(self):
         for item in self.items:
-            self.ticks.get(_select(item), _tick_normal)(item)
+            _ticks.get(_select(item), _tick_normal)(item)
