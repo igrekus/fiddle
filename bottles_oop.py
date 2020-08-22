@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from functools import singledispatchmethod
+from functools import singledispatch
 
 
 def _default_field(obj):
@@ -41,7 +41,7 @@ class Container:
 
 
 class Song:
-    @singledispatchmethod
+    @singledispatch
     def __getitem__(self, item: slice):
         return '\n'.join(self[n] for n in range(item.start, item.stop - 1, -1)).strip()
 
