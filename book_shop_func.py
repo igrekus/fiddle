@@ -39,7 +39,6 @@ def _tick_coupon(item):
         item.quality += 1
     if item.sell_in < 5:
         item.quality += 1
-    return
 
 
 def _tick_framework(item):
