@@ -55,17 +55,17 @@ _id = lambda x: x
 _rpartial = lambda f, *args: lambda *a: f(*(a + args))
 _compose = lambda *fs: reduce(lambda f, g: lambda *args: f(g(*args)), fs, _id)
 
+_select = lambda item: 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
+_get = {
+    'Д. Кнут, Искусство программирования': _tick_knuth,
+    'Марк Лутц, Изучаем Python, 3й том': _id,
+    'Скидочный купон на курс': _tick_coupon,
+    'фреймворк': _tick_framework
+}.get
+
 _update = _compose(
-    _rpartial(
-        {
-            'Д. Кнут, Искусство программирования': _tick_knuth,
-            'Марк Лутц, Изучаем Python, 3й том': _id,
-            'Скидочный купон на курс': _tick_coupon,
-            'фреймворк': _tick_framework
-        }.get,
-        _tick_normal
-    ),
-    lambda item: 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
+    _rpartial(_get, _tick_normal),
+    _select
 )
 
 
