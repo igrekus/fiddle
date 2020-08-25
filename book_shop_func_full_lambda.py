@@ -3,6 +3,12 @@ from dataclasses import dataclass
 from functools import reduce
 
 
+__all__ = [
+    'BookShop',
+    'Item'
+]
+
+
 @dataclass()
 class Item:
     name: str = ''
