@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 from dataclasses import dataclass
+from functools import reduce
+
+
+__all__ = [
+    'BookShop',
+    'Item'
+]
 
 
 @dataclass()
@@ -50,16 +57,22 @@ def _tick_framework(item):
         item.quality -= 2
 
 
-def _select(item):
-    return 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
+_id = lambda x: x
+_rpartial = lambda f, *args: lambda *a: f(*(a + args))
+_compose = lambda *fs: reduce(lambda f, g: lambda *args: f(g(*args)), fs, _id)
 
-
-_ticks = {
+_select = lambda item: 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
+_get = {
     'Д. Кнут, Искусство программирования': _tick_knuth,
-    'Марк Лутц, Изучаем Python, 3й том': lambda x: x,
+    'Марк Лутц, Изучаем Python, 3й том': _id,
     'Скидочный купон на курс': _tick_coupon,
     'фреймворк': _tick_framework
-}
+}.get
+
+_update = _compose(
+    _rpartial(_get, _tick_normal),
+    _select
+)
 
 
 class BookShop:
@@ -68,4 +81,4 @@ class BookShop:
 
     def update_quality(self):
         for item in self.items:
-            _ticks.get(_select(item), _tick_normal)(item)
+            _update(item)(item)
