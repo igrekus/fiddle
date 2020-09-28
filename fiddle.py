@@ -80,8 +80,8 @@ class Command:
 
 class Vendromat:
     def __init__(self):
-        self.balance = 0
-        self.stock = {
+        self._balance = 0
+        self._stock = {
             'java': Stock('JAVA', 50),
             'nesquick': Stock('Nesquick', 40),
             'latte': Stock('Latte', 50),
@@ -96,7 +96,7 @@ class Vendromat:
         }
 
     def __str__(self):
-        return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self.balance}"
+        return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self._balance}"
 
     def _help(self, _):
         return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
@@ -109,24 +109,24 @@ class Vendromat:
             return self.__str__()
         if amt <= 0:
             return self.__str__()
-        self.balance += amt
+        self._balance += amt
         return self.__str__()
     def _withdraw(self, _):
-        to_return, self.balance = self.balance, 0
+        to_return, self._balance = self._balance, 0
         return f"Возвращено: {to_return}\n{self.__str__()}"
     def _buy(self, brew):
         if not brew:
             return self.__str__()
         key = brew.lower()
-        if key not in self.stock:
+        if key not in self._stock:
             return self.__str__()
-        if self.balance < self.stock[key].price:
+        if self._balance < self._stock[key].price:
             return f'Сумма недостаточна! Внесите еще монет\n{self.__str__()}'
-        if self.stock[key].stock <= 0:
+        if self._stock[key].stock <= 0:
             return f'Не осталось данного напитка!\n{self.__str__()}'
-        self.stock[key].stock -= 1
-        self.balance -= self.stock[key].price
-        return f'Выдан {self.stock[key].brew}!\n{self.__str__()}'
+        self._stock[key].stock -= 1
+        self._balance -= self._stock[key].price
+        return f'Выдан {self._stock[key].brew}!\n{self.__str__()}'
     def _default(self, _):
         return self.__str__()
     def exec(self, com: str):
