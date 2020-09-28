@@ -50,64 +50,77 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Brew:
-    name: str
+class Stock:
+    brew: str
     price: int
+    stock: int = 5
 
 
 @dataclass
-class Stock:
-    brew: Brew
-    stock: int = 5
+class Command:
+    com: str
+    par: str
+    @classmethod
+    def parse(cls, s: str):
+        s = s.lower()
+        try:
+            com, *params = s.split()
+            param = params[0]
+        except (ValueError, IndexError):
+            return cls(com=s, par='')
+        else:
+            return cls(com=com, par=param)
+    @property
+    def param(self):
+        return self.par
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.com == other
 
 
 class Vendromat:
     def __init__(self):
         self.balance = 0
         self.stock = {
-            'java': Stock(Brew('JAVA', 50)),
-            'nesquick': Stock(Brew('Nesquick', 40)),
-            'latte': Stock(Brew('Latte', 50)),
-            'tea': Stock(Brew('Tea', 20))
+            'java': Stock('JAVA', 50),
+            'nesquick': Stock('Nesquick', 40),
+            'latte': Stock('Latte', 50),
+            'tea': Stock('Tea', 20)
         }
 
     def __str__(self):
         return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self.balance}"
 
     def exec(self, com: str):
-        try:
-            com, *params = com.split()
-        except ValueError:
-            return self.__str__()
+        c = Command.parse(com)
 
-        com = com.lower()
-        if com == 'помощь':
+        if c == 'помощь':
             return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
-        elif com == 'выход':
+        elif c == 'выход':
             return False
-        elif com == 'внести':
+        elif c == 'внести':
             try:
-                amt = int(params[0])
+                amt = int(c.param)
             except (ValueError, TypeError, IndexError):
                 return self.__str__()
             if amt <= 0:
                 return self.__str__()
             self.balance += amt
             return self.__str__()
-        elif com == 'взять':
-            if not params:
+        elif c == 'взять':
+            if not c.param:
                 return self.__str__()
-            brew = params[0]
-            key = brew.lower()
+
+            key = c.param.lower()
             if key not in self.stock:
                 return self.__str__()
-            if self.balance < self.stock[key].brew.price:
+            if self.balance < self.stock[key].price:
                 return f'Сумма недостаточна! Внесите еще монет\n{self.__str__()}'
             if self.stock[key].stock <= 0:
                 return f'Не осталось данного напитка!\n{self.__str__()}'
             self.stock[key].stock -= 1
-            self.balance -= self.stock[key].brew.price
-            return f'Выдан {self.stock[key].brew.name}!\n{self.__str__()}'
+            self.balance -= self.stock[key].price
+            return f'Выдан {self.stock[key].brew}!\n{self.__str__()}'
         elif com == 'сдача':
             to_return, self.balance = self.balance, 0
             return f"Возвращено: {to_return}\n{self.__str__()}"
