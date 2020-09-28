@@ -46,22 +46,29 @@ Java и Latte стоят по 50, Nesquick стоит 40, а Tea - 20
 
 Process finished with exit code 0
 """
+from dataclasses import dataclass
+
+
+@dataclass
+class Brew:
+    name: str
+    price: int
+
+
+@dataclass
+class Stock:
+    brew: Brew
+    stock: int = 5
 
 
 class Vendromat:
     def __init__(self):
         self.balance = 0
         self.stock = {
-            'java': 5,
-            'nesquick': 5,
-            'latte': 5,
-            'tea': 2
-        }
-        self.prices = {
-            'java': 50,
-            'nesquick': 40,
-            'latte': 50,
-            'tea': 20
+            'java': Stock(Brew('JAVA', 50)),
+            'nesquick': Stock(Brew('Nesquick', 40)),
+            'latte': Stock(Brew('Latte', 50)),
+            'tea': Stock(Brew('Tea', 20))
         }
 
     def __str__(self):
@@ -94,13 +101,13 @@ class Vendromat:
             key = brew.lower()
             if key not in self.stock:
                 return self.__str__()
-            if self.balance < self.prices[key]:
+            if self.balance < self.stock[key].brew.price:
                 return f'Сумма недостаточна! Внесите еще монет\n{self.__str__()}'
-            if self.stock[key] <= 0:
+            if self.stock[key].stock <= 0:
                 return f'Не осталось данного напитка!\n{self.__str__()}'
-            self.stock[key] -= 1
-            self.balance -= self.prices[key]
-            return f'Выдан {brew}!\n{self.__str__()}'
+            self.stock[key].stock -= 1
+            self.balance -= self.stock[key].brew.price
+            return f'Выдан {self.stock[key].brew.name}!\n{self.__str__()}'
         elif com == 'сдача':
             to_return, self.balance = self.balance, 0
             return f"Возвращено: {to_return}\n{self.__str__()}"

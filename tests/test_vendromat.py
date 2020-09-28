@@ -110,8 +110,12 @@ def test_run_command_should_reject_not_enough_stock():
     expected = """Не осталось данного напитка!\nНапитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 50"""
 
     v = Vendromat()
-    v.stock['java'] = 0
-    v.exec('внести 50')
+    v.exec('внести 300')
+    v.exec('взять JAVA')
+    v.exec('взять JAVA')
+    v.exec('взять JAVA')
+    v.exec('взять JAVA')
+    v.exec('взять JAVA')
     expect(v.exec('взять JAVA')).to_equal(expected)
 
 
