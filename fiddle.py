@@ -87,6 +87,13 @@ class Vendromat:
             'latte': Stock('Latte', 50),
             'tea': Stock('Tea', 20)
         }
+        self._handlers = {
+            'помощь': self._help,
+            'выход': self._exit,
+            'внести': self._deposit,
+            'взять': self._buy,
+            'сдача': self._withdraw
+        }
 
     def __str__(self):
         return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self.balance}"
@@ -124,18 +131,7 @@ class Vendromat:
         return self.__str__()
     def exec(self, com: str):
         c = Command.parse(com)
-        if c == 'помощь':
-            return self._help(c.param)
-        elif c == 'выход':
-            return self._exit(c.param)
-        elif c == 'внести':
-            return self._deposit(c.param)
-        elif c == 'взять':
-            return self._buy(c.param)
-        elif c == 'сдача':
-            return self._withdraw(c.param)
-        else:
-            return self._default(c.param)
+        return self._handlers.get(c.com, self._default)(c.param)
 
 
 def run() -> str:
