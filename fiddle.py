@@ -105,11 +105,11 @@ class Vendromat:
     def _deposit(self, amt):
         try:
             amt = int(amt)
-        except (ValueError, TypeError, IndexError):
-            return self.__str__()
-        if amt <= 0:
-            return self.__str__()
-        self._balance += amt
+        except (ValueError, TypeError):
+            pass
+        else:
+            if amt > 0:
+                self._balance += amt
         return self.__str__()
     def _withdraw(self, _):
         to_return, self._balance = self._balance, 0
