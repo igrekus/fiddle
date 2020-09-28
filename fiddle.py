@@ -91,41 +91,51 @@ class Vendromat:
     def __str__(self):
         return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self.balance}"
 
+    def _help(self, _):
+        return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
+    def _exit(self, _):
+        return False
+    def _deposit(self, amt):
+        try:
+            amt = int(amt)
+        except (ValueError, TypeError, IndexError):
+            return self.__str__()
+        if amt <= 0:
+            return self.__str__()
+        self.balance += amt
+        return self.__str__()
+    def _withdraw(self, _):
+        to_return, self.balance = self.balance, 0
+        return f"Возвращено: {to_return}\n{self.__str__()}"
+    def _buy(self, brew):
+        if not brew:
+            return self.__str__()
+        key = brew.lower()
+        if key not in self.stock:
+            return self.__str__()
+        if self.balance < self.stock[key].price:
+            return f'Сумма недостаточна! Внесите еще монет\n{self.__str__()}'
+        if self.stock[key].stock <= 0:
+            return f'Не осталось данного напитка!\n{self.__str__()}'
+        self.stock[key].stock -= 1
+        self.balance -= self.stock[key].price
+        return f'Выдан {self.stock[key].brew}!\n{self.__str__()}'
+    def _default(self, _):
+        return self.__str__()
     def exec(self, com: str):
         c = Command.parse(com)
-
         if c == 'помощь':
-            return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
+            return self._help(c.param)
         elif c == 'выход':
-            return False
+            return self._exit(c.param)
         elif c == 'внести':
-            try:
-                amt = int(c.param)
-            except (ValueError, TypeError, IndexError):
-                return self.__str__()
-            if amt <= 0:
-                return self.__str__()
-            self.balance += amt
-            return self.__str__()
+            return self._deposit(c.param)
         elif c == 'взять':
-            if not c.param:
-                return self.__str__()
-
-            key = c.param.lower()
-            if key not in self.stock:
-                return self.__str__()
-            if self.balance < self.stock[key].price:
-                return f'Сумма недостаточна! Внесите еще монет\n{self.__str__()}'
-            if self.stock[key].stock <= 0:
-                return f'Не осталось данного напитка!\n{self.__str__()}'
-            self.stock[key].stock -= 1
-            self.balance -= self.stock[key].price
-            return f'Выдан {self.stock[key].brew}!\n{self.__str__()}'
-        elif com == 'сдача':
-            to_return, self.balance = self.balance, 0
-            return f"Возвращено: {to_return}\n{self.__str__()}"
+            return self._buy(c.param)
+        elif c == 'сдача':
+            return self._withdraw(c.param)
         else:
-            return self.__str__()
+            return self._default(c.param)
 
 
 def run() -> str:
