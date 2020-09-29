@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import reduce
 
 __all__ = ['run']
 
@@ -15,20 +16,17 @@ def _parse_command(s):
     return s.split(maxsplit=1) if ' ' in s else (s, '')
 
 
-def _help(v, _):
-    return f"Доступные команды: {tuple(v._handlers.keys())}"
+def _help(*_):
+    return f"Доступные команды: {tuple(_handlers.keys())}"
 
 
-def _exit(v, _):
+def _exit(*_):
     return False
 
 
 def _deposit(v, amt):
-    try:
+    if amt.isdigit():
         amt = int(amt)
-    except (ValueError, TypeError):
-        pass
-    else:
         if amt > 0:
             v._balance += amt
     return True
@@ -55,8 +53,20 @@ def _buy(v, brew):
     return f'Выдан {item.brew}!'
 
 
-def _default(v, _):
+def _default(*_):
     return True
+
+
+_rpartial = lambda f, *args: lambda *a: f(*(a + args))
+
+_handlers = {
+    'помощь': _help,
+    'взять': _buy,
+    'внести': _deposit,
+    'сдача': _withdraw,
+    'выход': _exit
+}
+_handle = _rpartial(_handlers.get, _default)
 
 
 class Vendor:
@@ -68,20 +78,12 @@ class Vendor:
             'latte': Stock('Latte', 50),
             'tea': Stock('Tea', 20)
         }
-        self._handlers = {
-            'помощь': _help,
-            'взять': _buy,
-            'внести': _deposit,
-            'сдача': _withdraw,
-            'выход': _exit
-        }
 
     def __str__(self) -> str:
         return f"Напитки: {[b.brew for b in self._stock.values()]} Баланс: {self._balance}"
 
-    def exec(self, com: str):
-        c, p = _parse_command(com)
-        return self._handlers.get(c, _default)(self, p)
+    def exec(self, com):
+        return (lambda c, p: _handle(c)(self, p))(*_parse_command(com))
 
 
 def run():
