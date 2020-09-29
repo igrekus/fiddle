@@ -1,4 +1,4 @@
-from fiddle import run, Vendromat
+from fiddle import Vendromat
 from pyexpect import expect
 
 
