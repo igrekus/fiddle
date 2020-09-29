@@ -96,3 +96,7 @@ def run():
         res = v.exec(input('Введите команду>>>:'))
         if isinstance(res, str):
             print(f'{res}')
+
+
+if __name__ == '__main__':
+    run()
