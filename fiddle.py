@@ -26,7 +26,7 @@ class Command:
             return cls(com=com, param=param)
 
 
-class Vendromat:
+class Vendor:
     def __init__(self):
         self._balance = 0
         self._stock = {
@@ -89,7 +89,7 @@ class Vendromat:
 
 
 def run():
-    v = Vendromat()
+    v = Vendor()
     res = ''
     while res is not False:
         print(f'{v}')
