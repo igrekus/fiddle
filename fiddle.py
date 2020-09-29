@@ -1,97 +1,205 @@
-# -*- coding: utf-8 -*-
-"""ТЗ:
+"""
+This module emulates a brew vending machine.
 
-Фрилансер Василий получил от книжного магазина "Зелёный змий" заказ на доработку системы складского учёта. Суть такова...
+Implements a CLI user interface, capable of handling a set of commands:
 
-    - товары теряют ценность по мере приближения указанноего срока реализации товара
-    - у всех товаров есть свойство sell_in, показывающее количество дней, оставшееся до окончания срока реализации
-    - у всех товаров есть свойство quality, описывающее ценность товара
-    - в конце каждого дня, система производит автоматический перерасчёт срока годности и показателя качества для всех товаров на складе
+    помощь       -- display the help message
+    взять <brew> -- sell the selected brew, if requirements are met
+    внести <sum> -- deposit <sum> to the session balance
+    сдача        -- retrieve deposited money
+    выход        -- exit the current vending session
 
-Система достаточно простая, но есть пара ньюансов:
+Business rules:
 
-    - по истечению срока продажи, параметр quality уменьшается вдвое быстрее
-    - quality не может быть отрицательным, но может быть равным нулю
-    - quality не может превышать 50
-    - "Д. Кнут, Искусство программирования" с возрастом только хорошеет
-    - "Марк Лутц, Изучаем Python, 3й том" - легендартный артефакт, не терят в качестве и продавать его нельзя
-    - quality 3го тома Лутца равно 80 и никогда не меняется
-    - "Скидочный купон на курс", также как книга Вирта, набирает ценность по мере истечения срока годности:
-        - на 1, если осталось больше 10 дней
-        - за 10 и менее дней до истечения срока ценность увеличивается на 2 в день
-        - за 5 и менее дней до истечения срока ценность увеличивается на 3 в день
-        - по истечению срока, ценность падает до нуля
+    - vending session is a REPL-loop
+    - commands and parameters can be input in any register
+    - each command is preceded by a status message and a command prompt:
 
-Далее, поставщик впарил магазину серию книг по фреймворкам, и задачей Василия будет внесение следующей доработки в систему:
+        Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0
+        Введите команду>>>:
 
-    - любоая литература со словом "фреймворк" в названии устаревает в 2 раза быстрее
+    - unknown commands are ignored
+    - commands with unknown/wrong parameters are ignored
+    - no error messages
+    - 'помощь' should display 'Доступные команды: {список команд}'
+    - 'взять <brew>' should:
+        - display 'Сумма недостаточна! Внесите еще монет' message and reject operation if not enough credit is deposited
+        - display 'Не осталось данного напитка!' message and reject operation if selected brew is out of stock
+        - display 'Выдан <brew>' message and update the machine status if credit and stock conditions are satisfied
+    - 'внести <sum>' should update credit balance if parameter is a natural number
+    - 'сдача' should display 'Возвращено:<balance>' message and reset the machine balance to 0
+    - 'выход' should shut down the current vending session
+    - upon launch, the machine should have ['JAVA', 'Nesquick', 'Latte', 'Tea'] brews available, 5 units each
+    - brew prices are:
+        JAVA: 50
+        Latte: 50
+        Nesquick: 40
+        Tea: 20
 
-Василий, будучи опытным фрилансером, прекрасно понимает, что ТЗ заказчик пишет всегда через задницу, поэтому __поведение системы придётся уточнять через анализ существующего кода__.
-Василий может вносить __любые__ изменения в код метода update_quality(), главное, чтобы существующий контракт не менялся.
-Класс Item __трогать нельзя__, так как его писал психопат, который знает, где Василий живёт. С дргой стороны, психопат код писать всё-такие умел и Item из БД приходит всегда валидный.
+Example:
+
+    Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea']
+    Баланс: 0
+    Введите команду>>>:помощь
+    Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')
+    Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea']
+    Баланс: 0
+    Введите команду>>>:внести 100
+    Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea']
+    Баланс: 100
+    Введите команду>>>:взять JAVA
+    Выдан java
+    Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea']
+    Баланс: 50
+    Введите команду>>>:сдача
+    Возвращено:50
+    Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea']
+    Баланс: 0
+    Введите команду>>>:выход
+
+    Process finished with exit code 0
 """
 from dataclasses import dataclass
+from typing import Union
+
+__all__ = ['run']
 
 
-@dataclass()
-class Item:
-    name: str = ''
-    sell_in: int = 0
-    quality: int = 0
+@dataclass
+class Stock:
+    """
+    Helper, stores machine stock information.
+
+    Not a part of the public API.
+    """
+    brew: str
+    price: int
+    stock: int = 5
 
 
-def _normal_tick(item):
-    new_item = Item(item.name, item.sell_in - 1, item.quality)
-    if new_item.quality > 0:
-        new_item.quality = item.quality - 1 if item.sell_in > 0 else item.quality - 2
-    return new_item
+@dataclass
+class Command:
+    """
+    Helper, handles the user input.
+
+    Not a part of the public API.
+    """
+    com: str
+    param: str
+
+    @classmethod
+    def parse(cls, s: str):
+        """
+        Parses the input string into command name and parameter.
+
+        :param s: raw input string to parse
+        """
+        s = s.lower()
+        try:
+            com, *params = s.split()
+            param = params[0]
+        except (ValueError, IndexError):
+            return cls(com=s, param='')
+        else:
+            return cls(com=com, param=param)
 
 
-def _knuth_tick(item):
-    new_item = Item(item.name, item.sell_in - 1, item.quality)
-    if new_item.quality < 50:
-        new_item.quality += 1
-    if new_item.sell_in <= 0 and new_item.quality < 50:
-        new_item.quality += 1
-    return new_item
+class Vendor:
+    """
+    Helper, handles the emulated machine state updates.
+
+    Not a part of the public API.
+    """
+    def __init__(self):
+        self._balance = 0
+        self._stock = {
+            'java': Stock('JAVA', 50),
+            'nesquick': Stock('Nesquick', 40),
+            'latte': Stock('Latte', 50),
+            'tea': Stock('Tea', 20)
+        }
+        self._handlers = {
+            'помощь': self._help,
+            'взять': self._buy,
+            'внести': self._deposit,
+            'сдача': self._withdraw,
+            'выход': self._exit
+        }
+
+    def __str__(self) -> str:
+        return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self._balance}"
+
+    def _help(self, _) -> str:
+        """Build and return the help message."""
+        return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
+
+    def _exit(self, _) -> bool:
+        """Return the exit flag."""
+        return False
+
+    def _deposit(self, amt: int) -> bool:
+        """
+        Deposits credit to the session balance.
+
+        :param amt: - natural number, amount to deposit
+        :return: bool flag
+        """
+        try:
+            amt = int(amt)
+        except (ValueError, TypeError):
+            pass
+        else:
+            if amt > 0:
+                self._balance += amt
+        return True
+
+    def _withdraw(self, _) -> str:
+        """
+        Withdraws the remaining credits.
+
+        :return: report message
+        """
+        to_return, self._balance = self._balance, 0
+        return f"Возвращено:{to_return}"
+
+    def _buy(self, brew: str) -> Union[str, bool]:
+        """
+        Sells the requested brew if enough credit is on the balance and the brew is in stock.
+
+        :param brew: requested brew name
+        :return: report message on error or True on success
+        """
+        if not brew:
+            return True
+        key = brew.lower()
+        if key not in self._stock:
+            return True
+        item = self._stock[key]
+        if self._balance < item.price:
+            return f'Сумма недостаточна! Внесите еще монет'
+        if item.stock <= 0:
+            return f'Не осталось данного напитка!'
+        item.stock -= 1
+        self._balance -= item.price
+        return f'Выдан {item.brew}!'
+
+    def _default(self, _) -> bool:
+        return True
+
+    def exec(self, com: str) -> Union[str, bool]:
+        c = Command.parse(com)
+        return self._handlers.get(c.com, self._default)(c.param)
 
 
-def _coupon_tick(item):
-    new_item = Item(item.name, item.sell_in - 1, item.quality)
-    if new_item.quality < 50:
-        new_item.quality += 1
-        if new_item.sell_in < 10:
-            new_item.quality += 1
-        if new_item.sell_in < 5:
-            new_item.quality += 1
-
-    if new_item.sell_in < 0:
-        new_item.quality = 0
-    return new_item
+def run():
+    v = Vendor()
+    res = ''
+    while res is not False:
+        print(f'{v}')
+        res = v.exec(input('Введите команду>>>:'))
+        if isinstance(res, str):
+            print(f'{res}')
 
 
-def _framework_tick(item):
-    new_item = Item(item.name, item.sell_in - 1, item.quality)
-    if new_item.quality > 0:
-        new_item.quality = item.quality - 2 if new_item.sell_in > 0 else item.quality - 4
-    return new_item
-
-
-def _pick(item):
-    return 'фреймворк' if 'фреймворк' in item.name.lower() else item.name
-
-
-tick_handlers = {
-    'Д. Кнут, Искусство программирования': _knuth_tick,
-    'Марк Лутц, Изучаем Python, 3й том': lambda _: _,
-    'Скидочный купон на курс': _coupon_tick,
-    'фреймворк': _framework_tick
-}
-
-
-class BookShop:
-    def __init__(self, items: list):
-        self.items: list = items
-
-    def update_quality(self):
-        self.items = [tick_handlers.get(_pick(item), _normal_tick)(item) for item in self.items]
+if __name__ == '__main__':
+    run()
