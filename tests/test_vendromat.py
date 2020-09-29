@@ -21,61 +21,64 @@ def test_run_command_should_return_false_on_exit():
 
 
 def test_run_command_should_nop_on_unknown_command():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('lolcommand')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_empty_command():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command1():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('внести 1.1')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command2():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('внести text')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command3():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('внести text ext')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command4():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('внести -1')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command5():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = True
 
     expect(Vendromat().exec('внести 0')).to_equal(expected)
 
 
 def test_run_command_should_update_balance():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 100"""
+    expected = 100
 
-    expect(Vendromat().exec('внести 100')).to_equal(expected)
+    v = Vendromat()
+    v.exec('внести 100')
+
+    expect(v._balance).to_equal(expected)
 
 
 def test_run_command_should_withdraw1():
-    expected = """Возвращено: 0\nНапитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = """Возвращено: 0"""
 
     expect(Vendromat().exec('сдача')).to_equal(expected)
 
 
 def test_run_command_should_withdraw2():
-    expected = """Возвращено: 50\nНапитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
+    expected = """Возвращено: 50"""
 
     v = Vendromat()
     v.exec('внести 50')
@@ -83,7 +86,7 @@ def test_run_command_should_withdraw2():
 
 
 def test_run_command_should_nop_on_vend_unknown1():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 100"""
+    expected = True
 
     v = Vendromat()
     v.exec('внести 100')
@@ -91,7 +94,7 @@ def test_run_command_should_nop_on_vend_unknown1():
 
 
 def test_run_command_should_nop_on_vend_unknown2():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 100"""
+    expected = True
 
     v = Vendromat()
     v.exec('внести 100')
@@ -99,7 +102,7 @@ def test_run_command_should_nop_on_vend_unknown2():
 
 
 def test_run_command_should_reject_not_enough_balance():
-    expected = """Сумма недостаточна! Внесите еще монет\nНапитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 40"""
+    expected = """Сумма недостаточна! Внесите еще монет"""
 
     v = Vendromat()
     v.exec('внести 40')
@@ -107,7 +110,7 @@ def test_run_command_should_reject_not_enough_balance():
 
 
 def test_run_command_should_reject_not_enough_stock():
-    expected = """Не осталось данного напитка!\nНапитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 50"""
+    expected = """Не осталось данного напитка!"""
 
     v = Vendromat()
     v.exec('внести 300')
@@ -120,7 +123,7 @@ def test_run_command_should_reject_not_enough_stock():
 
 
 def test_run_command_should_normal_vend():
-    expected = """Выдан JAVA!\nНапитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 50"""
+    expected = """Выдан JAVA!"""
 
     v = Vendromat()
     v.exec('внести 100')
