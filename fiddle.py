@@ -1,36 +1,37 @@
 """
-This module emulates a brew vending machine.
+This module emulates a beverage vending machine.
 
 Implements a CLI user interface, capable of handling a set of commands:
 
     помощь       -- display the help message
-    взять <brew> -- sell the selected brew, if requirements are met
+    взять <brew> -- sell the selected beverage, if requirements are met
     внести <sum> -- deposit <sum> to the session balance
-    сдача        -- retrieve deposited money
+    сдача        -- retrieve the deposited money
     выход        -- exit the current vending session
 
 Business rules:
 
-    - vending session is a REPL-loop
+    - the vending session is a REPL cycle
     - commands and parameters can be input in any register
-    - each command is preceded by a status message and a command prompt:
+    - command prompt is preceded by a status message:
 
         Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0
         Введите команду>>>:
 
     - unknown commands are ignored
-    - commands with unknown/wrong parameters are ignored
+    - commands with unknown malformed parameters are ignored
     - no error messages
-    - 'помощь' should display 'Доступные команды: {список команд}'
-    - 'взять <brew>' should:
-        - display 'Сумма недостаточна! Внесите еще монет' message and reject operation if not enough credit is deposited
-        - display 'Не осталось данного напитка!' message and reject operation if selected brew is out of stock
-        - display 'Выдан <brew>' message and update the machine status if credit and stock conditions are satisfied
-    - 'внести <sum>' should update credit balance if parameter is a natural number
-    - 'сдача' should display 'Возвращено:<balance>' message and reset the machine balance to 0
-    - 'выход' should shut down the current vending session
-    - upon launch, the machine should have ['JAVA', 'Nesquick', 'Latte', 'Tea'] brews available, 5 units each
-    - brew prices are:
+    - 'помощь' displays 'Доступные команды: <список команд>'
+    - 'взять <brew>':
+        - displays 'Сумма недостаточна! Внесите еще монет' message and rejects the operation
+          if not enough credit is deposited
+        - displays 'Не осталось данного напитка!' message and rejects the operation if selected beverage is out of stock
+        - displays 'Выдан <brew>' message and updates the internal machine state if both conditions are satisfied
+    - 'внести <sum>' updates credit balance if parameter is a natural number
+    - 'сдача' displays 'Возвращено:<balance>' message and resets the machine balance to 0
+    - 'выход' shuts down the current vending session
+    - upon launch, the machine has ['JAVA', 'Nesquick', 'Latte', 'Tea'] beverages available, 5 units each in stock
+    - beverage prices are:
         JAVA: 50
         Latte: 50
         Nesquick: 40
@@ -68,7 +69,7 @@ __all__ = ['run']
 @dataclass
 class Stock:
     """
-    Helper, stores machine stock information.
+    Helper, stores machine stock entry information.
 
     Not a part of the public API.
     """
@@ -80,7 +81,7 @@ class Stock:
 @dataclass
 class Command:
     """
-    Helper, handles the user input.
+    Helper, processes the user input.
 
     Not a part of the public API.
     """
@@ -106,7 +107,7 @@ class Command:
 
 class Vendor:
     """
-    Helper, handles the emulated machine state updates.
+    Helper, handles the emulated machine state changes.
 
     Not a part of the public API.
     """
@@ -127,19 +128,19 @@ class Vendor:
         }
 
     def __str__(self) -> str:
-        return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self._balance}"
+        return f"Напитки: {[b.brew for b in self._stock.values()]} Баланс: {self._balance}"
 
     def _help(self, _) -> str:
-        """Build and return the help message."""
-        return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
+        """Builds and returns the help message."""
+        return f"Доступные команды: {tuple(self._handlers.keys())}"
 
     def _exit(self, _) -> bool:
-        """Return the exit flag."""
+        """Returns the exit flag."""
         return False
 
     def _deposit(self, amt: int) -> bool:
         """
-        Deposits credit to the session balance.
+        Deposits the credit to the session balance.
 
         :param amt: - natural number, amount to deposit
         :return: bool flag
@@ -164,10 +165,10 @@ class Vendor:
 
     def _buy(self, brew: str) -> Union[str, bool]:
         """
-        Sells the requested brew if enough credit is on the balance and the brew is in stock.
+        Sells the requested beverage if enough credit is on the balance and the beverage is in stock.
 
-        :param brew: requested brew name
-        :return: report message on error or True on success
+        :param brew: requested beverage name
+        :return: report message on error or bool flag on success
         """
         if not brew:
             return True
@@ -184,14 +185,29 @@ class Vendor:
         return f'Выдан {item.brew}!'
 
     def _default(self, _) -> bool:
+        """
+        Handles unrecognised commands.
+
+        :return: bool flag
+        """
         return True
 
     def exec(self, com: str) -> Union[str, bool]:
+        """
+        Selects a command handler based on the user input.
+
+        :return: either a status message ot a bool flag
+        """
         c = Command.parse(com)
         return self._handlers.get(c.com, self._default)(c.param)
 
 
 def run():
+    """
+    Runs the vending session REPL.
+
+    Part of the public API
+    """
     v = Vendor()
     res = ''
     while res is not False:
