@@ -128,11 +128,11 @@ class Vendor:
         }
 
     def __str__(self) -> str:
-        return f"Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: {self._balance}"
+        return f"Напитки: {[b.brew for b in self._stock.values()]} Баланс: {self._balance}"
 
     def _help(self, _) -> str:
         """Builds and returns the help message."""
-        return "Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"
+        return f"Доступные команды: {tuple(self._handlers.keys())}"
 
     def _exit(self, _) -> bool:
         """Returns the exit flag."""
