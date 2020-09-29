@@ -72,13 +72,13 @@ def test_run_command_should_update_balance():
 
 
 def test_run_command_should_withdraw1():
-    expected = """Возвращено: 0"""
+    expected = """Возвращено:0"""
 
     expect(Vendor().exec('сдача')).to_equal(expected)
 
 
 def test_run_command_should_withdraw2():
-    expected = """Возвращено: 50"""
+    expected = """Возвращено:50"""
 
     v = Vendor()
     v.exec('внести 50')
