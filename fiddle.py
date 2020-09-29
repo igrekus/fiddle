@@ -1,10 +1,10 @@
 """
-This module emulates a brew vending machine.
+This module emulates a beverage vending machine.
 
 Implements a CLI user interface, capable of handling a set of commands:
 
     помощь       -- display the help message
-    взять <brew> -- sell the selected brew, if requirements are met
+    взять <brew> -- sell the selected beverage, if requirements are met
     внести <sum> -- deposit <sum> to the session balance
     сдача        -- retrieve deposited money
     выход        -- exit the current vending session
@@ -164,9 +164,9 @@ class Vendor:
 
     def _buy(self, brew: str) -> Union[str, bool]:
         """
-        Sells the requested brew if enough credit is on the balance and the brew is in stock.
+        Sells the requested beverage if enough credit is on the balance and the beverage is in stock.
 
-        :param brew: requested brew name
+        :param brew: requested beverage name
         :return: report message on error or True on success
         """
         if not brew:
