@@ -165,7 +165,8 @@ class Vendor:
 
     def _buy(self, brew: str) -> Union[str, bool]:
         """
-        Sells the requested beverage if enough credit is on the balance and the beverage is in stock.
+        Vends the requested beverage and updates the machine state if enough credit is on the balance
+        and the beverage is in stock.
 
         :param brew: requested beverage name
         :return: report message on error or bool flag on success
