@@ -1,14 +1,11 @@
+from collections import namedtuple
 from dataclasses import dataclass
 from functools import reduce
 
 __all__ = ['run']
 
 
-@dataclass
-class Stock:
-    brew: str
-    price: int
-    stock: int = 5
+Stock = namedtuple('Stock', ['brew', 'price', 'stock'])
 
 
 def _parse_command(s):
@@ -47,7 +44,7 @@ def _buy(v, brew):
         return f'Сумма недостаточна! Внесите еще монет'
     if item.stock <= 0:
         return f'Не осталось данного напитка!'
-    item.stock -= 1
+    v._stock[key] = Stock(item.brew, item.price, item.stock - 1)
     v._balance -= item.price
     return f'Выдан {item.brew}!'
 
@@ -72,10 +69,10 @@ class Vendor:
     def __init__(self):
         self._balance = 0
         self._stock = {
-            'java': Stock('JAVA', 50),
-            'nesquick': Stock('Nesquick', 40),
-            'latte': Stock('Latte', 50),
-            'tea': Stock('Tea', 20)
+            'java': Stock('JAVA', 50, 5),
+            'nesquick': Stock('Nesquick', 40, 5),
+            'latte': Stock('Latte', 50, 5),
+            'tea': Stock('Tea', 20, 5)
         }
 
     def __str__(self) -> str:
