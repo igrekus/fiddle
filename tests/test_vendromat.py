@@ -33,42 +33,42 @@ def test_run_command_should_nop_on_empty_command():
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command1():
-    expected = True
+    expected = Vendor()
 
     expect(_exec(Vendor(), 'внести 1.1')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command2():
-    expected = True
+    expected = Vendor()
 
     expect(_exec(Vendor(), 'внести text')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command3():
-    expected = True
+    expected = Vendor()
 
     expect(_exec(Vendor(), 'внести text ext')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command4():
-    expected = True
+    expected = Vendor()
 
     expect(_exec(Vendor(), 'внести -1')).to_equal(expected)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command5():
-    expected = True
+    expected = Vendor()
 
     expect(_exec(Vendor(), 'внести 0')).to_equal(expected)
 
 
 def test_run_command_should_update_balance():
-    expected = 100
+    expected = Vendor(balance=100)
 
     v = Vendor()
-    _exec(v, 'внести 100')
+    v = _exec(v, 'внести 100')
 
-    expect(v._balance).to_equal(expected)
+    expect(v).to_equal(expected)
 
 
 def test_run_command_should_withdraw1():

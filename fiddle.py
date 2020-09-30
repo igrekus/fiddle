@@ -17,11 +17,7 @@ def _help(*_):
 
 
 def _deposit(v, amt):
-    if amt.isdigit():
-        amt = int(amt)
-        if amt > 0:
-            v._balance += amt
-    return True
+    return Vendor(balance=v._balance + 0 if not amt.isdigit() else int(amt) if int(amt) > 0 else 0, stock=v._stock)
 
 
 def _withdraw(v, _):
@@ -62,17 +58,20 @@ def _exec(v, com):
 
 
 class Vendor:
-    def __init__(self):
-        self._balance = 0
+    def __init__(self, balance=0, stock=None):
+        self._balance = balance
         self._stock = {
             'java': Stock('JAVA', 50, 5),
             'nesquick': Stock('Nesquick', 40, 5),
             'latte': Stock('Latte', 50, 5),
             'tea': Stock('Tea', 20, 5)
-        }
+        } if stock is None else stock
 
     def __str__(self) -> str:
         return f"Напитки: {[b.brew for b in self._stock.values()]} Баланс: {self._balance}"
+
+    def __eq__(self, other):
+        return self._balance == other._balance and self._stock == other._stock
 
 
 def run():
@@ -80,9 +79,9 @@ def run():
     res = ''
     while res is not False:
         print(f'{v}')
-        res = _exec(v, input('Введите команду>>>:'))
-        if isinstance(res, str):
-            print(f'{res}')
+        v, msg = _exec(v, input('Введите команду>>>:'))
+        if msg:
+            print(f'{msg}')
 
 
 if __name__ == '__main__':
