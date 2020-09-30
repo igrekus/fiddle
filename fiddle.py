@@ -4,6 +4,7 @@ __all__ = ['run']
 
 
 Stock = namedtuple('Stock', ['brew', 'price', 'stock'])
+Vendor = namedtuple('Vendor', ['balance', 'stock'])
 
 
 def _parse_command(s):
@@ -19,7 +20,7 @@ def _deposit(v, amt):
 
 
 def _withdraw(v, _):
-    return Vendor(stock=v.stock), f"Возвращено:{v.balance}"
+    return Vendor(balance=0, stock=v.stock), f"Возвращено:{v.balance}"
 
 
 def _buy(v, brew):
@@ -58,22 +59,16 @@ def _show(v):
     return f"Напитки: {[b.brew for b in v.stock.values()]} Баланс: {v.balance}"
 
 
-class Vendor:
-    def __init__(self, balance=0, stock=None):
-        self.balance = balance
-        self.stock = {
+def run():
+    v = Vendor(
+        balance=0,
+        stock={
             'java': Stock('JAVA', 50, 5),
             'nesquick': Stock('Nesquick', 40, 5),
             'latte': Stock('Latte', 50, 5),
             'tea': Stock('Tea', 20, 5)
-        } if stock is None else stock
-
-    def __eq__(self, other):
-        return self.balance == other.balance and self.stock == other.stock
-
-
-def run():
-    v = Vendor()
+        }
+    )
     res = True
     while res is not False:
         print(f'{_show(v)}')
