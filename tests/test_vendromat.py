@@ -1,127 +1,144 @@
-from fiddle import Vendor, _exec
+from fiddle import Vendor, _exec, Stock
 from pyexpect import expect
 
 
 def test_run_should_display_ui_on_start():
-    expected = """Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0"""
-
-    expect(str(Vendor())).to_equal(expected)
+    expect(str(Vendor())).to_equal("""Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0""")
 
 
 def test_run_command_should_display_help_on_help():
-    expected = """Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')"""
+    v, msg = _exec(Vendor(), 'помощь')
 
-    expect(_exec(Vendor(), 'помощь')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(msg).to_equal("""Доступные команды: ('помощь', 'взять', 'внести', 'сдача', 'выход')""")
 
 
 def test_run_command_should_return_false_on_exit():
-    expected = False
+    v, res = _exec(Vendor(), 'выход')
 
-    expect(_exec(Vendor(), 'выход')).to_be(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(False)
 
 
 def test_run_command_should_nop_on_unknown_command():
-    expected = True
+    v, res = _exec(Vendor(), 'lolcommand')
 
-    expect(_exec(Vendor(), 'lolcommand')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_empty_command():
-    expected = True
+    v, res = _exec(Vendor(), '')
 
-    expect(_exec(Vendor(), '')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command1():
-    expected = Vendor()
+    v, res = _exec(Vendor(), 'внести 1.1')
 
-    expect(_exec(Vendor(), 'внести 1.1')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command2():
-    expected = Vendor()
+    v, res = _exec(Vendor(), 'внести text')
 
-    expect(_exec(Vendor(), 'внести text')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command3():
-    expected = Vendor()
+    v, res = _exec(Vendor(), 'внести text ext')
 
-    expect(_exec(Vendor(), 'внести text ext')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command4():
-    expected = Vendor()
+    v, res = _exec(Vendor(), 'внести -1')
 
-    expect(_exec(Vendor(), 'внести -1')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_wrong_update_balance_command5():
-    expected = Vendor()
+    v, res = _exec(Vendor(), 'внести 0')
 
-    expect(_exec(Vendor(), 'внести 0')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_update_balance():
-    expected = Vendor(balance=100)
+    v, res = _exec(Vendor(), 'внести 100')
 
-    v = Vendor()
-    v = _exec(v, 'внести 100')
-
-    expect(v).to_equal(expected)
+    expect(v).to_equal(Vendor(balance=100))
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_withdraw1():
-    expected = """Возвращено:0"""
+    v, res = _exec(Vendor(), 'сдача')
 
-    expect(_exec(Vendor(), 'сдача')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal("""Возвращено:0""")
 
 
 def test_run_command_should_withdraw2():
-    expected = """Возвращено:50"""
+    v, _ = _exec(Vendor(), 'внести 50')
+    v, res = _exec(v, 'сдача')
 
-    v = Vendor()
-    _exec(v, 'внести 50')
-    expect(_exec(v, 'сдача')).to_equal(expected)
+    expect(v).to_equal(Vendor())
+    expect(res).to_equal("""Возвращено:50""")
 
 
 def test_run_command_should_nop_on_vend_unknown1():
-    expected = True
+    v, _ = _exec(Vendor(), 'внести 100')
+    v, res = _exec(v, 'взять lol')
 
-    v = Vendor()
-    _exec(v, 'внести 100')
-    expect(_exec(v, 'взять lol')).to_equal(expected)
+    expect(v).to_equal(Vendor(balance=100))
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_nop_on_vend_unknown2():
-    expected = True
+    v, _ = _exec(Vendor(), 'внести 100')
+    v, res = _exec(v, 'взять')
 
-    v = Vendor()
-    _exec(v, 'внести 100')
-    expect(_exec(v, 'взять')).to_equal(expected)
+    expect(v).to_equal(Vendor(balance=100))
+    expect(res).to_equal(True)
 
 
 def test_run_command_should_reject_not_enough_balance():
-    expected = """Сумма недостаточна! Внесите еще монет"""
+    v, _ = _exec(Vendor(), 'внести 40')
+    v, res = _exec(v, 'взять JAVA')
 
-    v = Vendor()
-    _exec(v, 'внести 40')
-    expect(_exec(v, 'взять JAVA')).to_equal(expected)
+    expect(v).to_equal(Vendor(balance=40))
+    expect(res).to_equal("""Сумма недостаточна! Внесите еще монет""")
 
 
 def test_run_command_should_reject_not_enough_stock():
-    expected = """Не осталось данного напитка!"""
-
-    v = Vendor()
-    _exec(v, 'внести 300')
+    v, _ = _exec(Vendor(), 'внести 300')
     for _ in range(5):
-        _exec(v, 'взять JAVA')
-    expect(_exec(v, 'взять JAVA')).to_equal(expected)
+        v, res = _exec(v, 'взять JAVA')
+
+    v, res = _exec(v, 'взять JAVA')
+
+    expect(v).to_equal(Vendor(balance=50, stock={
+        'java': Stock('JAVA', 50, 0),
+        'nesquick': Stock('Nesquick', 40, 5),
+        'latte': Stock('Latte', 50, 5),
+        'tea': Stock('Tea', 20, 5)
+    }))
+    expect(res).to_equal("""Не осталось данного напитка!""")
 
 
 def test_run_command_should_normal_vend():
-    expected = """Выдан JAVA!"""
+    v, _ = _exec(Vendor(), 'внести 100')
+    v, res = _exec(v, 'взять JAVA')
 
-    v = Vendor()
-    _exec(v, 'внести 100')
-    expect(_exec(v, 'взять JAVA')).to_equal(expected)
+    expect(v).to_equal(Vendor(balance=50, stock={
+        'java': Stock('JAVA', 50, 4),
+        'nesquick': Stock('Nesquick', 40, 5),
+        'latte': Stock('Latte', 50, 5),
+        'tea': Stock('Tea', 20, 5)
+    }))
+    expect(res).to_equal("""Выдан JAVA!""")
