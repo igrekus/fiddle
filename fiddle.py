@@ -21,8 +21,7 @@ def _deposit(v, amt):
 
 
 def _withdraw(v, _):
-    to_return, v._balance = v._balance, 0
-    return v, f"Возвращено:{to_return}"
+    return Vendor(stock=v._stock), f"Возвращено:{v._balance}"
 
 
 def _buy(v, brew):
