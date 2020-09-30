@@ -3,8 +3,34 @@ from collections import namedtuple
 __all__ = ['run']
 
 
-Stock = namedtuple('Stock', ['brew', 'price', 'stock'])
+def run():
+    v = Vendor(
+        balance=0,
+        stock={
+            'java': Stock('JAVA', 50, 5),
+            'nesquick': Stock('Nesquick', 40, 5),
+            'latte': Stock('Latte', 50, 5),
+            'tea': Stock('Tea', 20, 5)
+        }
+    )
+    res = True
+    while res is not False:
+        print(f'{_show(v)}')
+        v, res = _exec(v, input('Введите команду>>>:'))
+        if isinstance(res, str):
+            print(f'{res}')
+
+
 Vendor = namedtuple('Vendor', ['balance', 'stock'])
+Stock = namedtuple('Stock', ['brew', 'price', 'stock'])
+
+
+def _show(v):
+    return f"Напитки: {[b.brew for b in v.stock.values()]} Баланс: {v.balance}"
+
+
+def _exec(v, com):
+    return (lambda c, p: _select(c)(v, p))(*_parse_command(com))
 
 
 def _parse_command(s):
@@ -47,32 +73,6 @@ _rpartial = lambda f, *args: lambda *a: f(*(a + args))
 _commands = ['помощь', 'взять', 'внести', 'сдача', 'выход']
 _handlers = [_help, _buy, _deposit, _withdraw, _exit]
 _select = _rpartial(dict(zip(_commands, _handlers)).get, lambda *_: (_[0], True))
-
-
-def _exec(v, com):
-    return (lambda c, p: _select(c)(v, p))(*_parse_command(com))
-
-
-def _show(v):
-    return f"Напитки: {[b.brew for b in v.stock.values()]} Баланс: {v.balance}"
-
-
-def run():
-    v = Vendor(
-        balance=0,
-        stock={
-            'java': Stock('JAVA', 50, 5),
-            'nesquick': Stock('Nesquick', 40, 5),
-            'latte': Stock('Latte', 50, 5),
-            'tea': Stock('Tea', 20, 5)
-        }
-    )
-    res = True
-    while res is not False:
-        print(f'{_show(v)}')
-        v, res = _exec(v, input('Введите команду>>>:'))
-        if isinstance(res, str):
-            print(f'{res}')
 
 
 if __name__ == '__main__':
