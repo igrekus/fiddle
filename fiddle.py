@@ -25,19 +25,19 @@ def _withdraw(v, _):
 
 
 def _buy(v, brew):
-    if not brew:
-        return v, True
-    key = brew.lower()
-    if key not in v._stock:
-        return v, True
-    item = v._stock[key]
-    if v._balance < item.price:
-        return v, f'Сумма недостаточна! Внесите еще монет'
-    if item.stock <= 0:
-        return v, f'Не осталось данного напитка!'
-    v._stock[key] = Stock(item.brew, item.price, item.stock - 1)
-    v._balance -= item.price
-    return v, f'Выдан {item.brew}!'
+    return (lambda key: (v, True) if key not in v.stock else
+        (v, 'Сумма недостаточна! Внесите еще монет') if v.balance < v.stock[key].price else
+            (v, 'Не осталось данного напитка!') if v.stock[key].stock <= 0 else
+                (Vendor(
+                    balance=v.balance - v.stock[key].price,
+                    stock={
+                        **v.stock,
+                        key: Stock(
+                            v.stock[key].brew,
+                            v.stock[key].price,
+                            v.stock[key].stock - 1
+                        )
+                    }), f'Выдан {v.stock[key].brew}!'))(brew.lower())
 
 
 _rpartial = lambda f, *args: lambda *a: f(*(a + args))
