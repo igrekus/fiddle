@@ -1,6 +1,4 @@
 from collections import namedtuple
-from dataclasses import dataclass
-from functools import reduce
 
 __all__ = ['run']
 
