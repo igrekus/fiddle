@@ -12,7 +12,7 @@ def _parse_command(s):
 
 
 def _help(*_):
-    return _[0], f"Доступные команды: {tuple(_handlers.keys())}"
+    return _[0], f"Доступные команды: {tuple(_commands)}"
 
 
 def _deposit(v, amt):
@@ -39,20 +39,18 @@ def _buy(v, brew):
                     }), f'Выдан {v.stock[key].brew}!'))(brew.lower())
 
 
-_rpartial = lambda f, *args: lambda *a: f(*(a + args))
+def _exit(*_):
+    return _[0], False
 
-_handlers = {
-    'помощь': _help,
-    'взять': _buy,
-    'внести': _deposit,
-    'сдача': _withdraw,
-    'выход': lambda *_: (_[0], False)
-}
-_handle = _rpartial(_handlers.get, lambda *_: (_[0], True))
+
+_rpartial = lambda f, *args: lambda *a: f(*(a + args))
+_commands = ['помощь', 'взять', 'внести', 'сдача', 'выход']
+_handlers = [_help, _buy, _deposit, _withdraw, _exit]
+_select = _rpartial(dict(zip(_commands, _handlers)).get, lambda *_: (_[0], True))
 
 
 def _exec(v, com):
-    return (lambda c, p: _handle(c)(v, p))(*_parse_command(com))
+    return (lambda c, p: _select(c)(v, p))(*_parse_command(com))
 
 
 def _show(v):
