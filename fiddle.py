@@ -17,11 +17,11 @@ def _help(*_):
 
 
 def _deposit(v, amt):
-    return Vendor(balance=v._balance + 0 if not amt.isdigit() else int(amt) if int(amt) > 0 else 0, stock=v._stock), True
+    return Vendor(balance=v.balance + 0 if not amt.isdigit() else int(amt) if int(amt) > 0 else 0, stock=v.stock), True
 
 
 def _withdraw(v, _):
-    return Vendor(stock=v._stock), f"Возвращено:{v._balance}"
+    return Vendor(stock=v.stock), f"Возвращено:{v.balance}"
 
 
 def _buy(v, brew):
@@ -58,8 +58,8 @@ def _exec(v, com):
 
 class Vendor:
     def __init__(self, balance=0, stock=None):
-        self._balance = balance
-        self._stock = {
+        self.balance = balance
+        self.stock = {
             'java': Stock('JAVA', 50, 5),
             'nesquick': Stock('Nesquick', 40, 5),
             'latte': Stock('Latte', 50, 5),
@@ -67,10 +67,10 @@ class Vendor:
         } if stock is None else stock
 
     def __str__(self) -> str:
-        return f"Напитки: {[b.brew for b in self._stock.values()]} Баланс: {self._balance}"
+        return f"Напитки: {[b.brew for b in self.stock.values()]} Баланс: {self.balance}"
 
     def __eq__(self, other):
-        return self._balance == other._balance and self._stock == other._stock
+        return self.balance == other.balance and self.stock == other.stock
 
 
 def run():
