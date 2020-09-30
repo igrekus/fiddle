@@ -57,6 +57,10 @@ _handlers = {
 _handle = _rpartial(_handlers.get, lambda *args: True)
 
 
+def _exec(v, com):
+    return (lambda c, p: _handle(c)(v, p))(*_parse_command(com))
+
+
 class Vendor:
     def __init__(self):
         self._balance = 0
@@ -70,16 +74,13 @@ class Vendor:
     def __str__(self) -> str:
         return f"Напитки: {[b.brew for b in self._stock.values()]} Баланс: {self._balance}"
 
-    def exec(self, com):
-        return (lambda c, p: _handle(c)(self, p))(*_parse_command(com))
-
 
 def run():
     v = Vendor()
     res = ''
     while res is not False:
         print(f'{v}')
-        res = v.exec(input('Введите команду>>>:'))
+        res = _exec(v, input('Введите команду>>>:'))
         if isinstance(res, str):
             print(f'{res}')
 
