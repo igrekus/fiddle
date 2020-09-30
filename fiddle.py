@@ -4,7 +4,7 @@ __all__ = ['run']
 
 
 def run():
-    v = Vendor(
+    v, res = Vendor(
         balance=0,
         stock={
             'java': Stock('JAVA', 50, 5),
@@ -12,9 +12,8 @@ def run():
             'latte': Stock('Latte', 50, 5),
             'tea': Stock('Tea', 20, 5)
         }
-    )
-    res = True
-    while res is not False:
+    ), True
+    while res:
         print(f'{_show(v)}')
         v, res = _exec(v, input('Введите команду>>>:'))
         if isinstance(res, str):
