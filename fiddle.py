@@ -12,8 +12,7 @@ class Stock:
 
 
 def _parse_command(s):
-    s = s.lower()
-    return s.split(maxsplit=1) if ' ' in s else (s, '')
+    return (lambda st: st.split(maxsplit=1) if ' ' in st else (st, ''))(s)
 
 
 def _help(*_):
