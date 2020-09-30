@@ -56,6 +56,10 @@ def _exec(v, com):
     return (lambda c, p: _handle(c)(v, p))(*_parse_command(com))
 
 
+def _show(v):
+    return f"Напитки: {[b.brew for b in v.stock.values()]} Баланс: {v.balance}"
+
+
 class Vendor:
     def __init__(self, balance=0, stock=None):
         self.balance = balance
@@ -66,9 +70,6 @@ class Vendor:
             'tea': Stock('Tea', 20, 5)
         } if stock is None else stock
 
-    def __str__(self) -> str:
-        return f"Напитки: {[b.brew for b in self.stock.values()]} Баланс: {self.balance}"
-
     def __eq__(self, other):
         return self.balance == other.balance and self.stock == other.stock
 
@@ -77,7 +78,7 @@ def run():
     v = Vendor()
     res = True
     while res is not False:
-        print(f'{v}')
+        print(f'{_show(v)}')
         v, res = _exec(v, input('Введите команду>>>:'))
         if isinstance(res, str):
             print(f'{res}')

@@ -1,9 +1,9 @@
-from fiddle import Vendor, _exec, Stock
+from fiddle import Vendor, _exec, Stock, _show
 from pyexpect import expect
 
 
 def test_run_should_display_ui_on_start():
-    expect(str(Vendor())).to_equal("""Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0""")
+    expect(_show(Vendor())).to_equal("""Напитки: ['JAVA', 'Nesquick', 'Latte', 'Tea'] Баланс: 0""")
 
 
 def test_run_command_should_display_help_on_help():
