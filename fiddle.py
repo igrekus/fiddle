@@ -16,10 +16,6 @@ def _help(*_):
     return f"Доступные команды: {tuple(_handlers.keys())}"
 
 
-def _exit(*_):
-    return False
-
-
 def _deposit(v, amt):
     if amt.isdigit():
         amt = int(amt)
@@ -49,10 +45,6 @@ def _buy(v, brew):
     return f'Выдан {item.brew}!'
 
 
-def _default(*_):
-    return True
-
-
 _rpartial = lambda f, *args: lambda *a: f(*(a + args))
 
 _handlers = {
@@ -60,9 +52,9 @@ _handlers = {
     'взять': _buy,
     'внести': _deposit,
     'сдача': _withdraw,
-    'выход': _exit
+    'выход': lambda *args: False
 }
-_handle = _rpartial(_handlers.get, _default)
+_handle = _rpartial(_handlers.get, lambda *args: True)
 
 
 class Vendor:
