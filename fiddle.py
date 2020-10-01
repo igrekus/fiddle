@@ -4,7 +4,7 @@ __all__ = ['run']
 
 
 def run():
-    v, res = Vendor(
+    vend, res = Vendor(
         balance=0,
         stock={
             'java': Stock('JAVA', 50, 5),
@@ -14,10 +14,9 @@ def run():
         }
     ), True
     while res:
-        print(f'{_show(v)}')
-        v, res = _exec(v, input('Введите команду>>>:'))
-        if isinstance(res, str):
-            print(f'{res}')
+        *_, vend, res = (lambda v, r: (print(f'{r}') if isinstance(r, str) else None,
+                                       print(f'{_show(v)}'),
+                                       *_exec(v, input('Введите команду>>>:'))))(vend, res)
 
 
 Vendor = namedtuple('Vendor', ['balance', 'stock'])
@@ -49,19 +48,19 @@ def _withdraw(v, _):
 
 
 def _buy(v, brew):
-    return (lambda key: (v, True) if key not in v.stock else
-        (v, 'Сумма недостаточна! Внесите еще монет') if v.balance < v.stock[key].price else
-            (v, 'Не осталось данного напитка!') if v.stock[key].stock <= 0 else
+    return (lambda key: (v, True) if key not in v.stock else (lambda item:
+        (v, 'Сумма недостаточна! Внесите еще монет') if v.balance < item.price else
+            (v, 'Не осталось данного напитка!') if item.stock <= 0 else
                 (Vendor(
-                    balance=v.balance - v.stock[key].price,
+                    balance=v.balance - item.price,
                     stock={
                         **v.stock,
                         key: Stock(
-                            v.stock[key].brew,
-                            v.stock[key].price,
-                            v.stock[key].stock - 1
+                            item.brew,
+                            item.price,
+                            item.stock - 1
                         )
-                    }), f'Выдан {v.stock[key].brew}!'))(brew.lower())
+                    }), f'Выдан {item.brew}!'))(v.stock[key]))(brew.lower())
 
 
 def _exit(*_):
