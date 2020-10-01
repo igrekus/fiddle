@@ -3,8 +3,16 @@ from collections import namedtuple
 __all__ = ['run']
 
 
+def _loop(dummy1, dummy2, vend, res):
+    return exit() \
+        if res is False else \
+        _loop(*(lambda v, r: (print(f'{r}') if isinstance(r, str) else None,
+                              print(f'{_show(v)}'),
+                              *_exec(v, input('Введите команду>>>:'))))(vend, res))
+
+
 def run():
-    vend, res = Vendor(
+    return _loop(None, None, Vendor(
         balance=0,
         stock={
             'java': Stock('JAVA', 50, 5),
@@ -12,11 +20,7 @@ def run():
             'latte': Stock('Latte', 50, 5),
             'tea': Stock('Tea', 20, 5)
         }
-    ), True
-    while res:
-        *_, vend, res = (lambda v, r: (print(f'{r}') if isinstance(r, str) else None,
-                                       print(f'{_show(v)}'),
-                                       *_exec(v, input('Введите команду>>>:'))))(vend, res)
+    ), True)
 
 
 Vendor = namedtuple('Vendor', ['balance', 'stock'])
