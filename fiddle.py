@@ -4,7 +4,7 @@ __all__ = ['run']
 
 
 def _loop(dummy1, dummy2, vend, res):
-    return exit() \
+    return False \
         if res is False else \
         _loop(*(lambda v, r: (print(f'{r}') if isinstance(r, str) else None,
                               print(f'{_show(v)}'),
