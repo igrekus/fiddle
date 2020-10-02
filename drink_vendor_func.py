@@ -32,7 +32,7 @@ def _show(v):
 
 
 def _exec(v, com):
-    return (lambda c, p: _select(c)(v, p))(*_parse_command(com))
+    return (lambda c, p: _select(c)(v, p))(*_parse_command(com.lower()))
 
 
 def _parse_command(s):
@@ -44,7 +44,9 @@ def _help(*_):
 
 
 def _deposit(v, amt):
-    return Vendor(balance=v.balance + 0 if not amt.isdigit() else int(amt) if int(amt) > 0 else 0, stock=v.stock), True
+    return Vendor(balance=v.balance if not amt.isdigit() else
+                          (lambda qty: v.balance + qty if qty > 0 else
+                          v.balance)(int(amt)), stock=v.stock), True
 
 
 def _withdraw(v, _):
@@ -64,7 +66,7 @@ def _buy(v, brew):
                             item.price,
                             item.stock - 1
                         )
-                    }), f'Выдан {item.brew}!'))(v.stock[key]))(brew.lower())
+                    }), f'Выдан {item.brew}!'))(v.stock[key]))(brew)
 
 
 def _exit(*_):
@@ -75,7 +77,6 @@ _rpartial = lambda f, *args: lambda *a: f(*(a + args))
 _commands = ['помощь', 'взять', 'внести', 'сдача', 'выход']
 _handlers = [_help, _buy, _deposit, _withdraw, _exit]
 _select = _rpartial(dict(zip(_commands, _handlers)).get, lambda *_: (_[0], True))
-
 
 if __name__ == '__main__':
     run()
