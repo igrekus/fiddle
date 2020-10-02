@@ -44,9 +44,11 @@ def _help(*_):
 
 
 def _deposit(v, amt):
-    return Vendor(balance=v.balance if not amt.isdigit() else
-                          (lambda qty: v.balance + qty if qty > 0 else
-                          v.balance)(int(amt)), stock=v.stock), True
+    return Vendor(
+        balance=v.balance if not amt.isdigit() else
+                (lambda qty: v.balance + qty if qty > 0 else v.balance)(int(amt)),
+        stock=v.stock
+    ), True
 
 
 def _withdraw(v, _):
