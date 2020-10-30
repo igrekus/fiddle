@@ -1,20 +1,26 @@
-raw = [1, 1, 3, 4]
-mx = max(raw)
+from functools import partial
+
+raw = [1, 1, 3, 4, 7, 20]
 
 
-def consumables(cells):
-    return {(index, size): [c for c in cells if size > c] for index, size in enumerate(cells)}
+grow = lambda size, foods: \
+    size > foods[0] \
+        if len(foods) == 1 \
+        else (
+            lambda head, *tail:
+                grow(
+                    size + head if size > head else size,
+                    tail
+                )
+        )(*foods)
 
 
-can_win = list({
-    k: int(v > mx)
-    for k, v in {
-        k[0]: sum(v) + k[1]
-        for k, v in consumables(raw).items()
-    }.items()
-}.values())
+can_win = lambda foods: \
+    list(map(
+        int,
+        map(
+            partial(grow, foods=foods),
+            foods)
+    ))
 
-
-# print(consumable)
-# print(totals)
-print(can_win)
+print(can_win(raw))
