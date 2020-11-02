@@ -1,4 +1,3 @@
-from collections import namedtuple
 from functools import partial
 
 raw = [
@@ -10,23 +9,22 @@ raw = [
     [1, 1, 3, 4],
 ]
 
-
-Player = namedtuple('Player', ['id', 'size'])
-
-
-def grow(player, foods):
-    if len(foods) == 1:
-        return player.size > foods[0].size
-    else:
-        head, *tail = foods
-        new_player = Player(player.id, player.size + head.size if (player.size > head.size and player.id != head.id) else player.size)
-        return grow(new_player, tail)
+grow = lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else \
+    (lambda head, *tail: grow((p[0], p[1] + head[1]) if p[1] > head[1] and p[0] != head[0] else p, tail))(*fs)
 
 
-def can_win(ps):
-    ps = [Player(*args) for args in enumerate(ps)]
-    return [int(e) for e in [grow(p, ps) for p in ps]]
+can_win = lambda pls: list((lambda ps: map(int, map(partial(grow, fs=ps), ps)))(list(map(tuple, enumerate(pls)))))
 
 
-for r in raw:
-    print(r, can_win(r))
+res = [
+    [0, 0, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1]
+]
+
+for rw, rs in zip(raw, res):
+    cw = can_win(rw)
+    assert cw == rs
+    print(rw, cw)
