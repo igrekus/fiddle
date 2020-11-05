@@ -69,9 +69,9 @@ def num_coords(x):
         if v == x:
             row, col = (idx + 1, n_square) if direction else (n_square, idx + 1)
 
-    for idx, v in enumerate(range(starting_n + n_square - 1, n_square ** 2 + 1)):
+    for idx, v in enumerate(range(starting_n + n_square, n_square ** 2 + 1)):
         if v == x:
-            row, col = (n_square, n_square - idx) if direction else (n_square - idx, n_square)
+            row, col = (n_square, n_square - idx - 1) if direction else (n_square - idx - 1, n_square)
 
     # if direction:
     #     for idx, v in enumerate(range(starting_n, starting_n + n_square)):
