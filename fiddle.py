@@ -52,27 +52,24 @@
 
 import math
 
-
-def num_coords(x):
-    n_square = math.ceil(math.sqrt(x))
-    direction = n_square % 2 == 0   # True - down-left, False - right-up
-    starting_n = (n_square - 1) ** 2 + 1
-
-    half = (n_square ** 2 - starting_n + 1) // 2
-    in_first_half = x <= starting_n + half
-
-    row, col = \
-        [(idx + 1, n_square) if direction else (n_square, idx + 1) for idx, v in
-         enumerate(range(starting_n, starting_n + n_square)) if v == x][0] \
-            if in_first_half \
-            else [(n_square, n_square - idx - 1) if direction else (n_square - idx - 1, n_square) for idx, v in
-                  enumerate(range(starting_n + n_square, n_square ** 2 + 1)) if v == x][0]
-
-    return row, col
-
+num_coords  = lambda x: \
+    (lambda side:
+     (lambda dir, start:
+      (lambda:
+       [(idx + 1, side) if dir else (side, idx + 1) for idx, v in
+        enumerate(range(start, start + side)) if v == x][0]
+       if x <= start + (side ** 2 - start + 1) // 2
+       else
+       [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
+        enumerate(range(start + side, side ** 2 + 1)) if v == x][0]))
+    (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))()
 
 coords = [(i, num_coords(i)) for i in range(1, 37)]
-res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 2)), (7, (3, 3)), (8, (2, 3)), (9, (1, 3)), (10, (1, 4)), (11, (2, 4)), (12, (3, 4)), (13, (4, 4)), (14, (4, 3)), (15, (4, 2)), (16, (4, 1)), (17, (5, 1)), (18, (5, 2)), (19, (5, 3)), (20, (5, 4)), (21, (5, 5)), (22, (4, 5)), (23, (3, 5)), (24, (2, 5)), (25, (1, 5)), (26, (1, 6)), (27, (2, 6)), (28, (3, 6)), (29, (4, 6)), (30, (5, 6)), (31, (6, 6)), (32, (6, 5)), (33, (6, 4)), (34, (6, 3)), (35, (6, 2)), (36, (6, 1))]
+res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 2)), (7, (3, 3)), (8, (2, 3)),
+       (9, (1, 3)), (10, (1, 4)), (11, (2, 4)), (12, (3, 4)), (13, (4, 4)), (14, (4, 3)), (15, (4, 2)), (16, (4, 1)),
+       (17, (5, 1)), (18, (5, 2)), (19, (5, 3)), (20, (5, 4)), (21, (5, 5)), (22, (4, 5)), (23, (3, 5)), (24, (2, 5)),
+       (25, (1, 5)), (26, (1, 6)), (27, (2, 6)), (28, (3, 6)), (29, (4, 6)), (30, (5, 6)), (31, (6, 6)), (32, (6, 5)),
+       (33, (6, 4)), (34, (6, 3)), (35, (6, 2)), (36, (6, 1))]
 
 print(coords)
 for c, r in zip(coords, res):
