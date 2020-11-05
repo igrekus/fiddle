@@ -68,37 +68,6 @@ def num_coords(x):
             else [(n_square, n_square - idx - 1) if direction else (n_square - idx - 1, n_square) for idx, v in
                   enumerate(range(starting_n + n_square, n_square ** 2 + 1)) if v == x][0]
 
-    # for idx, v in enumerate(range(starting_n, starting_n + n_square)):
-    #     if v == x:
-    #         row, col = (idx + 1, n_square) if direction else (n_square, idx + 1)
-    #
-    # for idx, v in enumerate(range(starting_n + n_square, n_square ** 2 + 1)):
-    #     if v == x:
-    #         row, col = (n_square, n_square - idx - 1) if direction else (n_square - idx - 1, n_square)
-
-    # if direction:
-    #     for idx, v in enumerate(range(starting_n, starting_n + n_square)):
-    #         if v == x:
-    #             row = idx + 1
-    #             col = n_square
-    #             break
-    #     else:
-    #         for idx, v in enumerate(range(starting_n + n_square - 1, n_square ** 2 + 1)):
-    #             if v == x:
-    #                 row = n_square
-    #                 col = n_square - idx
-    # else:
-    #     for idx, v in enumerate(range(starting_n, starting_n + n_square)):
-    #         if v == x:
-    #             col = idx + 1
-    #             row = n_square
-    #             break
-    #     else:
-    #         for idx, v in enumerate(range(starting_n + n_square - 1, n_square ** 2 + 1)):
-    #             if v == x:
-    #                 col = n_square
-    #                 row = n_square - idx
-
     return row, col
 
 
