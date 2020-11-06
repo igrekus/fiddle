@@ -1,6 +1,6 @@
 from pyexpect import expect
 
-from fiddle import nearest_bus_stop, pack_pastry, rotate_board
+from fiddle import nearest_bus_stop, pack_pastry, rotate_board, locate_number
 
 
 def test_bus_stop():
@@ -25,3 +25,13 @@ def test_pack_pastry():
 def test_rotate_board():
     expect(rotate_board([4, 2, 3, 5, 1])).to_equal([1, 4, 3, 5, 2])
 
+
+def test_table_pattern():
+    res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 2)), (7, (3, 3)), (8, (2, 3)),
+           (9, (1, 3)), (10, (1, 4)), (11, (2, 4)), (12, (3, 4)), (13, (4, 4)), (14, (4, 3)), (15, (4, 2)),
+           (16, (4, 1)), (17, (5, 1)), (18, (5, 2)), (19, (5, 3)), (20, (5, 4)), (21, (5, 5)), (22, (4, 5)),
+           (23, (3, 5)), (24, (2, 5)), (25, (1, 5)), (26, (1, 6)), (27, (2, 6)), (28, (3, 6)), (29, (4, 6)),
+           (30, (5, 6)), (31, (6, 6)), (32, (6, 5)), (33, (6, 4)), (34, (6, 3)), (35, (6, 2)), (36, (6, 1)),
+           (37, (7, 1))]
+    for i, e in res:
+        expect(locate_number(i)).to_equal(e)
