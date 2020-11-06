@@ -1,6 +1,6 @@
 from pyexpect import expect
 
-from fiddle import nearest_bus_stop, pack_pastry
+from fiddle import nearest_bus_stop, pack_pastry, rotate_board
 
 
 def test_bus_stop():
@@ -20,3 +20,8 @@ def test_pack_pastry():
     expect(pack_pastry(5, 2)).three.diff.to_equal(None)
     expect(pack_pastry(2, 7)).big.diff.to_equal(None)
     expect(pack_pastry(7, 2)).big.diff.to_equal(None)
+
+
+def test_rotate_board():
+    expect(rotate_board([4, 2, 3, 5, 1])).to_equal([1, 4, 3, 5, 2])
+
