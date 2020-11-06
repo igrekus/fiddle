@@ -52,16 +52,16 @@
 
 import math
 
-num_coords  = lambda x: \
+num_coords = lambda x: \
     (lambda side:
      (lambda dir, start:
-       [(idx + 1, side) if dir else (side, idx + 1) for idx, v in
-        enumerate(range(start, start + side)) if v == x][0]
-       if x <= start + (side ** 2 - start + 1) // 2
-       else
-       [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
-        enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
-    (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
+      [(idx + 1, side) if dir else (side, idx + 1) for idx, v in
+       enumerate(range(start, start + side)) if v == x][0]
+      if x <= start + (side ** 2 - start + 1) // 2
+      else
+      [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
+       enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
+     (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
 
 coords = [(i, num_coords(i)) for i in range(1, 37)]
 res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 2)), (7, (3, 3)), (8, (2, 3)),
