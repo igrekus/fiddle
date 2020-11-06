@@ -52,8 +52,9 @@ nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in
 ```
 """
 pack_pastry = lambda a, b:\
-    None if abs(a - b) != 1 else (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
+    (a // 3, b // 3) if a - b == 0 else \
         None if abs(a - b) != 1 else \
+            (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
 
 """
 3. Шахматы
