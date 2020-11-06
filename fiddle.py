@@ -1,18 +1,22 @@
 """
 1. Света и остановки
 
-Остановки расставлены через каждые k метров, Света прошла n метров. Написать функциб `nearest()`,
-которая будет возвращать расстояние до ближайшей к Свете остановки. Сигнатура:
+Остановки расставлены через каждые k метров, Света прошла n метров. Написать функцию,
+принимающую на вход `k` и `n` и возвращающую расстояние до ближайшей к Свете остановки.
 
+Сигнатура функции:
+```
     def nearest_bus_stop(k: int, n: int) -> int:
         ...
-
+```
     гбе:
-        k, n - целые числа 1..10**9
+        `k`, `n` - натуральное число
 
     Пример:
+```
     >>> nearest_bus_stop(600, 2000)
     200
+```
 """
 
 from itertools import count
@@ -49,20 +53,6 @@ print(nearest_bus_stop(k=600, n=2000))
 #     cw = can_win(rw)
 #     assert cw == rs, f'{cw} {rs}'
 #     print(rw, cw)
-
-# # 1, sveta
-# k = 600
-# n = 2000
-# from itertools import count
-# sveta = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
-# print(sveta(k, n))
-
-# # 2. pirogi
-# a = 4
-# b = 5
-# pack = lambda a, b:\
-#     -1 if abs(a - b) != 1 else (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
-# print(pack(a, b))
 
 # # 3. chess
 # n = 5
