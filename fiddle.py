@@ -21,7 +21,6 @@
 
 from itertools import count
 nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
-print(nearest_bus_stop(k=600, n=2000))
 
 """
 2. Круассаны и эклеры
@@ -46,7 +45,7 @@ print(nearest_bus_stop(k=600, n=2000))
     Пример:
 ```    
     >>> pack_pastry(4, 5)
-    (!, 2)
+    (1, 2)
     
     >>> pack_pastry(3, 5)
     None
@@ -54,7 +53,7 @@ print(nearest_bus_stop(k=600, n=2000))
 """
 pack_pastry = lambda a, b:\
     None if abs(a - b) != 1 else (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
-print(pack_pastry(a=4, b=5))
+        None if abs(a - b) != 1 else \
 
 """
 3. Шахматы
@@ -86,7 +85,6 @@ print(pack_pastry(a=4, b=5))
 """
 rotate_board = lambda before: \
     [row.index(1) + 1 for row in list(zip(*reversed([[int(i == (v - 1)) for i in range(len(before))] for v in before])))]
-print(rotate_board(before=[4, 2, 3, 5, 1]))
 
 """
 4. Число в ячейке
@@ -135,7 +133,6 @@ res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 
        (25, (1, 5)), (26, (1, 6)), (27, (2, 6)), (28, (3, 6)), (29, (4, 6)), (30, (5, 6)), (31, (6, 6)), (32, (6, 5)),
        (33, (6, 4)), (34, (6, 3)), (35, (6, 2)), (36, (6, 1))]
 
-print(coords)
 for c, r in zip(coords, res):
     assert c == r, f'should be equal {c} != {r}'
 
@@ -185,4 +182,3 @@ can_win = lambda pls: list((lambda ps: map(int, map(partial(grow, fs=ps), ps)))(
 for rw, rs in zip(raw, res):
     cw = can_win(rw)
     assert cw == rs, f'{cw} {rs}'
-    print(rw, cw)
