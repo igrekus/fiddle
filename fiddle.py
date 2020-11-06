@@ -1,3 +1,24 @@
+"""
+1. Света и остановки
+
+Остановки расставлены через каждые k метров, Света прошла n метров. Написать функциб `nearest()`,
+которая будет возвращать расстояние до ближайшей к Свете остановки. Сигнатура:
+
+    def nearest_bus_stop(k: int, n: int) -> int:
+        ...
+
+    гбе:
+        k, n - целые числа 1..10**9
+
+    Пример:
+    >>> nearest_bus_stop(600, 2000)
+    200
+"""
+
+from itertools import count
+nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
+print(nearest_bus_stop(k=600, n=2000))
+
 # # 5, cells
 # from functools import partial
 #
