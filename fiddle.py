@@ -88,6 +88,57 @@ rotate_board = lambda before: \
     [row.index(1) + 1 for row in list(zip(*reversed([[int(i == (v - 1)) for i in range(len(before))] for v in before])))]
 print(rotate_board(before=[4, 2, 3, 5, 1]))
 
+"""
+4. Число в ячейке
+
+Дана бесконечная таблица, заполенная натуральными числами следующим образом:
+```
+   1  2  3  4  5  6
+------------------- 
+1| 1  2  9 10 25 26
+2| 4  3  8 11 24 ..
+3| 5  6  7 12 23 ..
+4|16 15 14 13 22 ..
+5|17 18 19 20 21 ..
+6|.. .. .. .. .. ..
+```
+
+Написать функцию, которая получает на вход натуральное число и возвращает его координаты в приведённой таблице,
+в формате (строка, столбец).
+
+Сигнатура функции:
+```
+    def locate_number(n: int) -> Tuple[int, int]
+        ...
+```
+Пример:
+```
+    >>> locate_number(15)
+    (4, 2)
+```
+"""
+import math
+locate_number = lambda x: \
+    (lambda side:
+     (lambda dir, start:
+      [(idx + 1, side) if dir else (side, idx + 1) for idx, v in
+       enumerate(range(start, start + side)) if v == x][0]
+      if x <= start + (side ** 2 - start + 1) // 2
+      else
+      [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
+       enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
+     (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
+coords = [(i, locate_number(i)) for i in range(1, 37)]
+res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 2)), (7, (3, 3)), (8, (2, 3)),
+       (9, (1, 3)), (10, (1, 4)), (11, (2, 4)), (12, (3, 4)), (13, (4, 4)), (14, (4, 3)), (15, (4, 2)), (16, (4, 1)),
+       (17, (5, 1)), (18, (5, 2)), (19, (5, 3)), (20, (5, 4)), (21, (5, 5)), (22, (4, 5)), (23, (3, 5)), (24, (2, 5)),
+       (25, (1, 5)), (26, (1, 6)), (27, (2, 6)), (28, (3, 6)), (29, (4, 6)), (30, (5, 6)), (31, (6, 6)), (32, (6, 5)),
+       (33, (6, 4)), (34, (6, 3)), (35, (6, 2)), (36, (6, 1))]
+
+print(coords)
+for c, r in zip(coords, res):
+    assert c == r, f'should be equal {c} != {r}'
+
 # # 5, cells
 # from functools import partial
 #
