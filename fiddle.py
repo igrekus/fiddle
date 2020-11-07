@@ -1,3 +1,9 @@
+import math
+
+from functools import partial
+from itertools import count
+
+
 """
 1. Света и остановки
 
@@ -18,9 +24,8 @@
     200
 ```
 """
-
-from itertools import count
 nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
+
 
 """
 2. Круассаны и эклеры
@@ -56,6 +61,7 @@ pack_pastry = lambda a, b:\
         None if abs(a - b) != 1 else \
             (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
 
+
 """
 3. Шахматы
 
@@ -87,6 +93,7 @@ pack_pastry = lambda a, b:\
 rotate_board = lambda before: \
     [row.index(1) + 1 for row in list(zip(*reversed([[int(i == (v - 1)) for i in range(len(before))] for v in before])))]
 
+
 """
 4. Число в ячейке
 
@@ -116,7 +123,6 @@ rotate_board = lambda before: \
     (4, 2)
 ```
 """
-import math
 locate_number = lambda x: \
     (lambda side:
      (lambda dir, start:
@@ -127,6 +133,7 @@ locate_number = lambda x: \
       [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
        enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
      (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
+
 
 """
 5. Agar.io
@@ -146,31 +153,7 @@ locate_number = lambda x: \
     [0, 0, 1, 1]
 ```
 """
-from functools import partial
-
-raw = [
-    [1, 1, 3, 4, 7, 15],
-    [1, 1, 3, 4, 7, 16],
-    [1, 1, 3, 4, 7, 17],
-    [1, 1, 3, 8, 9, 17],
-    [1, 2, 2, 4, 8, 15],
-    [1, 1, 3, 4],
-]
-
-res = [
-    [0, 0, 1, 1, 1, 1],
-    [0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 1, 1, 1],
-    [0, 1, 1, 1, 1, 1]
-]
 
 grow = lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else \
     (lambda head, *tail: grow((p[0], p[1] + head[1]) if p[1] > head[1] and p[0] != head[0] else p, tail))(*fs)
-
-can_win = lambda pls: list((lambda ps: map(int, map(partial(grow, fs=ps), ps)))(list(enumerate(pls))))
-
-
-for rw, rs in zip(raw, res):
-    cw = can_win(rw)
-    assert cw == rs, f'{cw} {rs}'
+find_winners = lambda pls: list((lambda ps: map(int, map(partial(grow, fs=ps), ps)))(list(enumerate(pls))))

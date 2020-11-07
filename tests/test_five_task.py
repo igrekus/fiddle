@@ -1,6 +1,6 @@
 from pyexpect import expect
 
-from fiddle import nearest_bus_stop, pack_pastry, rotate_board, locate_number
+from fiddle import nearest_bus_stop, pack_pastry, rotate_board, locate_number, find_winners
 
 
 def test_bus_stop():
@@ -35,3 +35,26 @@ def test_table_pattern():
            (37, (7, 1))]
     for i, e in res:
         expect(locate_number(i)).to_equal(e)
+
+
+def test_agar():
+    raw = [
+        [1, 1, 3, 4, 7, 15],
+        [1, 1, 3, 4, 7, 16],
+        [1, 1, 3, 4, 7, 17],
+        [1, 1, 3, 8, 9, 17],
+        [1, 2, 2, 4, 8, 15],
+        [1, 1, 3, 4],
+    ]
+
+    res = [
+        [0, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 1, 1, 1],
+        [0, 1, 1, 1, 1, 1]
+    ]
+
+    for rw, rs in zip(raw, res):
+        cw = find_winners(rw)
+        assert cw == rs, f'{cw} {rs}'
