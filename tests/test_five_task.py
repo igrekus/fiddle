@@ -52,9 +52,9 @@ def test_agar():
         [0, 0, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 1],
         [0, 0, 0, 1, 1, 1],
-        [0, 1, 1, 1, 1, 1]
+        [0, 1, 1, 1, 1, 1],
+        [0, 0, 1, 1]
     ]
 
     for rw, rs in zip(raw, res):
-        cw = find_winners(rw)
-        assert cw == rs, f'{cw} {rs}'
+        expect(find_winners(rw)).to_equal(rs)
