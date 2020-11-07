@@ -21,7 +21,6 @@
 
 from itertools import count
 nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
-print(nearest_bus_stop(k=600, n=2000))
 
 """
 2. Круассаны и эклеры
@@ -46,15 +45,16 @@ print(nearest_bus_stop(k=600, n=2000))
     Пример:
 ```    
     >>> pack_pastry(4, 5)
-    (!, 2)
+    (1, 2)
     
     >>> pack_pastry(3, 5)
     None
 ```
 """
 pack_pastry = lambda a, b:\
-    None if abs(a - b) != 1 else (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
-print(pack_pastry(a=4, b=5))
+    (a // 3, b // 3) if a - b == 0 else \
+        None if abs(a - b) != 1 else \
+            (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
 
 """
 3. Шахматы
@@ -86,7 +86,6 @@ print(pack_pastry(a=4, b=5))
 """
 rotate_board = lambda before: \
     [row.index(1) + 1 for row in list(zip(*reversed([[int(i == (v - 1)) for i in range(len(before))] for v in before])))]
-print(rotate_board(before=[4, 2, 3, 5, 1]))
 
 """
 4. Число в ячейке
@@ -128,16 +127,6 @@ locate_number = lambda x: \
       [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
        enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
      (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
-coords = [(i, locate_number(i)) for i in range(1, 37)]
-res = [(1, (1, 1)), (2, (1, 2)), (3, (2, 2)), (4, (2, 1)), (5, (3, 1)), (6, (3, 2)), (7, (3, 3)), (8, (2, 3)),
-       (9, (1, 3)), (10, (1, 4)), (11, (2, 4)), (12, (3, 4)), (13, (4, 4)), (14, (4, 3)), (15, (4, 2)), (16, (4, 1)),
-       (17, (5, 1)), (18, (5, 2)), (19, (5, 3)), (20, (5, 4)), (21, (5, 5)), (22, (4, 5)), (23, (3, 5)), (24, (2, 5)),
-       (25, (1, 5)), (26, (1, 6)), (27, (2, 6)), (28, (3, 6)), (29, (4, 6)), (30, (5, 6)), (31, (6, 6)), (32, (6, 5)),
-       (33, (6, 4)), (34, (6, 3)), (35, (6, 2)), (36, (6, 1))]
-
-print(coords)
-for c, r in zip(coords, res):
-    assert c == r, f'should be equal {c} != {r}'
 
 """
 5. Agar.io
@@ -185,4 +174,3 @@ can_win = lambda pls: list((lambda ps: map(int, map(partial(grow, fs=ps), ps)))(
 for rw, rs in zip(raw, res):
     cw = can_win(rw)
     assert cw == rs, f'{cw} {rs}'
-    print(rw, cw)
