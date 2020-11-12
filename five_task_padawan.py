@@ -50,16 +50,16 @@ def locate_number(n: int):
     ad = x ** 2 - n
     if ad <= delta:
         if x % 2 == 0:
-            return tuple([x, ad + 1])
+            return x, ad + 1
         else:
-            return tuple([ad + 1, x])
+            return ad + 1, x
     elif ad == delta:
-        return tuple([x, x])
+        return x, x
     else:
         if x % 2 == 0:
-            return tuple([2 * x - 1 - ad, x])
+            return 2 * x - 1 - ad, x
         else:
-            return tuple([x, 2 * x - 1 - ad])
+            return x, 2 * x - 1 - ad
 
 
 def find_winners(players):
