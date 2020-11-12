@@ -1,9 +1,9 @@
 # Светофоры и девушка
-def nearest_bus_stop(a, b):
-    if (b - (b // a) * a) < (a - (b - (b // a) * a)):
-        return (b - (b // a) * a)
+def nearest_bus_stop(n, k):
+    if (k - (k // n) * n) < (n - (k - (k // n) * n)):
+        return (k - (k // n) * n)
     else:
-        return (a - (b - (b // a) * a))
+        return (n - (k - (k // n) * n))
 
 
 # Эклеры и пирожные
@@ -29,25 +29,25 @@ def pack_pastry(a: int, b: int):
             return None
 
 
-def rotate_board(l):
-    N = len(l)
+def rotate_board(before):
+    N = len(before)
     ret = []
     ladies = {}
     res = [x for x in range(N, 0, -1)]
     for i in range(N):
-        ladies[l[i]] = i + 1
+        ladies[before[i]] = i + 1
     for i in range(1, N + 1):
         ret.append(res[ladies[i] - 1])
     return (ret)
 
 
 #  Решетка с числами
-def locate_number(N: int):
+def locate_number(n: int):
     x = 1
-    while x ** 2 < N:
+    while x ** 2 < n:
         x += 1
     delta = (x ** 2 - (x - 1) ** 2 - 1) / 2
-    ad = x ** 2 - N
+    ad = x ** 2 - n
     if ad <= delta:
         if x % 2 == 0:
             return tuple([x, ad + 1])
@@ -62,12 +62,12 @@ def locate_number(N: int):
             return tuple([x, 2 * x - 1 - ad])
 
 
-def find_winners(bakt):
+def find_winners(players):
     flag = 1
-    N = len(bakt)
+    N = len(players)
     ret = []
     res = []
-    if bakt[-1] > bakt[0]:
+    if players[-1] > players[0]:
         res.append(flag)
     else:
         flag = 0
@@ -77,12 +77,12 @@ def find_winners(bakt):
             res.append(flag)
             continue
         else:
-            if bakt[i] > bakt[0]:
+            if players[i] > players[0]:
                 sum_weight_do_i = 0
                 for j in range(i):
-                    sum_weight_do_i += bakt[j]
+                    sum_weight_do_i += players[j]
 
-                if bakt[i] + sum_weight_do_i > bakt[i + 1]:
+                if players[i] + sum_weight_do_i > players[i + 1]:
                     res.append(flag)
                     continue
                 else:
