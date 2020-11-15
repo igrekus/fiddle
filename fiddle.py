@@ -1,10 +1,9 @@
 import math
 
 from functools import partial
-from itertools import count
 
 
-nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
+nearest_bus_stop = lambda k, n: min(abs(k * (n // k) - n), abs(k * (n // k) - n + k))
 
 
 pack_pastry = lambda a, b:\
