@@ -9,7 +9,7 @@ nearest_bus_stop = lambda k, n: min(abs(k * (n // k) - n), abs(k * (n // k) - n 
 pack_pastry = lambda a, b:\
     (a // 3, b // 3) if a - b == 0 else \
         None if abs(a - b) != 1 else \
-            (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
+            (lambda com: (com + int(a - b > 0), com + int(a - b < 0)))(max(a // 3, b // 3))
 
 
 rotate_board = lambda before: \
