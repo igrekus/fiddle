@@ -20,12 +20,12 @@ locate_number = lambda x: \
     (lambda side:
      (lambda dir, start:
       [(idx + 1, side) if dir else (side, idx + 1) for idx, v in
-       enumerate(range(start, start + side)) if v == x][0]
+       enumerate(range(start, start + side)) if v == x]
       if x <= start + (side ** 2 - start + 1) // 2
       else
       [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
-       enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
-     (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
+       enumerate(range(start + side, side ** 2 + 1)) if v == x])
+     (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))[0]
 
 
 grow = lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else \
