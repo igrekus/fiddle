@@ -1,16 +1,15 @@
 import math
 
 from functools import partial
-from itertools import count
 
 
-nearest_bus_stop = lambda k, n: next(min(k * i - n, abs(k * i - k - n)) for i in count() if k * i > n)
+nearest_bus_stop = lambda k, n: min(abs(k * (n // k) - n), abs(k * (n // k) - n + k))
 
 
 pack_pastry = lambda a, b:\
     (a // 3, b // 3) if a - b == 0 else \
         None if abs(a - b) != 1 else \
-            (lambda com: (com + 1, com) if a - b > 0 else (com, com + 1))(max(a // 3, b // 3))
+            (lambda com: (com + int(a - b > 0), com + int(a - b < 0)))(max(a // 3, b // 3))
 
 
 rotate_board = lambda before: \
@@ -20,15 +19,12 @@ rotate_board = lambda before: \
 locate_number = lambda x: \
     (lambda side:
      (lambda dir, start:
-      [(idx + 1, side) if dir else (side, idx + 1) for idx, v in
-       enumerate(range(start, start + side)) if v == x][0]
-      if x <= start + (side ** 2 - start + 1) // 2
-      else
-      [(side, side - idx - 1) if dir else (side - idx - 1, side) for idx, v in
-       enumerate(range(start + side, side ** 2 + 1)) if v == x][0])
+      ((x - start + 1, side) if dir else (side, x - start + 1))
+      if x <= start + (side ** 2 - start + 1) // 2 else
+      ((side, start + 2 * side - x - 1) if dir else (start + 2 * side - x - 1, side)))
      (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
 
-
-grow = lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else \
-    (lambda head, *tail: grow((p[0], p[1] + head[1]) if p[1] > head[1] and p[0] != head[0] else p, tail))(*fs)
-find_winners = lambda pls: list((lambda ps: map(int, map(partial(grow, fs=ps), ps)))(list(enumerate(pls))))
+find_winners = lambda players: list((lambda ps: map(int, map(partial((lambda f: f(f))(
+    lambda h: lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else (
+        lambda head, *tail: (lambda f: f(f))(h)((p[0], p[1] + head[1]) if p[1] > head[1] and p[0] != head[0] else p,
+                                                tail))(*fs)), fs=ps), ps)))(list(enumerate(players))))
