@@ -58,11 +58,9 @@ def locate_number(x: int) -> Tuple[int, int]:
     half_point = start + (side ** 2 - start + 1) // 2
 
     if x <= half_point:
-        result = x - start + 1, side
+        return (x - start + 1, side) if direction else (side, x - start + 1)
     else:
-        result = side, start + 2 * side - x - 1
-
-    return result if direction else tuple(reversed(result))
+        return (side, start + 2 * side - x - 1) if direction else (start + 2 * side - x - 1, side)
 
 
 def find_winners(players: List[int]) -> List[int]:
