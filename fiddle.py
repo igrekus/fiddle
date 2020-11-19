@@ -45,10 +45,25 @@ def _hundreds(n):
     return ''
 
 
+def _thousands(n):
+    if n in [1000, 2000, 3000]:
+        return 'M' * (n // 1000)
+    if n in [4000, 5000]:
+        return 'C' * (5000 // 1000 - n // 1000) + 'D'
+    if n in [6000, 7000, 8000]:
+        return 'D' + 'C' * (n // 1000 - 5000 // 1000)
+    if n in [9000]:
+        return 'C' * (10000 // 1000 - 9000 // 1000) + 'M'
+    return ''
+
+
 def to_roman(n: int) -> str:
     if n in range(1000):
+        # thousands = (n // 1000 % 10) * 1000
         hundreds = (n // 100 % 10) * 100
         tens = (n // 10 % 10) * 10
         ones = n % 10
         return _hundreds(hundreds) + _tens(tens) + _ones(ones)
+    if n in [1000, 2000, 3000]:
+        return _thousands(n)
     return 'stub'
