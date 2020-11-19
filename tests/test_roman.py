@@ -29,3 +29,8 @@ def test_several(test_input, expected):
 @pytest.mark.parametrize('act,exp', [romans[idx - 1] for idx in [10, 20, 30, 40, 50, 60, 70, 80, 90]])
 def test_tens(act, exp):
     expect(to_roman(act)).to_equal(exp)
+
+
+@pytest.mark.parametrize('act,exp', [romans[idx - 1] for idx in [100, 200, 300, 400, 500, 600, 700, 800, 900]])
+def test_tens(act, exp):
+    expect(to_roman(act)).to_equal(exp)
