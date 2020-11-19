@@ -33,11 +33,22 @@ def _tens(n):
     return ''
 
 
+def _hundreds(n):
+    if n in [100, 200, 300]:
+        return 'C' * (n // 100)
+    if n in [400, 500]:
+        return 'C' * (500 // 100 - n // 100) + 'D'
+    if n in [600, 700, 800]:
+        return 'D' + 'C' * (n // 100 - 500 // 100)
+    if n in [900]:
+        return 'C' * (1000 // 100 - 900 // 100) + 'M'
+    return ''
+
+
 def to_roman(n: int) -> str:
-    if n in range(100):
+    if n in range(1000):
+        hundreds = (n // 100) * 100
         tens = (n // 10) * 10
         ones = n % 10
-        return _tens(tens) + _ones(ones)
-    if n in [99, 100]:
-        return 'X' * (100 - n) + 'C' + 'IX' * (100 - n)
+        return _hundreds(hundreds) + _tens(tens) + _ones(ones)
     return 'stub'
