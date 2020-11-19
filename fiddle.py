@@ -47,8 +47,8 @@ def _hundreds(n):
 
 def to_roman(n: int) -> str:
     if n in range(1000):
-        hundreds = (n // 100) * 100
-        tens = (n // 10) * 10
+        hundreds = (n // 100 % 10) * 100
+        tens = (n // 10 % 10) * 10
         ones = n % 10
         return _hundreds(hundreds) + _tens(tens) + _ones(ones)
     return 'stub'
