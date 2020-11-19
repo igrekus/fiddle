@@ -1,30 +1,43 @@
-import math
-
-from functools import partial
-
-
-nearest_bus_stop = lambda k, n: min(abs(k * (n // k) - n), abs(k * (n // k) - n + k))
-
-
-pack_pastry = lambda a, b:\
-    (a // 3, b // 3) if a - b == 0 else \
-        None if abs(a - b) != 1 else \
-            (lambda com: (com + int(a - b > 0), com + int(a - b < 0)))(max(a // 3, b // 3))
+bases = {
+    1: 'I',
+    5: 'V',
+    10: 'X',
+    50: 'L',
+    100: 'C',
+    500: 'D',
+    1000: 'M'
+}
 
 
-rotate_board = lambda before: \
-    [row.index(1) + 1 for row in list(zip(*reversed([[int(i == (v - 1)) for i in range(len(before))] for v in before])))]
+def _ones(n):
+    if n in [1, 2, 3]:
+        return 'I' * n
+    if n in [4, 5]:
+        return 'I' * (5 - n) + 'V'
+    if n in [6, 7, 8]:
+        return 'V' + 'I' * (n - 5)
+    if n in [9]:
+        return 'I' * (10 - n) + 'X'
+    return ''
 
 
-locate_number = lambda x: \
-    (lambda side:
-     (lambda dir, start:
-      ((x - start + 1, side) if dir else (side, x - start + 1))
-      if x <= start + (side ** 2 - start + 1) // 2 else
-      ((side, start + 2 * side - x - 1) if dir else (start + 2 * side - x - 1, side)))
-     (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
+def _tens(n):
+    if n in [10, 20, 30]:
+        return 'X' * (n // 10)
+    if n in [40, 50]:
+        return 'X' * (50 // 10 - n // 10) + 'L'
+    if n in [60, 70, 80]:
+        return 'L' + 'X' * (n // 10 - 50 // 10)
+    if n in [90]:
+        return 'X' * (100 // 10 - 90 // 10) + 'C'
+    return ''
 
-find_winners = lambda players: list((lambda ps: map(int, map(partial((lambda f: f(f))(
-    lambda h: lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else (
-        lambda head, *tail: (lambda f: f(f))(h)((p[0], p[1] + head[1]) if p[1] > head[1] and p[0] != head[0] else p,
-                                                tail))(*fs)), fs=ps), ps)))(list(enumerate(players))))
+
+def to_roman(n: int) -> str:
+    if n in range(100):
+        tens = (n // 10) * 10
+        ones = n % 10
+        return _tens(tens) + _ones(ones)
+    if n in [99, 100]:
+        return 'X' * (100 - n) + 'C' + 'IX' * (100 - n)
+    return 'stub'
