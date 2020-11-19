@@ -34,3 +34,9 @@ def test_tens(act, exp):
 @pytest.mark.parametrize('act,exp', [romans[idx - 1] for idx in [100, 200, 300, 400, 500, 600, 700, 800, 900]])
 def test_tens(act, exp):
     expect(to_roman(act)).to_equal(exp)
+
+
+@pytest.mark.parametrize('act,exp', romans[:999])
+def test_to_thousand(act, exp):
+    expect(to_roman(act)).to_equal(exp)
+
