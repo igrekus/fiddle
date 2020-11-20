@@ -57,11 +57,24 @@ def _thousands(n):
     return ''
 
 
+def _gen(n, place=100, unit='C', next_half='D', next_unit='M'):
+    n //= place
+    if n in [1, 2, 3]:
+        return unit * n
+    if n in [4, 5]:
+        return unit * (5 - n) + next_half
+    if n in [6, 7, 8]:
+        return next_half + unit * (n - 5)
+    if n in [9]:
+        return unit * (10 - 9) + next_unit
+    return ''
+
+
 def to_roman(n: int) -> str:
     if n in range(4000):
         thousands = (n // 1000 % 10) * 1000
         hundreds = (n // 100 % 10) * 100
         tens = (n // 10 % 10) * 10
         ones = n % 10
-        return _thousands(thousands) + _hundreds(hundreds) + _tens(tens) + _ones(ones)
+        return _thousands(thousands) + _gen(hundreds, 100, 'C', 'D', 'M') + _tens(tens) + _ones(ones)
     return 'stub'
