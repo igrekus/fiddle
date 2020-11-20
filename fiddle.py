@@ -9,8 +9,7 @@ bases = {
 }
 
 
-def _gen(n, place=100, unit='C', next_half='D', next_unit='M'):
-    n //= place
+def _gen(n, unit='C', next_half='D', next_unit='M'):
     if n in [1, 2, 3]:
         return unit * n
     if n in [4, 5]:
@@ -23,13 +22,11 @@ def _gen(n, place=100, unit='C', next_half='D', next_unit='M'):
 
 
 def to_roman(n: int) -> str:
-    if n in range(4000):
-        thousands = (n // 1000 % 10) * 1000
-        hundreds = (n // 100 % 10) * 100
-        tens = (n // 10 % 10) * 10
-        ones = n % 10
-        return _gen(thousands, 1000, 'M', 'V̅', 'X̅') + \
-               _gen(hundreds, 100, 'C', 'D', 'M') + \
-               _gen(tens, 10, 'X', 'L', 'C') + \
-               _gen(ones, 1, 'I', 'V', 'X')
-    return 'stub'
+    thousands = (n // 1000 % 10)
+    hundreds = (n // 100 % 10)
+    tens = (n // 10 % 10)
+    ones = n % 10
+    return _gen(thousands, 'M', 'V̅', 'X̅') + \
+           _gen(hundreds, 'C', 'D', 'M') + \
+           _gen(tens, 'X', 'L', 'C') + \
+           _gen(ones, 'I', 'V', 'X')
