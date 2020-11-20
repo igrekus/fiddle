@@ -76,5 +76,8 @@ def to_roman(n: int) -> str:
         hundreds = (n // 100 % 10) * 100
         tens = (n // 10 % 10) * 10
         ones = n % 10
-        return _thousands(thousands) + _gen(hundreds, 100, 'C', 'D', 'M') + _tens(tens) + _ones(ones)
+        return _gen(thousands, 1000, 'M', 'V̅', 'X̅') + \
+               _gen(hundreds, 100, 'C', 'D', 'M') + \
+               _gen(tens, 10, 'X', 'L', 'C') + \
+               _gen(ones, 1, 'I', 'V', 'X')
     return 'stub'
