@@ -5,8 +5,8 @@ def _digit_to_roman(n, unit, next_half, next_unit):
         return unit * (5 - n) + next_half
     if n in [6, 7, 8]:
         return next_half + unit * (n - 5)
-    if n in [9]:
-        return unit * (10 - 9) + next_unit
+    if n == 9:
+        return unit + next_unit
     return ''
 
 
