@@ -1,4 +1,4 @@
-def _gen(n, unit, next_half, next_unit):
+def _digit_to_roman(n, unit, next_half, next_unit):
     if n in [1, 2, 3]:
         return unit * n
     if n in [4, 5]:
@@ -11,7 +11,7 @@ def _gen(n, unit, next_half, next_unit):
 
 
 def to_roman(n: int) -> str:
-    return ''.join(_gen(v, *units) for v, units in zip(
+    return ''.join(_digit_to_roman(v, *units) for v, units in zip(
         map(int, f'{n:04d}'),
         [['M', 'V̅', 'X̅'],
          ['C', 'D', 'M'],
