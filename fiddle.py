@@ -1,15 +1,4 @@
-bases = {
-    1: 'I',
-    5: 'V',
-    10: 'X',
-    50: 'L',
-    100: 'C',
-    500: 'D',
-    1000: 'M'
-}
-
-
-def _gen(n, unit='C', next_half='D', next_unit='M'):
+def _gen(n, unit, next_half, next_unit):
     if n in [1, 2, 3]:
         return unit * n
     if n in [4, 5]:
@@ -22,11 +11,11 @@ def _gen(n, unit='C', next_half='D', next_unit='M'):
 
 
 def to_roman(n: int) -> str:
-    thousands = (n // 1000 % 10)
-    hundreds = (n // 100 % 10)
-    tens = (n // 10 % 10)
+    thousands = n // 1000 % 10
+    hundreds = n // 100 % 10
+    tens = n // 10 % 10
     ones = n % 10
-    return _gen(thousands, 'M', 'V̅', 'X̅') + \
-           _gen(hundreds, 'C', 'D', 'M') + \
-           _gen(tens, 'X', 'L', 'C') + \
-           _gen(ones, 'I', 'V', 'X')
+    return ''.join(_gen(v, *txt) for v, txt in zip(
+        [thousands, hundreds, tens, ones],
+        [['M', 'V̅', 'X̅'], ['C', 'D', 'M'], ['X', 'L', 'C'], ['I', 'V', 'X'], ]
+    ))
