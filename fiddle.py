@@ -58,12 +58,10 @@ def _thousands(n):
 
 
 def to_roman(n: int) -> str:
-    if n in range(1000):
-        # thousands = (n // 1000 % 10) * 1000
+    if n in range(4000):
+        thousands = (n // 1000 % 10) * 1000
         hundreds = (n // 100 % 10) * 100
         tens = (n // 10 % 10) * 10
         ones = n % 10
-        return _hundreds(hundreds) + _tens(tens) + _ones(ones)
-    if n in [1000, 2000, 3000]:
-        return _thousands(n)
+        return _thousands(thousands) + _hundreds(hundreds) + _tens(tens) + _ones(ones)
     return 'stub'
