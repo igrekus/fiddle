@@ -11,11 +11,10 @@ def _gen(n, unit, next_half, next_unit):
 
 
 def to_roman(n: int) -> str:
-    thousands = n // 1000 % 10
-    hundreds = n // 100 % 10
-    tens = n // 10 % 10
-    ones = n % 10
-    return ''.join(_gen(v, *txt) for v, txt in zip(
-        [thousands, hundreds, tens, ones],
-        [['M', 'V̅', 'X̅'], ['C', 'D', 'M'], ['X', 'L', 'C'], ['I', 'V', 'X'], ]
+    return ''.join(_gen(v, *units) for v, units in zip(
+        map(int, f'{n:04d}'),
+        [['M', 'V̅', 'X̅'],
+         ['C', 'D', 'M'],
+         ['X', 'L', 'C'],
+         ['I', 'V', 'X']]
     ))
