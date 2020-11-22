@@ -18,3 +18,32 @@ def to_roman(n: int) -> str:
          ['X', 'L', 'C'],
          ['I', 'V', 'X']]
     ))
+
+
+def _ones_from_roman():
+    pass
+
+
+def parse_roman(roman: str) -> int:
+    it = iter(roman)
+    char = next(it)
+    if char == 'I':
+        if roman == 'II':
+            return 2
+        if roman == 'III':
+            return 3
+        if roman == 'IV':
+            return 4
+        if roman == 'IX':
+            return 9
+        return 1
+
+    if char == 'V':
+        if roman == 'VI':
+            return 6
+        if roman == 'VII':
+            return 7
+        if roman == 'VIII':
+            return 8
+        return 5
+    return 0
