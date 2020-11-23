@@ -25,3 +25,15 @@ def test_3():
 @pytest.mark.parametrize('exp,act', [romans[idx] for idx in range(9)])
 def test_ones(exp, act):
     expect(parse_roman(act)).to_equal(exp)
+
+
+@pytest.mark.parametrize('exp,act', [romans[idx - 1] for idx in [10, 20, 30, 40, 50, 60, 70, 80, 90]])
+def test_tens(exp, act):
+    expect(parse_roman(act)).to_equal(exp)
+
+
+def test_ones_errors():
+    expect(parse_roman('IIX')).to_equal(-1)
+    expect(parse_roman('IIII')).to_equal(-1)
+    expect(parse_roman('O')).to_equal(-1)
+    expect(parse_roman('VIIII')).to_equal(-1)
