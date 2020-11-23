@@ -36,29 +36,30 @@ def _from_roman(roman, unit, half, next_unit):
         char = next(it, None)
         if char is None:
             return 1 * mul
-        if char == half:
+        elif char == half:
             return 4 * mul
-        if char == next_unit:
+        elif char == next_unit:
             return 9 * mul
-        char = next(it, None)
-        if char is None:
-            return 2 * mul
-        if char == unit:
-            return 3 * mul
+        else:
+            char = next(it, None)
+            if char is None:
+                return 2 * mul
+            elif char == unit:
+                return 3 * mul
 
-    if char == half:
+    elif char == half:
         char = next(it, None)
         if char is None:
             return 5 * mul
-        if char == unit:
+        elif char == unit:
             char = next(it, None)
             if char is None:
                 return 6 * mul
-            if char == unit:
+            elif char == unit:
                 char = next(it, None)
                 if char is None:
                     return 7 * mul
-                if char == unit:
+                elif char == unit:
                     return 8 * mul
 
 
