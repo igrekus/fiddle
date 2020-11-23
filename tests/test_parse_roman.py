@@ -61,3 +61,9 @@ def test_ones_errors():
     expect(parse_roman('DD')).to_equal(-1)
     expect(parse_roman('DCCCC')).to_equal(-1)
 
+    expect(parse_roman('MMV̅')).to_equal(-1)
+    expect(parse_roman('V̅V̅X̅')).to_equal(-1)
+    expect(parse_roman('MMMM')).to_equal(-1)
+    expect(parse_roman('V̅V̅')).to_equal(-1)
+    expect(parse_roman('X̅MMM')).to_equal(-1)
+
