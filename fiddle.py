@@ -54,24 +54,36 @@ def _ones_from_roman(roman):
 
 
 def _tens_from_roman(roman):
-    if roman == 'X':
-        return 10
-    if roman == 'XX':
-        return 20
-    if roman == 'XXX':
-        return 30
-    if roman == 'XL':
-        return 40
-    if roman == 'L':
-        return 50
-    if roman == 'LX':
-        return 60
-    if roman == 'LXX':
-        return 70
-    if roman == 'LXXX':
-        return 80
-    if roman == 'XC':
-        return 90
+    it = iter(roman)
+    char = next(it)
+    if char == 'X':
+        char = next(it, None)
+        if char is None:
+            return 10
+        if char == 'L':
+            return 40
+        if char == 'C':
+            return 90
+        char = next(it, None)
+        if char is None:
+            return 20
+        if char == 'X':
+            return 30
+
+    if char == 'L':
+        char = next(it, None)
+        if char is None:
+            return 50
+        if char == 'X':
+            char = next(it, None)
+            if char is None:
+                return 60
+            if char == 'X':
+                char = next(it, None)
+                if char is None:
+                    return 70
+                if char == 'X':
+                    return 80
 
 
 def parse_roman(roman: str) -> int:
