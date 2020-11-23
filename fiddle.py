@@ -20,30 +20,40 @@ def to_roman(n: int) -> str:
     ))
 
 
-def _ones_from_roman():
-    pass
-
-
-def parse_roman(roman: str) -> int:
+def _ones_from_roman(roman):
     it = iter(roman)
     char = next(it)
     if char == 'I':
-        if roman == 'II':
-            return 2
-        if roman == 'III':
-            return 3
-        if roman == 'IV':
+        char = next(it, None)
+        if char is None:
+            return 1
+        if char == 'V':
             return 4
-        if roman == 'IX':
+        if char == 'X':
             return 9
-        return 1
+        char = next(it, None)
+        if char is None:
+            return 2
+        if char == 'I':
+            return 3
 
     if char == 'V':
-        if roman == 'VI':
-            return 6
-        if roman == 'VII':
-            return 7
-        if roman == 'VIII':
-            return 8
-        return 5
-    return 0
+        char = next(it, None)
+        if char is None:
+            return 5
+        if char == 'I':
+            char = next(it, None)
+            if char is None:
+                return 6
+            if char == 'I':
+                char = next(it, None)
+                if char is None:
+                    return 7
+                if char == 'I':
+                    return 8
+
+
+def parse_roman(roman: str) -> int:
+    if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
+        return _ones_from_roman(roman)
+    return -1
