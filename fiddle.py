@@ -28,7 +28,7 @@ multipliers = {
 }
 
 
-def _from_roman(roman, unit='I', half='V', next_unit='X'):
+def _from_roman(roman, unit, half, next_unit):
     mul = multipliers[unit]
     it = iter(roman)
     char = next(it)
@@ -67,102 +67,15 @@ def _ones_from_roman(roman):
 
 
 def _tens_from_roman(roman):
-    it = iter(roman)
-    char = next(it)
-    if char == 'X':
-        char = next(it, None)
-        if char is None:
-            return 10
-        if char == 'L':
-            return 40
-        if char == 'C':
-            return 90
-        char = next(it, None)
-        if char is None:
-            return 20
-        if char == 'X':
-            return 30
-
-    if char == 'L':
-        char = next(it, None)
-        if char is None:
-            return 50
-        if char == 'X':
-            char = next(it, None)
-            if char is None:
-                return 60
-            if char == 'X':
-                char = next(it, None)
-                if char is None:
-                    return 70
-                if char == 'X':
-                    return 80
+    return _from_roman(roman, unit='X', half='L', next_unit='C')
 
 
 def _hundreds_from_roman(roman):
-    it = iter(roman)
-    char = next(it)
-    if char == 'C':
-        char = next(it, None)
-        if char is None:
-            return 100
-        if char == 'D':
-            return 400
-        if char == 'M':
-            return 900
-        char = next(it, None)
-        if char is None:
-            return 200
-        if char == 'C':
-            return 300
-
-    if char == 'D':
-        char = next(it, None)
-        if char is None:
-            return 500
-        if char == 'C':
-            char = next(it, None)
-            if char is None:
-                return 600
-            if char == 'C':
-                char = next(it, None)
-                if char is None:
-                    return 700
-                if char == 'C':
-                    return 800
+    return _from_roman(roman, unit='C', half='D', next_unit='M')
 
 
 def _thousands_from_roman(roman):
-    it = iter(roman)
-    char = next(it)
-    if char == 'M':
-        char = next(it, None)
-        if char is None:
-            return 1000
-        if char == 'V̅':
-            return 4000
-        if char == 'X̅':
-            return 9000
-        char = next(it, None)
-        if char is None:
-            return 2000
-        if char == 'M':
-            return 3000
-
-    if char == 'V̅':
-        char = next(it, None)
-        if char is None:
-            return 5000
-        if char == 'M':
-            char = next(it, None)
-            if char is None:
-                return 6000
-            if char == 'M':
-                char = next(it, None)
-                if char is None:
-                    return 7000
-                if char == 'M':
-                    return 8000
+    return _from_roman(roman, unit='M', half='V̅', next_unit='X̅')
 
 
 def parse_roman(roman: str) -> int:
