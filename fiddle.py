@@ -56,4 +56,22 @@ def _ones_from_roman(roman):
 def parse_roman(roman: str) -> int:
     if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
         return _ones_from_roman(roman)
+    if roman == 'X':
+        return 10
+    if roman == 'XX':
+        return 20
+    if roman == 'XXX':
+        return 30
+    if roman == 'XL':
+        return 40
+    if roman == 'L':
+        return 50
+    if roman == 'LX':
+        return 60
+    if roman == 'LXX':
+        return 70
+    if roman == 'LXXX':
+        return 80
+    if roman == 'XC':
+        return 90
     return -1
