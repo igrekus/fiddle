@@ -20,37 +20,46 @@ def to_roman(n: int) -> str:
     ))
 
 
+multipliers = {
+    'I': 1,
+    'X': 10,
+    'C': 100,
+    'M': 1000,
+}
+
+
 def _from_roman(roman, unit='I', half='V', next_unit='X'):
+    mul = multipliers[unit]
     it = iter(roman)
     char = next(it)
-    if char == 'I':
+    if char == unit:
         char = next(it, None)
         if char is None:
-            return 1
-        if char == 'V':
-            return 4
-        if char == 'X':
-            return 9
+            return 1 * mul
+        if char == half:
+            return 4 * mul
+        if char == next_unit:
+            return 9 * mul
         char = next(it, None)
         if char is None:
-            return 2
-        if char == 'I':
-            return 3
+            return 2 * mul
+        if char == unit:
+            return 3 * mul
 
-    if char == 'V':
+    if char == half:
         char = next(it, None)
         if char is None:
-            return 5
-        if char == 'I':
+            return 5 * mul
+        if char == unit:
             char = next(it, None)
             if char is None:
-                return 6
-            if char == 'I':
+                return 6 * mul
+            if char == unit:
                 char = next(it, None)
                 if char is None:
-                    return 7
-                if char == 'I':
-                    return 8
+                    return 7 * mul
+                if char == unit:
+                    return 8 * mul
 
 
 def _ones_from_roman(roman):
