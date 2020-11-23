@@ -20,7 +20,7 @@ def to_roman(n: int) -> str:
     ))
 
 
-def _ones_from_roman(roman):
+def _from_roman(roman, unit='I', half='V', next_unit='X'):
     it = iter(roman)
     char = next(it)
     if char == 'I':
@@ -51,6 +51,10 @@ def _ones_from_roman(roman):
                     return 7
                 if char == 'I':
                     return 8
+
+
+def _ones_from_roman(roman):
+    return _from_roman(roman, unit='I', half='V', next_unit='X')
 
 
 def _tens_from_roman(roman):
