@@ -30,37 +30,40 @@ multipliers = {
 
 def _from_roman(roman, unit, half, next_unit):
     mul = multipliers[unit]
+    ret = 0
+
     it = iter(roman)
     char = next(it)
     if char == unit:
         char = next(it, None)
         if char is None:
-            return 1 * mul
+            ret = 1 * mul
         elif char == half:
-            return 4 * mul
+            ret = 4 * mul
         elif char == next_unit:
-            return 9 * mul
+            ret = 9 * mul
         else:
             char = next(it, None)
             if char is None:
-                return 2 * mul
+                ret = 2 * mul
             elif char == unit:
-                return 3 * mul
+                ret = 3 * mul
 
     elif char == half:
         char = next(it, None)
         if char is None:
-            return 5 * mul
+            ret = 5 * mul
         elif char == unit:
             char = next(it, None)
             if char is None:
-                return 6 * mul
+                ret = 6 * mul
             elif char == unit:
                 char = next(it, None)
                 if char is None:
-                    return 7 * mul
+                    ret = 7 * mul
                 elif char == unit:
-                    return 8 * mul
+                    ret = 8 * mul
+    return ret
 
 
 def _ones_from_roman(roman):
@@ -88,4 +91,4 @@ def parse_roman(roman: str) -> int:
         return _hundreds_from_roman(roman)
     if roman in ['M', 'MM', 'MMM']:
         return _thousands_from_roman(roman)
-    return -1
+    return _tens_from_roman(roman)
