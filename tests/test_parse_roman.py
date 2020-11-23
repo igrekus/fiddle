@@ -39,6 +39,20 @@ def test_hundreds(exp, act):
 
 def test_ones_errors():
     expect(parse_roman('IIX')).to_equal(-1)
+    expect(parse_roman('IIV')).to_equal(-1)
     expect(parse_roman('IIII')).to_equal(-1)
     expect(parse_roman('O')).to_equal(-1)
     expect(parse_roman('VIIII')).to_equal(-1)
+
+    expect(parse_roman('XXL')).to_equal(-1)
+    expect(parse_roman('XXC')).to_equal(-1)
+    expect(parse_roman('XXXX')).to_equal(-1)
+    expect(parse_roman('LL')).to_equal(-1)
+    expect(parse_roman('LXXXX')).to_equal(-1)
+
+    expect(parse_roman('CCD')).to_equal(-1)
+    expect(parse_roman('CCM')).to_equal(-1)
+    expect(parse_roman('CCCC')).to_equal(-1)
+    expect(parse_roman('DD')).to_equal(-1)
+    expect(parse_roman('DCCCC')).to_equal(-1)
+
