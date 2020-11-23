@@ -37,6 +37,11 @@ def test_hundreds(exp, act):
     expect(parse_roman(act)).to_equal(exp)
 
 
+@pytest.mark.parametrize('exp,act', [romans[idx - 1] for idx in [1000, 2000, 3000]])
+def test_thousands(exp, act):
+    expect(parse_roman(act)).to_equal(exp)
+
+
 def test_ones_errors():
     expect(parse_roman('IIX')).to_equal(-1)
     expect(parse_roman('IIV')).to_equal(-1)
