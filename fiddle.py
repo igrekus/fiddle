@@ -53,9 +53,7 @@ def _ones_from_roman(roman):
                     return 8
 
 
-def parse_roman(roman: str) -> int:
-    if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
-        return _ones_from_roman(roman)
+def _tens_from_roman(roman):
     if roman == 'X':
         return 10
     if roman == 'XX':
@@ -74,4 +72,11 @@ def parse_roman(roman: str) -> int:
         return 80
     if roman == 'XC':
         return 90
+
+
+def parse_roman(roman: str) -> int:
+    if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
+        return _ones_from_roman(roman)
+    if roman in ['X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', ]:
+        return _tens_from_roman(roman)
     return -1
