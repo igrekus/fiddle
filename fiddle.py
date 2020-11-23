@@ -86,9 +86,44 @@ def _tens_from_roman(roman):
                     return 80
 
 
+def _hundreds_from_roman(roman):
+    it = iter(roman)
+    char = next(it)
+    if char == 'C':
+        char = next(it, None)
+        if char is None:
+            return 100
+        if char == 'D':
+            return 400
+        if char == 'M':
+            return 900
+        char = next(it, None)
+        if char is None:
+            return 200
+        if char == 'C':
+            return 300
+
+    if char == 'D':
+        char = next(it, None)
+        if char is None:
+            return 500
+        if char == 'C':
+            char = next(it, None)
+            if char is None:
+                return 600
+            if char == 'C':
+                char = next(it, None)
+                if char is None:
+                    return 700
+                if char == 'C':
+                    return 800
+
+
 def parse_roman(roman: str) -> int:
     if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
         return _ones_from_roman(roman)
     if roman in ['X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', ]:
         return _tens_from_roman(roman)
+    if roman in ['C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM']:
+        return _hundreds_from_roman(roman)
     return -1
