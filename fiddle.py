@@ -119,6 +119,39 @@ def _hundreds_from_roman(roman):
                     return 800
 
 
+def _thousands_from_roman(roman):
+    it = iter(roman)
+    char = next(it)
+    if char == 'M':
+        char = next(it, None)
+        if char is None:
+            return 1000
+        if char == 'V̅':
+            return 4000
+        if char == 'X̅':
+            return 9000
+        char = next(it, None)
+        if char is None:
+            return 2000
+        if char == 'M':
+            return 3000
+
+    if char == 'V̅':
+        char = next(it, None)
+        if char is None:
+            return 5000
+        if char == 'M':
+            char = next(it, None)
+            if char is None:
+                return 6000
+            if char == 'M':
+                char = next(it, None)
+                if char is None:
+                    return 7000
+                if char == 'M':
+                    return 8000
+
+
 def parse_roman(roman: str) -> int:
     if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
         return _ones_from_roman(roman)
@@ -126,4 +159,6 @@ def parse_roman(roman: str) -> int:
         return _tens_from_roman(roman)
     if roman in ['C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM']:
         return _hundreds_from_roman(roman)
+    if roman in ['M', 'MM', 'MMM']:
+        return _thousands_from_roman(roman)
     return -1
