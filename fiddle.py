@@ -19,26 +19,18 @@ def to_roman(n: int) -> str:
     )
 
 
-multipliers = {
-    'I': 1,
-    'X': 10,
-    'C': 100,
-    'M': 1000,
-}
-
-
 romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
 arabics = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 
 
-def _recur(total, digit, value, rest):
-    return _recur(total + value, digit, value, rest[len(digit):]) if rest.startswith(digit) else (total, rest)
+def _parse_digit(total, digit, value, rest):
+    return _parse_digit(total + value, digit, value, rest[len(digit):]) if rest.startswith(digit) else (total, rest)
 
 
 def parse_roman(roman):
     total = 0
     for r, a in zip(romans, arabics):
-        total, roman = _recur(total, r, a, roman)
+        total, roman = _parse_digit(total, r, a, roman)
     return total
 
 
