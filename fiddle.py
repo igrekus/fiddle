@@ -1,18 +1,19 @@
-def _digit_to_roman(n, unit, next_half, next_unit):
-    if n in [1, 2, 3]:
-        return unit * n
-    if n in [4, 5]:
-        return unit * (5 - n) + next_half
-    if n in [6, 7, 8]:
-        return next_half + unit * (n - 5)
-    if n == 9:
+def _digit_to_roman(n, unit, half, next_unit):
+    if n == '0':
+        return ''
+    if n in '123':
+        return unit * int(n)
+    if n in '45':
+        return unit * (5 - int(n)) + half
+    if n in '678':
+        return half + unit * (int(n) - 5)
+    if n == '9':
         return unit + next_unit
-    return ''
 
 
 def to_roman(n: int) -> str:
     return ''.join(_digit_to_roman(v, *units) for v, units in zip(
-        map(int, f'{n:04d}'),
+        f'{n:04d}',
         [['M', 'V̅', 'X̅'],
          ['C', 'D', 'M'],
          ['X', 'L', 'C'],
