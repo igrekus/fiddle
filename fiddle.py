@@ -1,24 +1,22 @@
-def _digit_to_roman(n, unit, half, next_unit):
-    if n == '0':
-        return ''
-    if n in '123':
-        return unit * int(n)
-    if n in '45':
-        return unit * (5 - int(n)) + half
-    if n in '678':
-        return half + unit * (int(n) - 5)
-    if n == '9':
-        return unit + next_unit
+_digit = {
+    **dict.fromkeys('123', lambda n, unit, *_: unit * int(n)),
+    **dict.fromkeys('45', lambda n, unit, half, *_: unit * (5 - int(n)) + half),
+    **dict.fromkeys('678', lambda n, unit, half, *_: half + unit * (int(n) - 5)),
+    '9': lambda _, unit, half, next: unit + next
+}
 
 
 def to_roman(n: int) -> str:
-    return ''.join(_digit_to_roman(v, *units) for v, units in zip(
-        f'{n:04d}',
-        [['M', 'V̅', 'X̅'],
-         ['C', 'D', 'M'],
-         ['X', 'L', 'C'],
-         ['I', 'V', 'X']]
-    ))
+    return ''.join(
+        _digit.get(v, lambda *_: '')(v, *units)
+        for v, units in zip(
+            f'{n:04d}',
+            [['M', 'V̅', 'X̅'],
+             ['C', 'D', 'M'],
+             ['X', 'L', 'C'],
+             ['I', 'V', 'X']]
+        )
+    )
 
 
 multipliers = {
