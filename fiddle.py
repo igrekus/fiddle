@@ -27,67 +27,21 @@ multipliers = {
 }
 
 
-def _from_roman(roman, unit, half, next_unit):
-    mul = multipliers[unit]
-    ret = 0
-
-    it = iter(roman)
-    char = next(it)
-    if char == unit:
-        char = next(it, None)
-        if char is None:
-            ret = 1 * mul
-        elif char == half:
-            ret = 4 * mul
-        elif char == next_unit:
-            ret = 9 * mul
-        else:
-            char = next(it, None)
-            if char is None:
-                ret = 2 * mul
-            elif char == unit:
-                ret = 3 * mul
-
-    elif char == half:
-        char = next(it, None)
-        if char is None:
-            ret = 5 * mul
-        elif char == unit:
-            char = next(it, None)
-            if char is None:
-                ret = 6 * mul
-            elif char == unit:
-                char = next(it, None)
-                if char is None:
-                    ret = 7 * mul
-                elif char == unit:
-                    ret = 8 * mul
-    return ret
+romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+arabics = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 
 
-def _ones_from_roman(roman):
-    return _from_roman(roman, unit='I', half='V', next_unit='X')
+def _recur(total, digit, value, rest):
+    return _recur(total + value, digit, value, rest[len(digit):]) if rest.startswith(digit) else (total, rest)
 
 
-def _tens_from_roman(roman):
-    return _from_roman(roman, unit='X', half='L', next_unit='C')
+def parse_roman(roman):
+    total = 0
+    for r, a in zip(romans, arabics):
+        total, roman = _recur(total, r, a, roman)
+    return total
 
 
-def _hundreds_from_roman(roman):
-    return _from_roman(roman, unit='C', half='D', next_unit='M')
-
-
-def _thousands_from_roman(roman):
-    return _from_roman(roman, unit='M', half='V̅', next_unit='X̅')
-
-
-def parse_roman(roman: str) -> int:
-    if roman in ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']:
-        return _ones_from_roman(roman)
-    if roman in ['X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', ]:
-        return _tens_from_roman(roman)
-    if roman in ['C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM']:
-        return _hundreds_from_roman(roman)
-    if roman in ['M', 'MM', 'MMM']:
-        return _thousands_from_roman(roman)
-    return _tens_from_roman(roman)
+if __name__ == '__main__':
+    print(parse_roman('MMMCMXCIX'))
+    print(parse_roman('MMMCMXCVIII'))
