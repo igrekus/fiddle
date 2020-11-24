@@ -1,49 +1,39 @@
-def _digit_to_roman(n, unit, next_half, next_unit):
-    if n in [1, 2, 3]:
-        return unit * n
-    if n in [4, 5]:
-        return unit * (5 - n) + next_half
-    if n in [6, 7, 8]:
-        return next_half + unit * (n - 5)
-    if n == 9:
-        return unit + next_unit
-    return ''
+_digit = {
+    **dict.fromkeys('123', lambda n, unit, *_: unit * int(n)),
+    **dict.fromkeys('45', lambda n, unit, half, *_: unit * (5 - int(n)) + half),
+    **dict.fromkeys('678', lambda n, unit, half, *_: half + unit * (int(n) - 5)),
+    '9': lambda _, unit, half, next: unit + next
+}
 
 
 def to_roman(n: int) -> str:
-    return ''.join(_digit_to_roman(v, *units) for v, units in zip(
-        map(int, f'{n:04d}'),
-        [['M', 'V̅', 'X̅'],
-         ['C', 'D', 'M'],
-         ['X', 'L', 'C'],
-         ['I', 'V', 'X']]
-    ))
+    return ''.join(
+        _digit.get(v, lambda *_: '')(v, *units)
+        for v, units in zip(
+            f'{n:04d}',
+            [['M', 'V̅', 'X̅'],
+             ['C', 'D', 'M'],
+             ['X', 'L', 'C'],
+             ['I', 'V', 'X']]
+        )
+    )
 
 
-def _ones_from_roman():
-    pass
+romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+arabics = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 
 
-def parse_roman(roman: str) -> int:
-    it = iter(roman)
-    char = next(it)
-    if char == 'I':
-        if roman == 'II':
-            return 2
-        if roman == 'III':
-            return 3
-        if roman == 'IV':
-            return 4
-        if roman == 'IX':
-            return 9
-        return 1
+def _parse_digit(total, digit, value, rest):
+    return _parse_digit(total + value, digit, value, rest[len(digit):]) if rest.startswith(digit) else (total, rest)
 
-    if char == 'V':
-        if roman == 'VI':
-            return 6
-        if roman == 'VII':
-            return 7
-        if roman == 'VIII':
-            return 8
-        return 5
-    return 0
+
+def parse_roman(roman):
+    total = 0
+    for r, a in zip(romans, arabics):
+        total, roman = _parse_digit(total, r, a, roman)
+    return total
+
+
+if __name__ == '__main__':
+    print(parse_roman('MMMCMXCIX'))
+    print(parse_roman('MMMCMXCVIII'))
