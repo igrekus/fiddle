@@ -24,6 +24,7 @@ locate_number = lambda x: \
       ((side, start + 2 * side - x - 1) if dir else (start + 2 * side - x - 1, side)))
      (side % 2 == 0, (side - 1) ** 2 + 1))(math.ceil(math.sqrt(x)))
 
+
 find_winners = lambda players: list((lambda ps: map(int, map(partial((lambda f: f(f))(
     lambda h: lambda p, fs: p[1] > fs[0][1] if len(fs) == 1 else (
         lambda head, *tail: (lambda f: f(f))(h)((p[0], p[1] + head[1]) if p[1] > head[1] and p[0] != head[0] else p,
