@@ -1,3 +1,5 @@
+import re
+
 _digit = {
     **dict.fromkeys('123', lambda n, unit, *_: unit * int(n)),
     **dict.fromkeys('45', lambda n, unit, half, *_: unit * (5 - int(n)) + half),
@@ -19,8 +21,12 @@ def to_roman(n: int) -> str:
     )
 
 
-romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
-arabics = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+pairs = list(zip(
+    ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'],
+    [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+))
+
+roman_re = re.compile(r'^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
 
 
 def _parse_digit(total, digit, value, rest):
@@ -28,8 +34,10 @@ def _parse_digit(total, digit, value, rest):
 
 
 def parse_roman(roman):
+    if not roman or not roman_re.match(roman):
+        return -1
     total = 0
-    for r, a in zip(romans, arabics):
+    for r, a in pairs:
         total, roman = _parse_digit(total, r, a, roman)
     return total
 
