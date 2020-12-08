@@ -40,7 +40,6 @@ _recur = \
     lambda total, roman, ps: \
         (total, '') if len(ps) == 0 else _recur(*(lambda t, r: _parse_digit(t, *ps[0], r))(total, roman), ps[1:])
 
-
 parse_roman = \
     lambda roman: \
         -1 if not roman or not roman_re.match(roman) else _recur(0, roman, pairs)[0]
