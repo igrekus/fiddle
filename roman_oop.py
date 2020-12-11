@@ -2,32 +2,25 @@ import re
 
 
 class Roman:
-    _letters = {
-        1000: ['M', 'V̅', 'X̅'],
-        100: ['C', 'D', 'M'],
-        10: ['X', 'L', 'C'],
-        1: ['I', 'V', 'X'],
-    }
     _pairs = [('M', 1000),
               ('CM', 900), ('D', 500), ('CD', 400), ('C', 100),
               ('XC', 90), ('L', 50), ('XL', 40), ('X', 10),
               ('IX', 9), ('V', 5), ('IV', 4), ('I', 1)]
-
     _validator = re.compile(r'^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
 
     def __init__(self, n: int):
-        self._arab = n
-        self._digits = {} if n == -1 else {k: self._arab // k % 10 for k in [1000, 100, 10, 1]}
+        self._value = n
 
     def __str__(self):
-        return f'{self[1000]}{self[100]}{self[10]}{self[1]}'
-
-    def __getitem__(self, item):
-        return self._digit_to_roman(self._digits[item], *self._letters[item])
+        ret = ''
+        for roman, arabic in Roman._pairs:
+            repeats, self._value = divmod(self._value, arabic)
+            ret += roman * repeats
+        return ret
 
     @property
     def arab(self):
-        return self._arab
+        return self._value
 
     @property
     def roman(self):
@@ -38,23 +31,11 @@ class Roman:
         if not cls._is_valid(roman):
             return cls(-1)
         total = 0
-        for symbol, value in cls._pairs:
-            while roman.startswith(symbol):
+        for digit, value in cls._pairs:
+            while roman.startswith(digit):
                 total += value
-                roman = roman[len(symbol):]
+                roman = roman[len(digit):]
         return cls(total)
-
-    @staticmethod
-    def _digit_to_roman(n, unit, next_half, next_unit):
-        if n in (1, 2, 3):
-            return unit * n
-        elif n in (4, 5):
-            return unit * (5 - n) + next_half
-        elif n in (6, 7, 8):
-            return next_half + unit * (n - 5)
-        elif n == 9:
-            return unit + next_unit
-        return ''
 
     @staticmethod
     def _is_valid(roman):
