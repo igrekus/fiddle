@@ -11,7 +11,7 @@ def to_roman(n: int) -> str:
     return reduce(_func, _tbl.keys(), ("", n))[0]
 
 
-def from_roman(roman: str) -> int:
+def parse_roman(roman: str) -> int:
     _tbl = {v: k for k, v in _romans.items()}
 
     _func = lambda accum, sym: accum[:-1] + [accum[-1] + sym] if accum and accum[-1] + sym in _tbl else accum + [sym]
