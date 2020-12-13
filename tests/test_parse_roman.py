@@ -67,3 +67,11 @@ def test_ones_errors():
     expect(parse_roman('V̅V̅')).to_equal(-1)
     expect(parse_roman('X̅MMM')).to_equal(-1)
 
+    expect(parse_roman('')).to_equal(-1)
+    expect(parse_roman('A')).to_equal(-1)
+    expect(parse_roman('MMMA')).to_equal(-1)
+
+
+def test_all():
+    for exp, act in romans:
+        expect(parse_roman(act)).to_equal(exp)

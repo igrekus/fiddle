@@ -1,39 +1,69 @@
-_digit = {
-    **dict.fromkeys('123', lambda n, unit, *_: unit * int(n)),
-    **dict.fromkeys('45', lambda n, unit, half, *_: unit * (5 - int(n)) + half),
-    **dict.fromkeys('678', lambda n, unit, half, *_: half + unit * (int(n) - 5)),
-    '9': lambda _, unit, half, next: unit + next
-}
+import re
+
+
+class Roman:
+    _letters = {
+        1000: ['M', 'V̅', 'X̅'],
+        100: ['C', 'D', 'M'],
+        10: ['X', 'L', 'C'],
+        1: ['I', 'V', 'X'],
+    }
+    _pairs = [('M', 1000),
+              ('CM', 900), ('D', 500), ('CD', 400), ('C', 100),
+              ('XC', 90), ('L', 50), ('XL', 40), ('X', 10),
+              ('IX', 9), ('V', 5), ('IV', 4), ('I', 1)]
+
+    _validator = re.compile(r'^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
+
+    def __init__(self, n: int):
+        self._arab = n
+        self._digits = {} if n == -1 else {k: self._arab // k % 10 for k in [1000, 100, 10, 1]}
+
+    def __str__(self):
+        return f'{self[1000]}{self[100]}{self[10]}{self[1]}'
+
+    def __getitem__(self, item):
+        return self._digit_to_roman(self._digits[item], *self._letters[item])
+
+    @property
+    def arab(self):
+        return self._arab
+
+    @property
+    def roman(self):
+        return str(self)
+
+    @classmethod
+    def from_string(cls, roman):
+        if not cls._is_valid(roman):
+            return cls(-1)
+        total = 0
+        for symbol, value in cls._pairs:
+            while roman.startswith(symbol):
+                total += value
+                roman = roman[len(symbol):]
+        return cls(total)
+
+    @staticmethod
+    def _digit_to_roman(n, unit, next_half, next_unit):
+        if n in (1, 2, 3):
+            return unit * n
+        elif n in (4, 5):
+            return unit * (5 - n) + next_half
+        elif n in (6, 7, 8):
+            return next_half + unit * (n - 5)
+        elif n == 9:
+            return unit + next_unit
+        return ''
+
+    @staticmethod
+    def _is_valid(roman):
+        return roman and bool(Roman._validator.match(roman))
 
 
 def to_roman(n: int) -> str:
-    return ''.join(
-        _digit.get(v, lambda *_: '')(v, *units)
-        for v, units in zip(
-            f'{n:04d}',
-            [['M', 'V̅', 'X̅'],
-             ['C', 'D', 'M'],
-             ['X', 'L', 'C'],
-             ['I', 'V', 'X']]
-        )
-    )
-
-
-romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
-arabics = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
-
-
-def _parse_digit(total, digit, value, rest):
-    return _parse_digit(total + value, digit, value, rest[len(digit):]) if rest.startswith(digit) else (total, rest)
+    return Roman(n).roman
 
 
 def parse_roman(roman):
-    total = 0
-    for r, a in zip(romans, arabics):
-        total, roman = _parse_digit(total, r, a, roman)
-    return total
-
-
-if __name__ == '__main__':
-    print(parse_roman('MMMCMXCIX'))
-    print(parse_roman('MMMCMXCVIII'))
+    return Roman.from_string(roman).arab

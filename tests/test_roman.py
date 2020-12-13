@@ -29,6 +29,6 @@ def test_thousands(act, exp):
     expect(to_roman(act)).to_equal(exp)
 
 
-def test_all_():
+def test_all():
     for act, exp in romans:
         expect(to_roman(act)).to_equal(exp)
