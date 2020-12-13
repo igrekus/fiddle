@@ -23,14 +23,12 @@ to_roman = lambda n: \
         )
     )
 
-
-pairs = list(zip(
+_map = list(zip(
     ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'],
     [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 ))
 
-roman_re = re.compile(r'^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
-
+_validator = re.compile(r'^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
 
 _parse_digit = \
     lambda total, digit, value, rest: \
@@ -42,8 +40,7 @@ _recur = \
 
 parse_roman = \
     lambda roman: \
-        -1 if not roman or not roman_re.match(roman) else _recur(0, roman, pairs)[0]
-
+        -1 if not roman or not _validator.match(roman) else _recur(0, roman, _map)[0]
 
 if __name__ == '__main__':
     print(parse_roman('MMMCMXCIX'))
