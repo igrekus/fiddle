@@ -3,7 +3,8 @@ import pytest
 
 from pyexpect import expect
 
-from fiddle import parse_roman
+from roman_pokemon import parse_roman
+# from fiddle import parse_roman
 
 
 with open('romans.txt', mode='rt', encoding='utf-8') as f:
