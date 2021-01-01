@@ -1,4 +1,4 @@
-count_dots = lambda radius:  _loop(radius, -int(radius), int(radius))
+count_dots = lambda radius: _loop(radius, -int(radius), int(radius))
 
 _loop = \
     lambda r, i, t: \
