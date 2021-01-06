@@ -15,17 +15,15 @@ def _check(seq, n):
 
 
 def _recur(seq):
-    one, two, *rest = seq
-    return two - one == 1 and _recur([two] + rest) if rest else two - one == 1
+    return (lambda one, two, *rest: (two - one == 1 and _recur([two] + list(rest))) if rest else (two - one == 1))(*seq)
 
 
 def _group(it, n):
-    border = f'{"9" * n}1'
-    return \
-        _make_groups(_left(it, border), n) + \
-        _make_groups(_right(it, border), n + 1) \
-        if border in it \
-        else _make_groups(it, n)
+    return (lambda border:
+            (_make_groups(_left(it, border), n) +
+             _make_groups(_right(it, border), n + 1))
+            if border in it
+            else _make_groups(it, n))(f'{"9" * n}1')
 
 
 def _make_groups(it, n):
