@@ -1,7 +1,7 @@
 from pyexpect import expect
 from textwrap import dedent
 
-from fiddle import song
+from song_denis import song
 
 
 def test_whole_song():
