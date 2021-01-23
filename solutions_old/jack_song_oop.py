@@ -53,11 +53,11 @@ class Song:
     def _line(self, num):
         return f'This is {self._phrase(num).strip()}.'
 
-    def _parts(self, num):
-        return self._formatter.format(self.data[-num:])
-
     def _phrase(self, num):
         return ''.join(self._parts(num))
+
+    def _parts(self, num):
+        return self._formatter.format(self.data[-num:])
 
     def __len__(self):
         return self.data.__len__()
