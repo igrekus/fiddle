@@ -1,10 +1,12 @@
 from pyexpect import expect
 from textwrap import dedent
 
-from fiddle import song
+# from jack_song_denis import double_song
+# from jack_song_perf0mance_artist import double_song
+from jack_song_pokemon import double_song
 
 
-def test_whole_song():
+def test_whole_double_song():
     expected = dedent("""    This is the house that Jack built the house that Jack built.
 
     This is the malt
@@ -160,4 +162,4 @@ def test_whole_song():
     That ate the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.""")
-    expect(song(double=True)).to_equal(expected)
+    expect(double_song()).to_equal(expected)

@@ -1,7 +1,11 @@
 from pyexpect import expect
 from textwrap import dedent
 
-from song_denis import song
+# from jack_song_denis import song
+# from jack_song_perf0mance_artist import song
+from jack_song_pokemon import song
+# from jack_song_Ramzes229 import song
+# from jack_song_ikrill import song
 
 
 def test_whole_song():
