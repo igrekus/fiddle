@@ -2,17 +2,17 @@ import itertools
 import random
 
 
-def _random(it): return sorted(it, key=lambda x: random.randint(0, 100))
-def _double(it): return itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
-def _id(it): return it
+_random = lambda it: sorted(it, key=lambda x: random.randint(0, 100))
+_double = lambda it: itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
+_id = lambda it: it
 
 
-order = {True: _random, False: _id}
-format = {True: _double, False: _id}
+_order = {True: _random, False: _id}
+_format = {True: _double, False: _id}
 
 
-def _recite(data, fmt):
-    return '\n\n'.join(
+_recite = lambda data, fmt: \
+    '\n\n'.join(
         'This is {}.'.format(
             ''.join(
                 fmt(data[-i:])
@@ -24,7 +24,7 @@ def _recite(data, fmt):
 
 def song(rnd=False, double=False):
     return _recite(
-        data=order[rnd]([
+        data=_order[rnd]([
             "the horse and the hound and the horn,\nThat belong to ",
             "the farmer sowing his corn,\nThat kept ",
             "the rooster that crow'd in the morn,\nThat waked ",
@@ -38,5 +38,5 @@ def song(rnd=False, double=False):
             "the malt\nThat lay in ",
             "the house that Jack built "
         ]),
-        fmt=format[double]
+        fmt=_format[double]
     )
