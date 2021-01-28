@@ -3,7 +3,9 @@ from textwrap import dedent
 
 # from jack_song_denis import double_song
 # from jack_song_perf0mance_artist import double_song
-from jack_song_pokemon import double_song
+# from jack_song_pokemon import double_song
+# from jack_song_Natocko import double_song
+from jack_song_ikrill import double_song
 
 
 def test_whole_double_song():
