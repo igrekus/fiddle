@@ -65,3 +65,7 @@ class Song:
 
 def song(rnd=False, double=False):
     return str(Song(orderer=Song.orderers[rnd](), formatter=Song.formatters[double]()))
+
+
+def double_song():
+    return song(rnd=False, double=True)

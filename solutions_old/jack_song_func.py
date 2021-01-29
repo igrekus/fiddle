@@ -1,15 +1,12 @@
 import itertools
 import random
 
-
-_random = lambda it: sorted(it, key=lambda x: random.randint(0, 100))
+_random = lambda it: sorted(it, key=lambda _: random.randint(0, 100))
 _double = lambda it: itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
 _id = lambda it: it
 
-
 _order = {True: _random, False: _id}
 _format = {True: _double, False: _id}
-
 
 _recite = lambda data, fmt: \
     '\n\n'.join(
@@ -21,9 +18,8 @@ _recite = lambda data, fmt: \
         for i in range(1, len(data) + 1)
     )
 
-
-def song(rnd=False, double=False):
-    return _recite(
+song = lambda rnd=False, double=False:\
+    _recite(
         data=_order[rnd]([
             "the horse and the hound and the horn,\nThat belong to ",
             "the farmer sowing his corn,\nThat kept ",
@@ -40,3 +36,5 @@ def song(rnd=False, double=False):
         ]),
         fmt=_format[double]
     )
+
+double_song = lambda: song(rnd=False, double=True)
