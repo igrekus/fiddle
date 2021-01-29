@@ -36,3 +36,5 @@ song = lambda rnd=False, double=False:\
         ]),
         fmt=_format[double]
     )
+
+double_song = lambda: song(rnd=False, double=True)
