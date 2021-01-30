@@ -11,6 +11,7 @@ from textwrap import dedent
 from jack_song_soldrag import song   # pass
 # from jack_song_Ramzes229 import song
 # from jack_song_Natocko import song
+from jack_song_nikitos import song
 
 
 def test_whole_song():
