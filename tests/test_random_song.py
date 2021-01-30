@@ -30,9 +30,18 @@ def randint(a, b):
 
 
 container_denis = [
-    "That tossed", "That belong to", "That milked", "This is", "That ate", "That worried", "That waked", "That kept",
+    "That tossed",
+    "That belong to",
+    "That milked",
+    "",
+    "That ate",
+    "That worried",
+    "That waked",
+    "That kept",
     "That killed",
-    "That married", "That lay in"
+    "That married",
+    "That kissed",
+    "That lay in"
 ]
 
 
@@ -154,4 +163,3 @@ def test_random_song():
 
     random.randint = rnd
     random.shuffle = shf
-
