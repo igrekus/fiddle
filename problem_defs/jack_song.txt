@@ -178,6 +178,20 @@ def random_song() -> str
 
 Помогите Василию справиться с очередными доработками в ТЗ.
 
+UPDATE: действие участников в сюжете должно оставаться сответствеющим исходной песне, смысловая нагрузка неважна:
+
+```
+the rooster that crow'd in the morn,
+That waked
++
+the cat,
+That killed
+=
+the cat,
+That killed the rooster that crow'd in the morn,
+That waked
+```
+
 ---
 
 Финальное требование
