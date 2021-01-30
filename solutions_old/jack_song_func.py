@@ -38,3 +38,4 @@ song = lambda rnd=False, double=False:\
     )
 
 double_song = lambda: song(rnd=False, double=True)
+random_song = lambda: song(rnd=True, double=False)

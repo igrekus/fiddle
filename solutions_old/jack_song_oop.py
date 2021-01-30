@@ -69,3 +69,7 @@ def song(rnd=False, double=False):
 
 def double_song():
     return song(rnd=False, double=True)
+
+
+def random_song():
+    return song(rnd=True, double=False)
