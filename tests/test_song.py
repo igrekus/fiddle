@@ -4,11 +4,11 @@ from textwrap import dedent
 # from jack_song_oop import song   # pass
 # from jack_song_func import song   # pass
 # from jack_song_AmigoSP import song   # pass
-# from jack_song_denis import song   # pass
+from jack_song_denis import song   # pass
 # from jack_song_perf0mance_artist import song   # pass
 # from jack_song_pokemon import song   # pass
 # from jack_song_ikrill import song   # pass
-from jack_song_soldrag import song   # pass
+# from jack_song_soldrag import song   # pass
 # from jack_song_Ramzes229 import song
 # from jack_song_Natocko import song
 
