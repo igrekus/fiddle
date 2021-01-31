@@ -1,17 +1,14 @@
 import random
 
-from unittest import mock
-
 from textwrap import dedent
 from pyexpect import expect
 
 # from jack_song_oop import random_song
 # from jack_song_func import song
-# from jack_song_AmigoSP import song
-from jack_song_denis import random_song
-
+# from jack_song_AmigoSP import random_song   # pass
+# from jack_song_denis import random_song   # pass
 # from jack_song_perf0mance_artist import song
-# from jack_song_pokemon import song
+from jack_song_pokemon import random_song   # pass
 # from jack_song_ikrill import song
 # from jack_song_soldrag import song
 # from jack_song_Ramzes229 import song
@@ -49,6 +46,48 @@ def shuffle_denis(cnt):
     global container_denis
     for i in range(len(container_denis)):
         cnt[i] = container_denis[i]
+
+container_amigo = [
+    {'name': 'dog,', 'actions': 'worried'},
+    {'name': "farmer sowing his corn,", 'actions': 'kept'},
+    {'name': 'cow with the crumpled horn,', 'actions': 'tossed'},
+    {'name': "horse and the hound and the horn,", 'actions': 'belong to'},
+    {'name': 'malt', 'actions': 'lay in'},
+    {'name': 'cat,', 'actions': 'killed'},
+    {'name': 'priest all shaven and shorn,', 'actions': 'married'},
+    {'name': "rooster that crow'd in the morn,", 'actions': 'waked'},
+    {'name': 'rat,', 'actions': 'ate'},
+    {'name': 'man all tattered and torn,', 'actions': 'kissed'},
+    {'name': 'maiden all forlorn,', 'actions': 'milked'},
+    {'name': 'house that Jack built', 'actions': ''},
+]
+
+
+def choice_amigo(seq):
+    global index
+    ret = container_amigo[index]
+    index += 1
+    return ret
+
+
+container_pokemon = [
+    'the dog,\nThat worried ',
+    'the farmer sowing his corn,\nThat kept ',
+    'the cow with the crumpled horn,\nThat tossed ',
+    'the horse and the hound and the horn,\nThat belong to ',
+    'the malt\nThat lay in ',
+    'the cat,\nThat killed ',
+    'the priest all shaven and shorn,\nThat married ',
+    "the rooster that crow'd in the morn,\nThat waked ",
+    'the rat,\nThat ate ',
+    'the man all tattered and torn,\nThat kissed ',
+    'the maiden all forlorn,\nThat milked ',
+    'the house that Jack built '
+]
+
+
+def sample_pokemon(seq, ln):
+    return list(reversed(container_pokemon))
 
 
 def test_random_song():
@@ -154,8 +193,13 @@ def test_random_song():
     That worried.""")
     rnd = random.randint
     shf = random.shuffle
+    chs = random.choice
+    smp = random.sample
+
     random.randint = randint
     random.shuffle = shuffle_denis
+    random.choice = choice_amigo
+    random.sample = sample_pokemon
 
     # with mock.patch('random.shuffle', shuffle):
     #     expect(random_song()).to_equal(expected)
@@ -163,3 +207,5 @@ def test_random_song():
 
     random.randint = rnd
     random.shuffle = shf
+    random.choice = chs
+    random.sample = smp
