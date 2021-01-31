@@ -1,4 +1,4 @@
-from functools import partial
+import random
 
 verse = """This is the horse and the hound and the horn,
 That belong to the farmer sowing his corn,
@@ -11,28 +11,21 @@ That tossed the dog,
 That worried the cat,
 That killed the rat,
 That ate the malt
-That lay in the house that Jack built."""
+That lay in the house that Jack built """
 
+_make_story = lambda v, n: (lambda f: v[n][f(v[n]):] + (f"\n{v[n + 1][:f(v[n + 1])]}" if n < len(v) - 1 else ""))(
+    lambda c: c.find("the"))
+_decompose_verse = lambda v: list(map(lambda n: _make_story(v, n), range(len(v))))
+_decor = lambda v, n: "This is " + "".join(v[n:]).strip() + "."
+_make_song = lambda f, s: (lambda v: "\n\n".join(map(lambda n: _decor(v, n), range(len(v))[::-1])))(
+    f(_decompose_verse(s.split("\n"))))
 
-def song(verse=verse) -> str:
-    make_verse = lambda n, v: "This is " + (lambda s: s[s.find("the"):])("\n".join(v[n:]))
-    return (lambda v: "\n\n".join(map(partial(make_verse, v=v), range(len(v))[::-1])))(verse.split("\n"))
-
-
-def double_song(verse=verse) -> str:
-    _last_row = "the house that Jack built the house that Jack built."
-    _conc = lambda s, n: (lambda f: f"{s[n][f(s[n]):]}\n{s[n + 1][:f(s[n + 1])]}")(lambda c: c.find("the"))
-    make_verse = lambda n, v: n == len(v) - 1 and _last_row or 2 * (_conc(v, n)) + make_verse(n + 1, v)
-    return (
-        lambda v: "\n\n".join(map(lambda *args: "This is " + partial(make_verse, v=v)(*args), range(len(v))[::-1])))(
-        verse.split("\n"))
-
-
-def double_song_(verse=verse) -> str:
-    # без хардкодинга последней строки, но тогда в ней пролезает лишняя точка
-    _conc = lambda s, n: (lambda f: s[n][f(s[n]):] + (f"\n{s[n + 1][:f(s[n + 1])]}" if n < len(s) - 1 else ""))(
-        lambda c: c.find("the"))
-    make_verse = lambda n, v: "" if n == len(v) else 2 * (_conc(v, n)) + make_verse(n + 1, v)
-    return (
-        lambda v: "\n\n".join(map(lambda *args: "This is " + partial(make_verse, v=v)(*args), range(len(v))[::-1])))(
-        verse.split("\n"))
+song = lambda v=verse: _make_song(
+    lambda s: s,
+    v)
+double_song = lambda v=verse: _make_song(
+    lambda s: list(map(lambda r: 2 * r, s)),
+    v)
+random_song = lambda v=verse: _make_song(
+    lambda s: random.sample(s, len(s)),
+    v)

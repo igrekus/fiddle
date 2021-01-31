@@ -1,5 +1,6 @@
-def song():
-    return '''This is the house that Jack built.
+import random
+
+ORIGINAL_SONG = """This is the house that Jack built.
 
 This is the malt
 That lay in the house that Jack built.
@@ -87,7 +88,51 @@ That tossed the dog,
 That worried the cat,
 That killed the rat,
 That ate the malt
-That lay in the house that Jack built.'''
+That lay in the house that Jack built."""
+
+SETTINGS = [
+    {'name': 'house that Jack built', 'actions': ''},
+    {'name': 'malt', 'actions': 'lay in'},
+    {'name': 'rat,', 'actions': 'ate'},
+    {'name': 'cat,', 'actions': 'killed'},
+    {'name': 'dog,', 'actions': 'worried'},
+    {'name': 'cow with the crumpled horn,', 'actions': 'tossed'},
+    {'name': 'maiden all forlorn,', 'actions': 'milked'},
+    {'name': 'man all tattered and torn,', 'actions': 'kissed'},
+    {'name': 'priest all shaven and shorn,', 'actions': 'married'},
+    {'name': "rooster that crow'd in the morn,", 'actions': 'waked'},
+    {'name': "farmer sowing his corn,", 'actions': 'kept'},
+    {'name': "horse and the hound and the horn,", 'actions': 'belong to'},
+]
+
+
+def _get_path_song():
+    path_song = random.choice(SETTINGS)
+    SETTINGS.remove(path_song)
+    return path_song['name'], path_song['actions']
+
+
+def random_song():
+    counter_cuplet = 12
+    _text = []
+    prev_text = ''
+    for _ in range(1, counter_cuplet + 1):
+        name, actions = _get_path_song()
+        if _ == 1 and not actions:
+            _text.append(f"This is the {name}.")
+        elif _ == 1 and actions:
+            _text.append(f"This is the {name}\nThat {actions}.")
+        else:
+            if actions:
+                _text.append(f"This is the {name}\nThat {actions} the {prev_text}")
+            else:
+                _text.append(f"This is the {name} the {prev_text}")
+        prev_text = _text[-1].replace('This is the ', '')
+    return '\n\n'.join(_text)
+
+
+def song():
+    return ORIGINAL_SONG
 
 
 def double_song():
@@ -111,7 +156,4 @@ def double_song():
 
 
 if __name__ == '__main__':
-    with open('double_song.txt', 'r', encoding='utf-8') as rd_file:
-        test_double = rd_file.read()
-    assert double_song() == test_double, 'Не совпадает'
-    print('Good job, freelancer Vasiliy')
+    print(random_song())
