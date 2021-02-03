@@ -1,12 +1,14 @@
+import warnings
+
 from pyexpect import expect
 from textwrap import dedent
 
-# from jack_song_oop import double_song   # pass
-# from jack_song_func import double_song   # pass
+from solutions_old.jack_song_oop import double_song   # pass
+# from solutions_old.jack_song_func import double_song   # pass
 # from jack_song_AmigoSP import double_song   # pass
 # from jack_song_denis import double_song   # pass
 # from jack_song_perf0mance_artist import double_song   # pass
-from jack_song_pokemon import double_song   # pass
+# from jack_song_pokemon import double_song   # pass
 # from jack_song_ikrill import double_song   # pass
 # from jack_song_soldrag import double_song   # pass
 # from jack_song_Ramzes229 import double_song
