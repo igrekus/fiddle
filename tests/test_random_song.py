@@ -3,12 +3,12 @@ import random
 from textwrap import dedent
 from pyexpect import expect
 
-# from jack_song_oop import random_song
-# from jack_song_func import song
+from solutions_old.jack_song_oop import random_song
+# from solutions_old.jack_song_func import random_song
 # from jack_song_AmigoSP import random_song   # pass
 # from jack_song_denis import random_song   # pass
 # from jack_song_perf0mance_artist import song
-from jack_song_pokemon import random_song   # pass
+# from jack_song_pokemon import random_song   # pass
 # from jack_song_ikrill import song
 # from jack_song_soldrag import song
 # from jack_song_Ramzes229 import song
@@ -46,6 +46,29 @@ def shuffle_denis(cnt):
     global container_denis
     for i in range(len(container_denis)):
         cnt[i] = container_denis[i]
+
+
+container_oop = list(reversed([
+    "the dog,\nThat worried ",
+    "the farmer sowing his corn,\nThat kept ",
+    "the cow with the crumpled horn,\nThat tossed ",
+    "the horse and the hound and the horn,\nThat belong to ",
+    "the malt\nThat lay in ",
+    "the cat,\nThat killed ",
+    "the priest all shaven and shorn,\nThat married ",
+    "the rooster that crow'd in the morn,\nThat waked ",
+    "the rat,\nThat ate ",
+    "the man all tattered and torn,\nThat kissed ",
+    "the maiden all forlorn,\nThat milked ",
+    "the house that Jack built "
+]))
+
+
+def shuffle_oop(cnt):
+    global container_oop
+    for i in range(len(container_oop)):
+        cnt[i] = container_oop[i]
+
 
 container_amigo = [
     {'name': 'dog,', 'actions': 'worried'},
@@ -197,12 +220,11 @@ def test_random_song():
     smp = random.sample
 
     random.randint = randint
-    random.shuffle = shuffle_denis
+    # random.shuffle = shuffle_denis
+    random.shuffle = shuffle_oop
     random.choice = choice_amigo
     random.sample = sample_pokemon
 
-    # with mock.patch('random.shuffle', shuffle):
-    #     expect(random_song()).to_equal(expected)
     expect(random_song()).to_equal(expected)
 
     random.randint = rnd

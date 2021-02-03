@@ -199,3 +199,10 @@ def test_echo_random_song():
     random.randint = randint
     expect(song(rnd=True, double=True)).to_equal(expected)
     random.randint = rnd
+
+    # with warnings.catch_warnings(record=True) as wns:
+    #     expect(double_song()).to_equal(expected)
+    #
+    # wn = wns[-1]
+    # expect(wn.category).to_be(DeprecationWarning)
+    # expect(wn.message.args[0]).to_contain('deprecated')
