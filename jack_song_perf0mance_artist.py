@@ -1,3 +1,16 @@
+import random
+
+def random_couplet(n, l):  
+    couplet = f'This is {l[n][0]}'
+
+    for k in range(n, 0, -1):
+        if l[k][0] == 'the house that Jack built':
+            couplet = f'{couplet} {l[k-1][0]}'
+        else:
+            couplet = f'{couplet}\n{l[k][1]} {l[k-1][0]}'
+
+    return f'{couplet}\n{l[0][1]}.'
+
 def generate_double_couplet(n):
     plot = ['That lay in', 'That ate', 'That killed', 'That worried',
     'That tossed', 'That milked', 'That kissed', 'That married',
@@ -21,14 +34,6 @@ def generate_double_couplet(n):
 
     return f'{couplet}.'
 
-def double_song():
-    song = []
-
-    for i in range(12):
-        song.append(generate_double_couplet(i))
-        
-    return '\n\n'.join(song)
-
 def generate_couplet(n):
     plot = ['That lay in', 'That ate', 'That killed', 'That worried',
     'That tossed', 'That milked', 'That kissed', 'That married',
@@ -46,6 +51,21 @@ def generate_couplet(n):
 
     return f'{couplet}.'
 
+def random_song():
+    parts = [['the house that Jack built'], ['the malt', 'That lay in'], ['the rat,', 'That ate'], ['the cat,', 'That killed'],
+    ['the dog,', 'That worried'], ['the cow with the crumpled horn,', 'That tossed'], ['the maiden all forlorn,', 'That milked'],
+    ['the man all tattered and torn,', 'That kissed'], ['the priest all shaven and shorn,', 'That married'], ['the rooster that crow\'d in the morn,', 'That waked'],
+    ['the farmer sowing his corn,', 'That kept'], ['the horse and the hound and the horn,', 'That belong to']]
+
+    random.shuffle(parts)
+
+    song = []
+
+    for i in range(12):
+        song.append(random_couplet(i, parts))
+        
+    return '\n\n'.join(song)
+
 def song():
     song = []
 
@@ -54,4 +74,10 @@ def song():
         
     return '\n\n'.join(song)
 
-print(song())
+def double_song():
+    song = []
+
+    for i in range(12):
+        song.append(generate_double_couplet(i))
+        
+    return '\n\n'.join(song)
