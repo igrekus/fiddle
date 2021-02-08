@@ -7,10 +7,10 @@ from solutions_old.jack_song_oop import random_song
 # from solutions_old.jack_song_func import random_song
 # from jack_song_AmigoSP import random_song   # pass
 # from jack_song_denis import random_song   # pass
-# from jack_song_perf0mance_artist import song
+# from jack_song_perf0mance_artist import random_song   # pass
 # from jack_song_pokemon import random_song   # pass
-# from jack_song_ikrill import song
 # from jack_song_soldrag import song
+# from jack_song_ikrill import song
 # from jack_song_Ramzes229 import song
 # from jack_song_Natocko import song
 
@@ -68,6 +68,28 @@ def shuffle_oop(cnt):
     global container_oop
     for i in range(len(container_oop)):
         cnt[i] = container_oop[i]
+
+
+container_performancearist = [
+    ['the dog,', 'That worried'],
+    ['the farmer sowing his corn,', 'That kept'],
+    ['the cow with the crumpled horn,', 'That tossed'],
+    ['the horse and the hound and the horn,', 'That belong to'],
+    ['the malt', 'That lay in'],
+    ['the cat,', 'That killed'],
+    ['the priest all shaven and shorn,', 'That married'],
+    ['the rooster that crow\'d in the morn,', 'That waked'],
+    ['the rat,', 'That ate'],
+    ['the man all tattered and torn,', 'That kissed'],
+    ['the maiden all forlorn,', 'That milked'],
+    ['the house that Jack built'],
+]
+
+
+def shuffle_performanceartist(cnt):
+    global container_performancearist
+    for i in range(len(container_performancearist)):
+        cnt[i] = container_performancearist[i]
 
 
 container_amigo = [
@@ -222,6 +244,7 @@ def test_random_song():
     random.randint = randint
     # random.shuffle = shuffle_denis
     random.shuffle = shuffle_oop
+    # random.shuffle = shuffle_performanceartist
     random.choice = choice_amigo
     random.sample = sample_pokemon
 
