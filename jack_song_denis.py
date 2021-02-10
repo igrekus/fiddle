@@ -1,5 +1,6 @@
+import warnings
 import random
-# from random import shuffle
+
 introduction = "This is"
 snippets = {"That lay in": " the house that Jack built.\n",
             "That ate": " the malt\n",
@@ -15,7 +16,15 @@ snippets = {"That lay in": " the house that Jack built.\n",
             "This is": " the horse and the hound and the horn,\n"}
 
 
-def song():
+def song(rnd=False, double=False):
+    cases = {(False, False): _song,
+             (False, True): _double_song,
+             (True, False): _random_song,
+             (True, True): _double_random_song}
+    return cases[(rnd, double)]()
+
+
+def _song():
     actions = list(snippets.keys())
     stories = list(snippets.values())
     all_song = ""
@@ -31,6 +40,11 @@ def song():
 
 
 def double_song():
+    warnings.warn("'double_song' is deprecated, use parametrized 'song' instead", DeprecationWarning)
+    return _double_song()
+
+
+def _double_song():
     actions = [""] + list(snippets.keys())
     stories = list(snippets.values())
     stories[0] = " the house that Jack built"
@@ -49,6 +63,11 @@ def double_song():
 
 
 def random_song():
+    warnings.warn("'random_song' is deprecated, use parametrized 'song' instead", DeprecationWarning)
+    return _random_song()
+
+
+def _random_song():
     local_snippets = dict(snippets)
     local_snippets.update({"That lay in": " the house that Jack built",
                            "": " the horse and the hound and the horn,\n"})
@@ -69,5 +88,31 @@ def random_song():
                 couplet = introduction + stories[row] + shifted_snippets[stories[row]] + couplet
             else:
                 couplet = stories[row] + shifted_snippets[stories[row]] + couplet
+        all_song += couplet + ("\n" if rows != len(stories) else "")
+    return all_song.strip()
+
+
+def _double_random_song():
+    local_snippets = dict(snippets)
+    local_snippets.update({"That lay in": " the house that Jack built",
+                           "": " the horse and the hound and the horn,\n"})
+    local_snippets.pop("This is")
+    actions = list(local_snippets.keys())
+    random.shuffle(actions)
+    stories = [local_snippets[key] for key in actions]
+    snippets_values = list(local_snippets.values())
+    snippets_keys = list(local_snippets.keys())
+    shifted_snippets = {snippets_values[i]: snippets_keys[i - 1] for i in range(len(snippets_values))}
+    all_song = ""
+    for rows in range(1, len(stories) + 1):
+        couplet = ""
+        for row in range(rows):
+            if row == 0:
+                couplet = (introduction if rows == 1 else "") + (stories[row] + shifted_snippets[stories[row]]) * 2 + \
+                          ".\n"
+            elif row == rows - 1:
+                couplet = introduction + (stories[row] + shifted_snippets[stories[row]]) * 2 + couplet
+            else:
+                couplet = (stories[row] + shifted_snippets[stories[row]]) * 2 + couplet
         all_song += couplet + ("\n" if rows != len(stories) else "")
     return all_song.strip()

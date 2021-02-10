@@ -3,19 +3,10 @@ import warnings
 from pyexpect import expect
 from textwrap import dedent
 
-from solutions_old.jack_song_oop import double_song   # pass
-# from solutions_old.jack_song_func import double_song   # pass
-# from jack_song_AmigoSP import double_song   # pass
-# from jack_song_denis import double_song   # pass
-# from jack_song_perf0mance_artist import double_song   # pass
-# from jack_song_pokemon import double_song   # pass
-# from jack_song_soldrag import double_song   # pass
-# from jack_song_ikrill import double_song   # pass
-# from jack_song_Ramzes229 import double_song
-# from jack_song_Natocko import double_song
+from jack_song_pokemon import double_song
 
 
-def test_whole_double_song():
+def test_double_song():
     expected = dedent("""    This is the house that Jack built the house that Jack built.
 
     This is the malt
@@ -171,4 +162,9 @@ def test_whole_double_song():
     That ate the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.""")
-    expect(double_song()).to_equal(expected)
+
+    with warnings.catch_warnings(record=True) as wns:
+        expect(double_song()).to_equal(expected)
+        wn = wns[-1]
+        expect(wn.category).to_be(DeprecationWarning)
+        expect(wn.message.args[0]).to_equal("'double_song' is deprecated, use parametrized 'song' instead")

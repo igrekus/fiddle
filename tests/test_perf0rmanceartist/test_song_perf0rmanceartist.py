@@ -1,19 +1,10 @@
 from pyexpect import expect
 from textwrap import dedent
 
-from solutions_old.jack_song_oop import song   # pass
-# from solutions_old.jack_song_func import song   # pass
-# from jack_song_AmigoSP import song   # pass
-# from jack_song_denis import song   # pass
-# from jack_song_perf0mance_artist import song   # pass
-# from jack_song_pokemon import song   # pass
-# from jack_song_soldrag import song   # pass
-# from jack_song_ikrill import song   # pass
-# from jack_song_Ramzes229 import song
-# from jack_song_Natocko import song
+from jack_song_perf0mance_artist import song
 
 
-def test_whole_song():
+def test_song():
     expected = dedent("""    This is the house that Jack built.
     
     This is the malt
@@ -103,4 +94,5 @@ def test_whole_song():
     That killed the rat,
     That ate the malt
     That lay in the house that Jack built.""")
+
     expect(song()).to_equal(expected)
