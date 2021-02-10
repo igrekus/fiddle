@@ -108,8 +108,6 @@ def random_song():
     random.shuffle(parts)
 
     for i in range(12):
-            song.append(random_couplet(i, parts))
+        song.append(random_couplet(i, parts))
 
     return '\n\n'.join(song)
-
-random_song()
