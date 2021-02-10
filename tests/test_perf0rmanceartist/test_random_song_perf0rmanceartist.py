@@ -4,7 +4,7 @@ import warnings
 from textwrap import dedent
 from pyexpect import expect
 
-from jack_song_perf0mance_artist import random_song   # pass
+from jack_song_perf0mance_artist import random_song
 
 
 container = [

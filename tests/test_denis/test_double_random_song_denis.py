@@ -1,10 +1,9 @@
-import warnings
 import random
 
 from textwrap import dedent
 from pyexpect import expect
 
-from jack_song_denis import song   # pass
+from jack_song_denis import song
 
 container_denis = [
     "That tossed",
@@ -574,5 +573,3 @@ def test_double_random_song():
 
     expect(song(rnd=True, double=True)).to_equal(expected)
     random.shuffle = shf
-
-

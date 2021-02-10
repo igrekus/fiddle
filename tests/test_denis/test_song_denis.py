@@ -1,7 +1,7 @@
 from pyexpect import expect
 from textwrap import dedent
 
-from jack_song_denis import song   # pass
+from jack_song_denis import song
 
 
 def test_song():
@@ -94,4 +94,5 @@ def test_song():
     That killed the rat,
     That ate the malt
     That lay in the house that Jack built.""")
+
     expect(song()).to_equal(expected)

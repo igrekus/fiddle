@@ -3,7 +3,7 @@ import warnings
 from pyexpect import expect
 from textwrap import dedent
 
-from jack_song_perf0mance_artist import double_song   # pass
+from jack_song_perf0mance_artist import double_song
 
 
 def test_double_song():

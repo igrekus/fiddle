@@ -1,7 +1,7 @@
 from pyexpect import expect
 from textwrap import dedent
 
-from jack_song_perf0mance_artist import song   # pass
+from jack_song_perf0mance_artist import song
 
 
 def test_song():

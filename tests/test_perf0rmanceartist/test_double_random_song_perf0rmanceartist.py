@@ -1,10 +1,9 @@
-import warnings
 import random
 
 from textwrap import dedent
 from pyexpect import expect
 
-from jack_song_perf0mance_artist import song   # pass
+from jack_song_perf0mance_artist import song
 
 container = [
     ['the dog,', 'That worried'],
@@ -576,5 +575,3 @@ def test_double_random_song():
 
     expect(song(rnd=True, double=True)).to_equal(expected)
     random.shuffle = shf
-
-
