@@ -17,19 +17,30 @@ class RandomOrder:
         return d
 
 
-class DefaultFormat:
+class DefaultLine:
     def format(self, parts):
         return parts
 
 
-class DoubleFormat:
+class DoubleLine:
     def format(self, parts):
         return itertools.chain(*[[l, r] for l, r in zip(parts, parts)])
 
 
+class DefaultVerse:
+    def line(self, string):
+        return string
+
+
+class ReversedVerse:
+    def line(self, string):
+        return string[::-1]
+
+
 class Song:
     orderers = {True: RandomOrder, False: DefaultOrder}
-    formatters = {True: DoubleFormat, False: DefaultFormat}
+    formatters = {True: DoubleLine, False: DefaultLine}
+    verse_formatters = {True: ReversedVerse, False: DefaultVerse}
     _data = [
         'the horse and the hound and the horn,\nThat belong to ',
         'the farmer sowing his corn,\nThat kept ',
@@ -45,15 +56,16 @@ class Song:
         'the house that Jack built '
     ]
 
-    def __init__(self, orderer, formatter):
-        self._formatter = formatter
+    def __init__(self, orderer, line_formatter, verse_formatter):
+        self._formatter = line_formatter
         self._data = orderer.order(self._data)
+        self._verse_formatter = verse_formatter
 
     def __str__(self):
-        return '\n\n'.join(self._line(i) for i in range(1, len(self) + 1))
+        return '\n\n'.join(self._verse(i) for i in range(1, len(self) + 1))
 
-    def _line(self, num):
-        return f'This is {self._phrase(num).strip()}.'
+    def _verse(self, num):
+        return self._verse_formatter.line(f'This is {self._phrase(num).strip()}.')
 
     def _phrase(self, num):
         return ''.join(self._parts(num))
@@ -65,8 +77,14 @@ class Song:
         return self._data.__len__()
 
 
-def song(rnd=False, double=False):
-    return str(Song(orderer=Song.orderers[rnd](), formatter=Song.formatters[double]()))
+def song(rnd=False, double=False, reverse=False):
+    return str(
+        Song(
+            orderer=Song.orderers[rnd](),
+            line_formatter=Song.formatters[double](),
+            verse_formatter=Song.verse_formatters[reverse]()
+        )
+    )
 
 
 def double_song():
