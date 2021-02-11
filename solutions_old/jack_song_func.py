@@ -2,6 +2,8 @@ import itertools
 import random
 import warnings
 
+__all__ = ['song', 'double_song', 'random_song']
+
 _random = lambda it: sorted(it, key=lambda _: random.randint(0, 100))
 _double = lambda it: itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
 _id = lambda it: it
