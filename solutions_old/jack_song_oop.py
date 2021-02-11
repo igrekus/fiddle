@@ -28,12 +28,12 @@ class DoubleLine:
 
 
 class DefaultVerse:
-    def line(self, string):
+    def format(self, string):
         return string
 
 
 class ReversedVerse:
-    def line(self, string):
+    def format(self, string):
         return string[::-1]
 
 
@@ -65,7 +65,7 @@ class Song:
         return '\n\n'.join(self._verse(i) for i in range(1, len(self) + 1))
 
     def _verse(self, num):
-        return self._verse_formatter.line(f'This is {self._phrase(num).strip()}.')
+        return self._verse_formatter.format(f'This is {self._phrase(num).strip()}.')
 
     def _phrase(self, num):
         return ''.join(self._parts(num))
