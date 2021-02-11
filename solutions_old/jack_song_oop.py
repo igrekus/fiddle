@@ -1,5 +1,6 @@
 import itertools
 import random
+import warnings
 
 
 class DefaultOrder:
@@ -67,8 +68,10 @@ def song(rnd=False, double=False):
 
 
 def double_song():
+    warnings.warn("'double_song' is deprecated, use parametrized 'song' instead", DeprecationWarning)
     return song(rnd=False, double=True)
 
 
 def random_song():
+    warnings.warn("'random_song' is deprecated, use parametrized 'song' instead", DeprecationWarning)
     return song(rnd=True, double=False)
