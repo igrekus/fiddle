@@ -2,6 +2,8 @@ import itertools
 import random
 import warnings
 
+__all__ = ['song', 'double_song', 'random_song']
+
 
 class DefaultOrder:
     def order(self, data):
