@@ -39,7 +39,7 @@ class ReversedVerse:
 
 class Song:
     orderers = {True: RandomOrder, False: DefaultOrder}
-    formatters = {True: DoubleLine, False: DefaultLine}
+    line_formatters = {True: DoubleLine, False: DefaultLine}
     verse_formatters = {True: ReversedVerse, False: DefaultVerse}
     _data = [
         'the horse and the hound and the horn,\nThat belong to ',
@@ -81,7 +81,7 @@ def song(rnd=False, double=False, reverse=False):
     return str(
         Song(
             orderer=Song.orderers[rnd](),
-            line_formatter=Song.formatters[double](),
+            line_formatter=Song.line_formatters[double](),
             verse_formatter=Song.verse_formatters[reverse]()
         )
     )
