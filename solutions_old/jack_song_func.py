@@ -1,5 +1,6 @@
 import itertools
 import random
+import warnings
 
 _random = lambda it: sorted(it, key=lambda _: random.randint(0, 100))
 _double = lambda it: itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
@@ -37,5 +38,9 @@ song = lambda rnd=False, double=False:\
         fmt=_format[double]
     )
 
-double_song = lambda: song(rnd=False, double=True)
-random_song = lambda: song(rnd=True, double=False)
+double_song = lambda: \
+    warnings.warn("'double_song' is deprecated, use parametrized 'song' instead", DeprecationWarning) or \
+    song(rnd=False, double=True)
+random_song = lambda: \
+    warnings.warn("'random_song' is deprecated, use parametrized 'song' instead", DeprecationWarning) or \
+    song(rnd=True, double=False)
