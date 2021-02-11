@@ -1,5 +1,10 @@
 import random
 import inspect
+import logging
+
+
+logging.basicConfig(format='%(message)s')
+log = logging.getLogger()
 
 
 def who_called(func):
@@ -7,9 +12,8 @@ def who_called(func):
         value = inspect.stack()[1][3]
         warning_string = f"DeprecationWarning: <{func.__name__}> is deprecated, use parametrized 'song' instead"
         if value == "<module>":
-            print(warning_string)
+            log.warning(warning_string)
         return func()
-
     return wrapper
 
 
@@ -167,7 +171,7 @@ def _random_and_double(text_song: str) -> str:
     new_chunk = 'the house that Jack built the house that Jack built'
     for chunk in text_song.split('\n'):
         new_text.append(chunk.replace(check_chunk, new_chunk))
-    return '\n'.join(new_text)
+    return '\n'.join(new_text).strip()
 
 
 def _adapting_to_4_task(container: list) -> str:
@@ -202,10 +206,9 @@ def double_song():
                 container[0], next_value = f'{text_string[:part_one]} ', text_string[part_one:]
             double_song_text += ''.join(container).replace('.', '') + '\n'
             container[1] = next_value
-    double_song_text += _adapting_to_4_task(container)
-    double_song_text = double_song_text.strip()
+    double_song_text += _adapting_to_4_task(container).strip()
     return double_song_text if not _is_random else _random_and_double(double_song_text)
 
 
 if __name__ == '__main__':
-    print(random_song())
+    print(double_song())
