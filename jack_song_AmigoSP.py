@@ -1,4 +1,20 @@
 import random
+import inspect
+import logging
+
+logging.basicConfig(format='%(message)s')
+log = logging.getLogger(__name__)
+
+
+def who_called(func):
+    def wrapper():
+        value = inspect.stack()[1][3]
+        warning_string = f"DeprecationWarning: <{func.__name__}> is deprecated, use parametrized 'song' instead"
+        if value == "<module>":
+            log.warning(warning_string)
+        return func()
+    return wrapper
+
 
 ORIGINAL_SONG = """This is the house that Jack built.
 
@@ -106,18 +122,47 @@ SETTINGS = [
 ]
 
 
-def _get_path_song():
-    path_song = random.choice(SETTINGS)
-    SETTINGS.remove(path_song)
+def _get_path_song(chunk: int):
+    path_song = SETTINGS[chunk]
     return path_song['name'], path_song['actions']
 
 
+@who_called
+def double_song():
+    chunk_list = list(range(0, 12))
+    counter_cuplet = 12
+    _text = []
+    prev_text = ''
+    double_random = hasattr(song, '_is_random')
+    for _ in range(1, counter_cuplet + 1):
+        if not double_random:
+            name, actions = _get_path_song(_ - 1)
+        else:
+            chunk_random = random.choice(chunk_list)
+            chunk_list.remove(chunk_random)
+            name, actions = _get_path_song(chunk_random)
+        if _ == 1 and not actions:
+            _text.append(f"This is the {name} the {name}.")
+        elif _ == 1 and actions:
+            _text.append(f"This is the {name}\nThat {actions} the {name}\nThat {actions}.")
+        elif actions:
+            _text.append(f"This is the {name}\nThat {actions} the {name}\nThat {actions} the {prev_text}")
+        else:
+            _text.append(f"This is the {name} the {name} the {prev_text}")
+        prev_text = _text[-1].replace('This is the ', '')
+    return '\n\n'.join(_text)
+
+
+@who_called
 def random_song():
+    chunk_list = list(range(0, 12))
     counter_cuplet = 12
     _text = []
     prev_text = ''
     for _ in range(1, counter_cuplet + 1):
-        name, actions = _get_path_song()
+        chunk_random = random.choice(chunk_list)
+        chunk_list.remove(chunk_random)
+        name, actions = _get_path_song(chunk_random)
         if _ == 1 and not actions:
             _text.append(f"This is the {name}.")
         elif _ == 1 and actions:
@@ -131,29 +176,20 @@ def random_song():
     return '\n\n'.join(_text)
 
 
-def song():
-    return ORIGINAL_SONG
-
-
-def double_song():
-    song_text = song().split('\n')
-    double_song_text = ''
-    container = []
-    for text_string in song_text:
-        part_one = text_string.find('the')
-        if not text_string:
-            double_song_text += ''.join(container).replace('.', '') + ' ' + container[-1] + '\n\n'
-            container = []
-        elif not container:
-            container = [text_string[:part_one], text_string[part_one:]]
-        else:
-            double_song_text += ''.join(container).replace('.', '') + '\n'
-            container[0], next_value = text_string[:part_one], text_string[part_one:]
-            double_song_text += ''.join(container).replace('.', '') + '\n'
-            container[1] = next_value
-    double_song_text += ''.join(container).replace('.', '') + ' ' + container[-1]
-    return double_song_text
+def song(rnd=False, double=False):
+    if rnd and double:
+        setattr(song, '_is_random', True)
+        text_song = double_song()
+        delattr(song, '_is_random')
+        return text_song
+    elif rnd is True and double is False:
+        return random_song()
+    elif rnd is False and double is True:
+        return double_song()
+    else:
+        return ORIGINAL_SONG
 
 
 if __name__ == '__main__':
-    print(random_song())
+    print(song(True, True))
+    print(double_song())

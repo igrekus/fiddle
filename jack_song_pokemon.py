@@ -1,4 +1,5 @@
 import random
+from warnings import warn
 
 verse = """This is the horse and the hound and the horn,
 That belong to the farmer sowing his corn,
@@ -20,12 +21,26 @@ _decor = lambda v, n: "This is " + "".join(v[n:]).strip() + "."
 _make_song = lambda f, s: (lambda v: "\n\n".join(map(lambda n: _decor(v, n), range(len(v))[::-1])))(
     f(_decompose_verse(s.split("\n"))))
 
-song = lambda v=verse: _make_song(
-    lambda s: s,
-    v)
-double_song = lambda v=verse: _make_song(
+_depr = lambda f: lambda: (lambda g: ((lambda h: warn(
+    f"'{__import__('inspect').getsource(h).split('=')[0].strip()[2:]}' is deprecated, use parametrized 'song' instead",
+    DeprecationWarning))(g) or g)())(f)
+
+__double_song = lambda v=verse: _make_song(
     lambda s: list(map(lambda r: 2 * r, s)),
     v)
-random_song = lambda v=verse: _make_song(
+__random_song = lambda v=verse: _make_song(
     lambda s: random.sample(s, len(s)),
     v)
+
+double_song = _depr(__double_song)
+random_song = _depr(__random_song)
+
+
+def song(rnd: bool = False, double: bool = False) -> str:
+    functions = {"rnd": lambda s: random.sample(s, len(s)),
+                 "double": lambda s: list(map(lambda r: 2 * r, s))}
+
+    _p = lambda arg, fs: _p(fs[0](arg), fs[1:]) if len(fs) > 1 else fs[0](arg)
+
+    return (lambda locs, fs: _make_song(lambda v: _p(v, [fs.get(k) for k in fs.keys() if locs.get(k)]
+                                                     or (lambda s: s,)), verse))(locals(), functions)
