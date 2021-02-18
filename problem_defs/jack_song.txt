@@ -250,3 +250,27 @@ That waked
         DeprecationWarning: '<имя_функции>' is deprecated, use parametrized 'song' instead
 
 функции при этом должны выполнять свои контракты
+
+
+-------------------
+Бонусное требование
+
+четвертое требование задумывалось финальным, но так как у нас тут собрался клуб юных любителей комбинаторики и цепочек элифов, будет ещё одно, бонусное ТЗ, шоп все ощутить прелести комбинаторного взрыва от неправильно выбранной абстракции =)
+
+#task
+Добавить в функцию `song()` ещё один флаг, управляющий выводом:
+
+    def song(rnd: bool=False, double: bool=False, reverse: bool=False) -> str:
+
+При установке флага reverse в True текст куплета доложен выводиться задом наперёд:
+
+    .tliub kcaJ taht esuoh eht si sihT
+
+    .tliub kcaJ taht esuoh eht ni yal tahT
+    tlam eht si sihT
+
+    .tliub kcaJ taht esuoh eht ni yal tahT
+    tlam eht eta tahT
+    ,tar eht si sihT
+
+Все остальные флаги должны выполнять свои функции как прежде. Две депрекатнутые функции также должны работать как прежде.
