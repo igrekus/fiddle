@@ -14,16 +14,7 @@ _line_format = {True: _double, False: _id}
 _verse_format = {True: _reverse, False: _id}
 
 _recite = lambda data, fmt, rev: \
-    '\n\n'.join(
-        rev(
-            'This is {}.'.format(
-                ''.join(
-                    fmt(data[-i:])
-                ).strip()
-            )
-        )
-        for i in range(1, len(data) + 1)
-    )
+    '\n\n'.join(rev(f'This is {"".join(fmt(data[-i:])).strip()}.') for i in range(1, len(data) + 1))
 
 song = lambda rnd=False, double=False, reverse=False:\
     _recite(
