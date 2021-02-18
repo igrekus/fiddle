@@ -3,9 +3,10 @@ from warnings import warn
 
 
 class SongGenerator:
-    def __init__(self, rnd=False, count_mod=1):
+    def __init__(self, rnd: bool = False, count_mod: int = 1, reverse: bool = False):
         self.count_mod = count_mod
         self.rnd = rnd
+        self.reverse = reverse
         self.simple_song = (
             {"action": " the house that Jack built", "object": ""},
             {"action": " lay in", "object": " the malt"},
@@ -28,13 +29,16 @@ class SongGenerator:
         for item in self.song[song_length::-1]:
             article = "\nThat" if item['object'] else ""
             couplet += f"{item['object']}{article}{item['action']}" * self.count_mod
-        return couplet.rstrip(",") + "."
+        couplet = couplet.rstrip(",") + "."
+        if self.reverse:
+            couplet = couplet[::-1]
+        return couplet
 
 
-def song(rnd: bool = False, double: bool = False) -> str:
+def song(rnd: bool = False, double: bool = False, reverse: bool = False) -> str:
     count_mod = 2 if double else 1
-    jacks_song = SongGenerator(rnd=rnd, count_mod=count_mod).couplet_generator
-    return '\n\n'.join(jacks_song(i) for i in range(12))
+    jacks_song = SongGenerator(rnd=rnd, count_mod=count_mod, reverse=reverse).couplet_generator
+    return '\n\n'.join([jacks_song(i) for i in range(12)])
 
 
 def double_song() -> str:
@@ -48,4 +52,4 @@ def random_song() -> str:
 
 
 if __name__ == '__main__':
-    print(song(double=False, rnd=True))
+    print(song(double=False, rnd=False, reverse=True))
