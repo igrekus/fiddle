@@ -16,18 +16,19 @@ snippets = {"That lay in": " the house that Jack built.\n",
             "This is": " the horse and the hound and the horn,\n"}
 
 
-def song(rnd=False, double=False):
+def song(rnd: bool = False, double: bool = False, reverse: bool = False) -> str:
     cases = {(False, False): _song,
              (False, True): _double_song,
              (True, False): _random_song,
              (True, True): _double_random_song}
-    return cases[(rnd, double)]()
+    return "\n".join([couplet[::-1] for couplet in cases[(rnd, double)]()]).strip() if reverse\
+        else "\n".join(cases[(rnd, double)]()).strip()
 
 
 def _song():
     actions = list(snippets.keys())
     stories = list(snippets.values())
-    all_song = ""
+    all_song = list()
     for rows in range(1, len(stories) + 1):
         couplet = ""
         for row in range(rows):
@@ -35,20 +36,20 @@ def _song():
                 couplet = introduction + stories[row] + couplet
             else:
                 couplet = actions[row] + stories[row] + couplet
-        all_song += couplet + ("\n" if rows != len(stories) else "")
-    return all_song.strip()
+        all_song.append(couplet)
+    return all_song
 
 
 def double_song():
     warnings.warn("'double_song' is deprecated, use parametrized 'song' instead", DeprecationWarning)
-    return _double_song()
+    return "\n".join(_double_song()).strip()
 
 
 def _double_song():
     actions = [""] + list(snippets.keys())
     stories = list(snippets.values())
     stories[0] = " the house that Jack built"
-    all_song = ""
+    all_song = list()
     for rows in range(1, len(stories) + 1):
         couplet = ""
         for row in range(rows):
@@ -58,13 +59,13 @@ def _double_song():
                 couplet = actions[row + 1] + stories[row] + actions[row] + stories[row] + couplet
             if row == rows - 1:
                 couplet += ".\n"
-        all_song += couplet + ("\n" if rows != len(stories) else "")
-    return all_song.strip()
+        all_song.append(couplet)
+    return all_song
 
 
 def random_song():
     warnings.warn("'random_song' is deprecated, use parametrized 'song' instead", DeprecationWarning)
-    return _random_song()
+    return "\n".join(_random_song()).strip()
 
 
 def _random_song():
@@ -78,7 +79,7 @@ def _random_song():
     snippets_values = list(local_snippets.values())
     snippets_keys = list(local_snippets.keys())
     shifted_snippets = {snippets_values[i]: snippets_keys[i - 1] for i in range(len(snippets_values))}
-    all_song = ""
+    all_song = list()
     for rows in range(1, len(stories) + 1):
         couplet = ""
         for row in range(rows):
@@ -88,8 +89,8 @@ def _random_song():
                 couplet = introduction + stories[row] + shifted_snippets[stories[row]] + couplet
             else:
                 couplet = stories[row] + shifted_snippets[stories[row]] + couplet
-        all_song += couplet + ("\n" if rows != len(stories) else "")
-    return all_song.strip()
+        all_song.append(couplet)
+    return all_song
 
 
 def _double_random_song():
@@ -103,7 +104,7 @@ def _double_random_song():
     snippets_values = list(local_snippets.values())
     snippets_keys = list(local_snippets.keys())
     shifted_snippets = {snippets_values[i]: snippets_keys[i - 1] for i in range(len(snippets_values))}
-    all_song = ""
+    all_song = list()
     for rows in range(1, len(stories) + 1):
         couplet = ""
         for row in range(rows):
@@ -114,5 +115,5 @@ def _double_random_song():
                 couplet = introduction + (stories[row] + shifted_snippets[stories[row]]) * 2 + couplet
             else:
                 couplet = (stories[row] + shifted_snippets[stories[row]]) * 2 + couplet
-        all_song += couplet + ("\n" if rows != len(stories) else "")
-    return all_song.strip()
+        all_song.append(couplet)
+    return all_song
