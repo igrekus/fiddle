@@ -49,7 +49,7 @@ def couplet(n, l):
 
     return f'{couplet}.'
 
-def song(rnd = False, double = False):
+def song(rnd = False, double = False, reverse = False):
     parts = [['the house that Jack built'], ['the malt', 'That lay in'], ['the rat,', 'That ate'], ['the cat,', 'That killed'],
     ['the dog,', 'That worried'], ['the cow with the crumpled horn,', 'That tossed'], ['the maiden all forlorn,', 'That milked'],
     ['the man all tattered and torn,', 'That kissed'], ['the priest all shaven and shorn,', 'That married'], ['the rooster that crow\'d in the morn,', 'That waked'],
@@ -77,6 +77,16 @@ def song(rnd = False, double = False):
         for i in range(12):
             song.append(double_random_couplet(i, parts))
 
+    if reverse:
+        for j in range(12):
+            song[j] = song[j].split('\n')
+            song[j] = song[j][::-1]
+
+            for n in range(len(song[j])):
+                song[j][n] = song[j][n][::-1]
+
+            song[j] = '\n'.join(song[j])
+
     return '\n\n'.join(song)
 
 def double_song():
@@ -90,7 +100,7 @@ def double_song():
     song = []
 
     for i in range(12):
-            song.append(double_couplet(i, parts))
+        song.append(double_couplet(i, parts))
 
     return '\n\n'.join(song)
 
