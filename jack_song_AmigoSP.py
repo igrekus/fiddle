@@ -16,6 +16,19 @@ def who_called(func):
     return wrapper
 
 
+def backwards(func):
+    def wrapper(*args, **kwargs):
+        if len(args) == 3:
+            has_reverse = args[-1]
+        else:
+            has_reverse = kwargs.get('reverse')
+        if has_reverse:
+            return '\n\n'.join(list(map(lambda x: x[::-1], func(*args, **kwargs).split('\n\n'))))
+        else:
+            return func(*args, **kwargs)
+    return wrapper
+
+
 ORIGINAL_SONG = """This is the house that Jack built.
 
 This is the malt
@@ -176,7 +189,8 @@ def random_song():
     return '\n\n'.join(_text)
 
 
-def song(rnd=False, double=False):
+@backwards
+def song(rnd=False, double=False, reverse=False):
     if rnd and double:
         setattr(song, '_is_random', True)
         text_song = double_song()
@@ -191,5 +205,4 @@ def song(rnd=False, double=False):
 
 
 if __name__ == '__main__':
-    print(song(True, True))
-    print(double_song())
+    print(song(False, False, reverse=True))
