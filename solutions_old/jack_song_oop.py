@@ -57,7 +57,7 @@ class Song:
     ]
 
     def __init__(self, orderer, line_formatter, verse_formatter):
-        self._formatter = line_formatter
+        self._line_formatter = line_formatter
         self._data = orderer.order(self._data)
         self._verse_formatter = verse_formatter
 
@@ -71,7 +71,7 @@ class Song:
         return ''.join(self._parts(num))
 
     def _parts(self, num):
-        return self._formatter.format(self._data[-num:])
+        return self._line_formatter.format(self._data[-num:])
 
     def __len__(self):
         return self._data.__len__()
