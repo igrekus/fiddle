@@ -5,20 +5,22 @@ import warnings
 __all__ = ['song', 'double_song', 'random_song']
 
 _random = lambda it: sorted(it, key=lambda _: random.randint(0, 100))
+_numbered = lambda it, order: [it[i] for i in order]
 _double = lambda it: itertools.chain(*[[lhs, rhs] for lhs, rhs in zip(it, it)])
 _reverse = lambda it: it[::-1]
-_id = lambda it: it
+_id = lambda it, *_: it
 
-_order = {True: _random, False: _id}
+_random_order = {True: _random, False: _id}
+_numbered_order = {list: _numbered, type(None): _id}
 _line_format = {True: _double, False: _id}
 _verse_format = {True: _reverse, False: _id}
 
 _recite = lambda data, fmt, rev: \
     '\n\n'.join(rev(f'This is {"".join(fmt(data[-i:])).strip()}.') for i in range(1, len(data) + 1))
 
-song = lambda rnd=False, double=False, reverse=False:\
+song = lambda rnd=False, double=False, reverse=False, order=None:\
     _recite(
-        data=_order[rnd]([
+        data=_numbered_order[type(order)](_random_order[rnd]([
             "the horse and the hound and the horn,\nThat belong to ",
             "the farmer sowing his corn,\nThat kept ",
             "the rooster that crow'd in the morn,\nThat waked ",
@@ -31,7 +33,7 @@ song = lambda rnd=False, double=False, reverse=False:\
             "the rat,\nThat ate ",
             "the malt\nThat lay in ",
             "the house that Jack built "
-        ]),
+        ]), order),
         fmt=_line_format[double],
         rev=_verse_format[reverse]
     )
