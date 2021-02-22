@@ -21,7 +21,7 @@ class RandomOrder(DefaultOrder):
 
 class NumberedOrder(DefaultOrder):
     def order(self, data):
-        return [data[i] for i in self._order]
+        return [data[::-1][i] for i in self._order][::-1]
 
 
 class DefaultLine:

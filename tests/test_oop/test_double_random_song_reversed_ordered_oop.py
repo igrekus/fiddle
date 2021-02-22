@@ -37,89 +37,89 @@ def test_ordered_song():
     This is the malt
     That lay in the house that Jack built.
     
-    This is the priest all shaven and shorn,
-    That married the malt
-    That lay in the house that Jack built.
-    
     This is the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    That waked the malt
     That lay in the house that Jack built.
     
-    This is the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    This is the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
     This is the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
-    This is the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    This is the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
     This is the dog,
-    That worried the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    That worried the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
-    This is the cat,
-    That killed the dog,
-    That worried the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    This is the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
     This is the rat,
-    That ate the cat,
-    That killed the dog,
-    That worried the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    That ate the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
+    That lay in the house that Jack built.
+    
+    This is the cat,
+    That killed the rat,
+    That ate the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
     This is the farmer sowing his corn,
-    That kept the rat,
-    That ate the cat,
-    That killed the dog,
-    That worried the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    That kept the cat,
+    That killed the rat,
+    That ate the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.
     
     This is the horse and the hound and the horn,
     That belong to the farmer sowing his corn,
-    That kept the rat,
-    That ate the cat,
-    That killed the dog,
-    That worried the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the malt
+    That kept the cat,
+    That killed the rat,
+    That ate the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the house that Jack built.""")
 
     expect(song(order=order)).to_equal(expected)
@@ -132,129 +132,129 @@ def test_double_ordered_song():
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
-    This is the priest all shaven and shorn,
-    That married the priest all shaven and shorn,
-    That married the malt
-    That lay in the malt
-    That lay in the house that Jack built the house that Jack built.
-    
     This is the rooster that crow'd in the morn,
     That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the priest all shaven and shorn,
-    That married the malt
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
-    This is the maiden all forlorn,
-    That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    This is the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
     This is the man all tattered and torn,
     That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
-    That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
-    This is the cow with the crumpled horn,
-    That tossed the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
+    This is the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
     This is the dog,
     That worried the dog,
-    That worried the cow with the crumpled horn,
-    That tossed the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
+    That worried the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
-    This is the cat,
-    That killed the cat,
-    That killed the dog,
-    That worried the dog,
-    That worried the cow with the crumpled horn,
+    This is the cow with the crumpled horn,
     That tossed the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
+    That tossed the dog,
+    That worried the dog,
+    That worried the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
     This is the rat,
     That ate the rat,
-    That ate the cat,
-    That killed the cat,
-    That killed the dog,
-    That worried the dog,
-    That worried the cow with the crumpled horn,
+    That ate the cow with the crumpled horn,
     That tossed the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
+    That tossed the dog,
+    That worried the dog,
+    That worried the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
+    That lay in the malt
+    That lay in the house that Jack built the house that Jack built.
+    
+    This is the cat,
+    That killed the cat,
+    That killed the rat,
+    That ate the rat,
+    That ate the cow with the crumpled horn,
+    That tossed the cow with the crumpled horn,
+    That tossed the dog,
+    That worried the dog,
+    That worried the maiden all forlorn,
+    That milked the maiden all forlorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
+    That married the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
     This is the farmer sowing his corn,
     That kept the farmer sowing his corn,
-    That kept the rat,
-    That ate the rat,
-    That ate the cat,
+    That kept the cat,
     That killed the cat,
-    That killed the dog,
-    That worried the dog,
-    That worried the cow with the crumpled horn,
+    That killed the rat,
+    That ate the rat,
+    That ate the cow with the crumpled horn,
     That tossed the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
+    That tossed the dog,
+    That worried the dog,
+    That worried the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.
     
@@ -262,23 +262,23 @@ def test_double_ordered_song():
     That belong to the horse and the hound and the horn,
     That belong to the farmer sowing his corn,
     That kept the farmer sowing his corn,
-    That kept the rat,
-    That ate the rat,
-    That ate the cat,
+    That kept the cat,
     That killed the cat,
-    That killed the dog,
-    That worried the dog,
-    That worried the cow with the crumpled horn,
+    That killed the rat,
+    That ate the rat,
+    That ate the cow with the crumpled horn,
     That tossed the cow with the crumpled horn,
-    That tossed the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the maiden all forlorn,
+    That tossed the dog,
+    That worried the dog,
+    That worried the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That milked the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the malt
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the malt
     That lay in the malt
     That lay in the house that Jack built the house that Jack built.""")
 
@@ -292,87 +292,87 @@ def test_reversed_ordered_song():
     tlam eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht si sihT
-    
-    .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht si sihT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht si sihT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
     ,god eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht si sihT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht eta tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
     ,tar eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht eta tahT
-    ,tar eht tpek tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
+    ,tar eht dellik tahT
+    ,tac eht si sihT
+    
+    .tliub kcaJ taht esuoh eht ni yal tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
+    ,tar eht dellik tahT
+    ,tac eht tpek tahT
     ,nroc sih gniwos remraf eht si sihT
     
     .tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht eta tahT
-    ,tar eht tpek tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
+    ,tar eht dellik tahT
+    ,tac eht tpek tahT
     ,nroc sih gniwos remraf eht ot gnoleb tahT
     ,nroh eht dna dnuoh eht dna esroh eht si sihT""")
 
@@ -387,97 +387,97 @@ def test_random_ordered_song():
     That kept the dog,
     That worried.
     
-    This is the rat,
-    That ate the farmer sowing his corn,
-    That kept the dog,
-    That worried.
-    
     This is the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
-    This is the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    This is the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
     This is the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
-    This is the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    This is the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
     This is the malt
-    That lay in the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    That lay in the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
-    This is the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    This is the cat,
+    That killed the malt
+    That lay in the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
     This is the cow with the crumpled horn,
-    That tossed the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    That tossed the cat,
+    That killed the malt
+    That lay in the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
+    That kept the dog,
+    That worried.
+    
+    This is the horse and the hound and the horn,
+    That belong to the cow with the crumpled horn,
+    That tossed the cat,
+    That killed the malt
+    That lay in the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
     This is the maiden all forlorn,
-    That milked the cow with the crumpled horn,
-    That tossed the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    That milked the horse and the hound and the horn,
+    That belong to the cow with the crumpled horn,
+    That tossed the cat,
+    That killed the malt
+    That lay in the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.
     
     This is the house that Jack built the maiden all forlorn,
-    That milked the cow with the crumpled horn,
-    That tossed the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the rat,
-    That ate the farmer sowing his corn,
+    That milked the horse and the hound and the horn,
+    That belong to the cow with the crumpled horn,
+    That tossed the cat,
+    That killed the malt
+    That lay in the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the dog,
     That worried.""")
 
@@ -498,149 +498,149 @@ def test_double_reversed_ordered_song():
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht si sihT
-    
-    .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
-    tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht si sihT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
     ,nrot dna derettat lla nam eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht si sihT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
     ,god eht deirrow tahT
     ,god eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
     ,god eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht si sihT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
     ,god eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht eta tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
     ,tar eht eta tahT
     ,tar eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
     ,god eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht eta tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
     ,tar eht eta tahT
-    ,tar eht tpek tahT
+    ,tar eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht si sihT
+    
+    .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
+    tlam eht ni yal tahT
+    tlam eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
+    ,nrot dna derettat lla nam eht dessik tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
+    ,god eht deirrow tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
     ,nroc sih gniwos remraf eht si sihT
     
     .tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    tlam eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht deklim tahT
-    ,nrolrof lla nediam eht deklim tahT
-    ,nrolrof lla nediam eht dessik tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deirrow tahT
+    ,nrot dna derettat lla nam eht deklim tahT
+    ,nrolrof lla nediam eht deklim tahT
+    ,nrolrof lla nediam eht deirrow tahT
     ,god eht deirrow tahT
-    ,god eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht eta tahT
+    ,god eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht eta tahT
     ,tar eht eta tahT
-    ,tar eht tpek tahT
+    ,tar eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
     ,nroc sih gniwos remraf eht ot gnoleb tahT
     ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
@@ -659,96 +659,96 @@ def test_random_reversed_ordered_song():
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht si sihT
-    
-    .deirrow tahT
-    ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht si sihT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht si sihT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht ni yal tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
     tlam eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht si sihT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
+    tlam eht dellik tahT
+    ,tac eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht dessot tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
+    tlam eht dellik tahT
+    ,tac eht dessot tahT
     ,nroh delpmurc eht htiw woc eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deklim tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
+    tlam eht dellik tahT
+    ,tac eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht si sihT
+    
+    .deirrow tahT
+    ,god eht tpek tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
+    tlam eht dellik tahT
+    ,tac eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht deklim tahT
     ,nrolrof lla nediam eht si sihT
     
     .deirrow tahT
     ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deklim tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
+    tlam eht dellik tahT
+    ,tac eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht deklim tahT
     ,nrolrof lla nediam eht tliub kcaJ taht esuoh eht si sihT""")
 
     tmp = random.shuffle
@@ -770,31 +770,19 @@ def test_random_double_ordered_song():
     That worried the dog,
     That worried.
     
-    This is the rat,
-    That ate the rat,
-    That ate the farmer sowing his corn,
-    That kept the farmer sowing his corn,
-    That kept the dog,
-    That worried the dog,
-    That worried.
-    
     This is the man all tattered and torn,
     That kissed the man all tattered and torn,
-    That kissed the rat,
-    That ate the rat,
-    That ate the farmer sowing his corn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
     That worried.
     
-    This is the priest all shaven and shorn,
-    That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    This is the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
@@ -802,29 +790,25 @@ def test_random_double_ordered_song():
     
     This is the rooster that crow'd in the morn,
     That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
-    That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
     That worried.
     
-    This is the cat,
-    That killed the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    This is the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
@@ -832,37 +816,33 @@ def test_random_double_ordered_song():
     
     This is the malt
     That lay in the malt
-    That lay in the cat,
-    That killed the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That lay in the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
     That worried.
     
-    This is the horse and the hound and the horn,
-    That belong to the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the malt
-    That lay in the cat,
+    This is the cat,
     That killed the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That killed the malt
+    That lay in the malt
+    That lay in the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
@@ -870,21 +850,41 @@ def test_random_double_ordered_song():
     
     This is the cow with the crumpled horn,
     That tossed the cow with the crumpled horn,
-    That tossed the horse and the hound and the horn,
-    That belong to the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the malt
-    That lay in the cat,
+    That tossed the cat,
     That killed the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That killed the malt
+    That lay in the malt
+    That lay in the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
+    That kept the farmer sowing his corn,
+    That kept the dog,
+    That worried the dog,
+    That worried.
+    
+    This is the horse and the hound and the horn,
+    That belong to the horse and the hound and the horn,
+    That belong to the cow with the crumpled horn,
+    That tossed the cow with the crumpled horn,
+    That tossed the cat,
+    That killed the cat,
+    That killed the malt
+    That lay in the malt
+    That lay in the priest all shaven and shorn,
+    That married the priest all shaven and shorn,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
+    That ate the rat,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
@@ -892,23 +892,23 @@ def test_random_double_ordered_song():
     
     This is the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the cow with the crumpled horn,
-    That tossed the cow with the crumpled horn,
-    That tossed the horse and the hound and the horn,
+    That milked the horse and the hound and the horn,
     That belong to the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the malt
-    That lay in the cat,
+    That belong to the cow with the crumpled horn,
+    That tossed the cow with the crumpled horn,
+    That tossed the cat,
     That killed the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That killed the malt
+    That lay in the malt
+    That lay in the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
@@ -916,23 +916,23 @@ def test_random_double_ordered_song():
     
     This is the house that Jack built the house that Jack built the maiden all forlorn,
     That milked the maiden all forlorn,
-    That milked the cow with the crumpled horn,
-    That tossed the cow with the crumpled horn,
-    That tossed the horse and the hound and the horn,
+    That milked the horse and the hound and the horn,
     That belong to the horse and the hound and the horn,
-    That belong to the malt
-    That lay in the malt
-    That lay in the cat,
+    That belong to the cow with the crumpled horn,
+    That tossed the cow with the crumpled horn,
+    That tossed the cat,
     That killed the cat,
-    That killed the rooster that crow'd in the morn,
-    That waked the rooster that crow'd in the morn,
-    That waked the priest all shaven and shorn,
+    That killed the malt
+    That lay in the malt
+    That lay in the priest all shaven and shorn,
     That married the priest all shaven and shorn,
-    That married the man all tattered and torn,
-    That kissed the man all tattered and torn,
-    That kissed the rat,
+    That married the rooster that crow'd in the morn,
+    That waked the rooster that crow'd in the morn,
+    That waked the rat,
     That ate the rat,
-    That ate the farmer sowing his corn,
+    That ate the man all tattered and torn,
+    That kissed the man all tattered and torn,
+    That kissed the farmer sowing his corn,
     That kept the farmer sowing his corn,
     That kept the dog,
     That worried the dog,
@@ -961,17 +961,7 @@ def test_random_double_reverse_ordered_song():
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht si sihT
-    
-    .deirrow tahT
-    ,god eht deirrow tahT
-    ,god eht tpek tahT
-    ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
     ,nrot dna derettat lla nam eht si sihT
     
@@ -979,25 +969,21 @@ def test_random_double_reverse_ordered_song():
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht si sihT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht si sihT
     
     .deirrow tahT
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht si sihT
     
@@ -1005,33 +991,29 @@ def test_random_double_reverse_ordered_song():
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht si sihT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht si sihT
     
     .deirrow tahT
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht ni yal tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
     tlam eht ni yal tahT
     tlam eht si sihT
     
@@ -1039,41 +1021,37 @@ def test_random_double_reverse_ordered_song():
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht ni yal tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht si sihT
+    tlam eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht si sihT
     
     .deirrow tahT
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht ni yal tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht dessot tahT
+    tlam eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht dessot tahT
     ,nroh delpmurc eht htiw woc eht dessot tahT
     ,nroh delpmurc eht htiw woc eht si sihT
     
@@ -1081,23 +1059,45 @@ def test_random_double_reverse_ordered_song():
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht ni yal tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht dessot tahT
+    tlam eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht dessot tahT
     ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deklim tahT
+    ,nroh delpmurc eht htiw woc eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht si sihT
+    
+    .deirrow tahT
+    ,god eht deirrow tahT
+    ,god eht tpek tahT
+    ,nroc sih gniwos remraf eht tpek tahT
+    ,nroc sih gniwos remraf eht dessik tahT
+    ,nrot dna derettat lla nam eht dessik tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht dekaw tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
+    tlam eht ni yal tahT
+    tlam eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht dessot tahT
+    ,nroh delpmurc eht htiw woc eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht deklim tahT
     ,nrolrof lla nediam eht deklim tahT
     ,nrolrof lla nediam eht si sihT
     
@@ -1105,23 +1105,23 @@ def test_random_double_reverse_ordered_song():
     ,god eht deirrow tahT
     ,god eht tpek tahT
     ,nroc sih gniwos remraf eht tpek tahT
-    ,nroc sih gniwos remraf eht eta tahT
-    ,tar eht eta tahT
-    ,tar eht dessik tahT
+    ,nroc sih gniwos remraf eht dessik tahT
     ,nrot dna derettat lla nam eht dessik tahT
-    ,nrot dna derettat lla nam eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht deirram tahT
-    ,nrohs dna nevahs lla tseirp eht dekaw tahT
+    ,nrot dna derettat lla nam eht eta tahT
+    ,tar eht eta tahT
+    ,tar eht dekaw tahT
     ,nrom eht ni d'worc taht retsoor eht dekaw tahT
-    ,nrom eht ni d'worc taht retsoor eht dellik tahT
-    ,tac eht dellik tahT
-    ,tac eht ni yal tahT
+    ,nrom eht ni d'worc taht retsoor eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht deirram tahT
+    ,nrohs dna nevahs lla tseirp eht ni yal tahT
     tlam eht ni yal tahT
-    tlam eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
-    ,nroh eht dna dnuoh eht dna esroh eht dessot tahT
+    tlam eht dellik tahT
+    ,tac eht dellik tahT
+    ,tac eht dessot tahT
     ,nroh delpmurc eht htiw woc eht dessot tahT
-    ,nroh delpmurc eht htiw woc eht deklim tahT
+    ,nroh delpmurc eht htiw woc eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht ot gnoleb tahT
+    ,nroh eht dna dnuoh eht dna esroh eht deklim tahT
     ,nrolrof lla nediam eht deklim tahT
     ,nrolrof lla nediam eht tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht si sihT""")
 
