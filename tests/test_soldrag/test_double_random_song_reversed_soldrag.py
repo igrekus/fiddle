@@ -22,8 +22,10 @@ container = (
 )
 
 
-def sample_patched(seq, ln):
-    return list(container)
+def random_patched(cnt):
+    global container
+    for i in range(len(container)):
+        cnt[i] = container[i]
 
 
 def test_reversed_song():
@@ -382,12 +384,12 @@ def test_random_reversed_song():
     ,nrot dna derettat lla nam eht deklim tahT
     ,nrolrof lla nediam eht tliub kcaJ taht esuoh eht si sihT""")
 
-    smp = random.sample
-    random.sample = sample_patched
+    tmp = random.shuffle
+    random.shuffle = random_patched
 
     expect(song(rnd=True, reverse=True)).to_equal(expected)
 
-    random.sample = smp
+    random.shuffle = tmp
 
 
 def test_random_double_reversed_song():
@@ -569,12 +571,9 @@ def test_random_double_reversed_song():
     ,nrolrof lla nediam eht deklim tahT
     ,nrolrof lla nediam eht tliub kcaJ taht esuoh eht tliub kcaJ taht esuoh eht si sihT""")
 
-    smp = random.sample
-    random.sample = sample_patched
+    tmp = random.shuffle
+    random.shuffle = random_patched
 
     expect(song(rnd=True, double=True, reverse=True)).to_equal(expected)
 
-    random.sample = smp
-
-".dessik tahT\n,nrot dna derettat lla nam eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht deirram tahT\n,nrohs dna nevahs lla tseirp eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht deirram tahT\n,nrohs dna nevahs lla tseirp eht deirrow tahT\n,god eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht deirram tahT\n,nrohs dna nevahs lla tseirp eht deirrow tahT\n,god eht tliub kcaJ taht esuoh eht si sihT\n\n.dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tpek tahT\n,nroc sih gniwos remraf eht dellik tahT\n,tac eht dessot tahT\n,nroh delpmurc eht htiw woc eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht deirram tahT\n,nrohs dna nevahs lla tseirp eht deirrow tahT\n,god eht tliub kcaJ taht esuoh eht ni yal tahT\ntlam eht si sihT"
-".deirrow tahT\n,god eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht deirram tahT\n,nrohs dna nevahs lla tseirp eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht deirram tahT\n,nrohs dna nevahs lla tseirp eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht deirram tahT\n,nrohs dna nevahs lla tseirp eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht deirram tahT\n,nrohs dna nevahs lla tseirp eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht dessik tahT\n,nrot dna derettat lla nam eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht deirram tahT\n,nrohs dna nevahs lla tseirp eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht si sihT\n\n.deirrow tahT\n,god eht tpek tahT\n,nroc sih gniwos remraf eht dessot tahT\n,nroh delpmurc eht htiw woc eht ot gnoleb tahT\n,nroh eht dna dnuoh eht dna esroh eht ni yal tahT\ntlam eht dellik tahT\n,tac eht deirram tahT\n,nrohs dna nevahs lla tseirp eht dekaw tahT\n,nrom eht ni d'worc taht retsoor eht eta tahT\n,tar eht dessik tahT\n,nrot dna derettat lla nam eht deklim tahT\n,nrolrof lla nediam eht tliub kcaJ taht esuoh eht si sihT"
+    random.shuffle = tmp
