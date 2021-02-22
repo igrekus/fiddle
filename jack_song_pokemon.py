@@ -1,4 +1,5 @@
 import random
+from typing import Optional, List
 from warnings import warn
 
 verse = """This is the horse and the hound and the horn,
@@ -37,8 +38,9 @@ double_song = _depr(__double_song)
 random_song = _depr(__random_song)
 
 
-def song(rnd: bool = False, double: bool = False, reverse: bool = False) -> str:
+def song(rnd: bool = False, double: bool = False, reverse: bool = False, order: Optional[List[int]] = None) -> str:
     functions = {"rnd": lambda s: random.sample(s, len(s)),
+                 "order": lambda s: list(map(lambda idx: s[::-1][idx], order))[::-1],
                  "double": lambda s: list(map(lambda r: 2 * r, s)),
                  "reverse": lambda s: list(map(lambda r: r[::-1], s))}
 
