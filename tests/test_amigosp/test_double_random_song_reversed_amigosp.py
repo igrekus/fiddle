@@ -6,15 +6,11 @@ from pyexpect import expect
 from jack_song_AmigoSP import song
 
 
-index = 0
 container = [4, 10, 5, 11, 1, 3, 8, 9, 2, 7, 6, 0, ]
 
 
-def choice_patched(seq):
-    global index
-    ret = container[index]
-    index += 1
-    return ret
+def random_patched(seq, ln):
+    return list(container)
 
 
 def test_reversed_song():
@@ -375,12 +371,12 @@ def test_random_reversed_song():
 
     global index
     index = 0
-    chs = random.choice
-    random.choice = choice_patched
+    chs = random.sample
+    random.sample = random_patched
 
     expect(song(rnd=True, reverse=True)).to_equal(expected)
 
-    random.choice = chs
+    random.sample = chs
 
 
 def test_random_double_reversed_song():
@@ -564,9 +560,9 @@ def test_random_double_reversed_song():
 
     global index
     index = 0
-    chs = random.choice
-    random.choice = choice_patched
+    chs = random.sample
+    random.sample = random_patched
 
     expect(song(rnd=True, double=True, reverse=True)).to_equal(expected)
 
-    random.choice = chs
+    random.sample = chs
