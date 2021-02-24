@@ -22,8 +22,10 @@ container = (
 )
 
 
-def sample_patched(seq, ln):
-    return list(container)
+def random_patched(cnt):
+    global container
+    for i in range(len(container)):
+        cnt[i] = container[i]
 
 
 def test_song():
@@ -382,15 +384,12 @@ def test_random_song():
     That kept the dog,
     That worried.""")
 
-    global index
-    index = 0
-
-    smp = random.sample
-    random.sample = sample_patched
+    tmp = random.shuffle
+    random.shuffle = random_patched
 
     expect(song(rnd=True)).to_equal(expected)
 
-    random.sample = smp
+    random.shuffle = tmp
 
 
 def test_double_random_song():
@@ -572,12 +571,9 @@ def test_double_random_song():
     That worried the dog,
     That worried.""")
 
-    global index
-    index = 0
-
-    chs = random.sample
-    random.sample = sample_patched
+    chs = random.shuffle
+    random.shuffle = random_patched
 
     expect(song(rnd=True, double=True)).to_equal(expected)
 
-    random.sample = chs
+    random.shuffle = chs

@@ -23,8 +23,10 @@ container = (
 )
 
 
-def sample_patched(seq, ln):
-    return list(container)
+def random_patched(cnt):
+    global container
+    for i in range(len(container)):
+        cnt[i] = container[i]
 
 
 def test_random_song():
@@ -129,8 +131,8 @@ def test_random_song():
     That kept the dog,
     That worried.""")
 
-    smp = random.sample
-    random.sample = sample_patched
+    tmp = random.shuffle
+    random.shuffle = random_patched
 
     with warnings.catch_warnings(record=True) as wns:
         expect(random_song()).to_equal(expected)
@@ -138,4 +140,4 @@ def test_random_song():
         expect(wn.category).to_be(DeprecationWarning)
         expect(wn.message.args[0]).to_equal("'random_song' is deprecated, use parametrized 'song' instead")
 
-    random.sample = smp
+    random.shuffle = tmp

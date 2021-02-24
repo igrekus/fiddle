@@ -1,195 +1,94 @@
 import random
-import inspect
 import logging
+from typing import List, Optional
 
-logging.basicConfig(format='%(message)s')
+logging.basicConfig(format="DeprecationWarning: <%(funcName)s> is deprecated, use parametrized 'song' instead")
 log = logging.getLogger(__name__)
 
 
-def who_called(func):
-    def wrapper():
-        value = inspect.stack()[1][3]
-        warning_string = f"DeprecationWarning: <{func.__name__}> is deprecated, use parametrized 'song' instead"
-        if value == "<module>":
-            log.warning(warning_string)
-        return func()
-    return wrapper
+class Song:
+    def __init__(self):
+        self.chunks_list = list(range(12))
+        self.part_song = "This is {name}{action}"
+        self.SETTINGS = [
+            {'name': 'the house that Jack built', 'actions': ''},
+            {'name': 'the malt', 'actions': '\nThat lay in'},
+            {'name': 'the rat,', 'actions': '\nThat ate'},
+            {'name': 'the cat,', 'actions': '\nThat killed'},
+            {'name': 'the dog,', 'actions': '\nThat worried'},
+            {'name': 'the cow with the crumpled horn,', 'actions': '\nThat tossed'},
+            {'name': 'the maiden all forlorn,', 'actions': '\nThat milked'},
+            {'name': 'the man all tattered and torn,', 'actions': '\nThat kissed'},
+            {'name': 'the priest all shaven and shorn,', 'actions': '\nThat married'},
+            {'name': "the rooster that crow'd in the morn,", 'actions': '\nThat waked'},
+            {'name': "the farmer sowing his corn,", 'actions': '\nThat kept'},
+            {'name': "the horse and the hound and the horn,", 'actions': '\nThat belong to'},
+        ]
+        self.start_couplet = 'This is'
+        self.song = None
+
+    def _get_path_song(self):
+        for chunk in self.chunks_list:
+            path_song = self.SETTINGS[chunk]
+            yield path_song['name'], path_song['actions']
+
+    def set_reverse(self):
+        return '\n\n'.join(list(map(lambda x: x[::-1], self.set_song().split('\n\n'))))
+
+    @property
+    def get_song(self):
+        self.song = self.set_song()
+        return self.song
+
+    def set_song(self):
+        _text: List[str] = []
+        prev_text = '.'
+        for name, action in self._get_path_song():
+            couplet = self.part_song.format(name=name, action=action)
+            _text.append(couplet + prev_text)
+            prev_text = _text[-1].replace(self.start_couplet, '')
+        return '\n\n'.join(_text)
 
 
-ORIGINAL_SONG = """This is the house that Jack built.
+class BuilderJack(Song):
+    def __init__(self, rnd, double, reverse, order):
+        super().__init__()
+        set_order = list(filter(lambda x: isinstance(x, List), [order, list(range(12))]))[0]
+        self.dict_default = {
+            'rnd': {
+                True: random.sample(set_order, len(set_order)),
+                False: set_order},
+            'double': {
+                True: "This is {name}{action} {name}{action}",
+                False: "This is {name}{action}"},
+            'reverse': {
+                True: self.set_reverse,
+                False: self.set_song},
+            }
+        self.chunks_list = self.dict_default['rnd'][rnd]
+        self.part_song = self.dict_default['double'][double]
+        self.song_revers = self.dict_default['reverse'][reverse]
 
-This is the malt
-That lay in the house that Jack built.
-
-This is the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the rooster that crow'd in the morn,
-That waked the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the farmer sowing his corn,
-That kept the rooster that crow'd in the morn,
-That waked the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built.
-
-This is the horse and the hound and the horn,
-That belong to the farmer sowing his corn,
-That kept the rooster that crow'd in the morn,
-That waked the priest all shaven and shorn,
-That married the man all tattered and torn,
-That kissed the maiden all forlorn,
-That milked the cow with the crumpled horn,
-That tossed the dog,
-That worried the cat,
-That killed the rat,
-That ate the malt
-That lay in the house that Jack built."""
-
-SETTINGS = [
-    {'name': 'house that Jack built', 'actions': ''},
-    {'name': 'malt', 'actions': 'lay in'},
-    {'name': 'rat,', 'actions': 'ate'},
-    {'name': 'cat,', 'actions': 'killed'},
-    {'name': 'dog,', 'actions': 'worried'},
-    {'name': 'cow with the crumpled horn,', 'actions': 'tossed'},
-    {'name': 'maiden all forlorn,', 'actions': 'milked'},
-    {'name': 'man all tattered and torn,', 'actions': 'kissed'},
-    {'name': 'priest all shaven and shorn,', 'actions': 'married'},
-    {'name': "rooster that crow'd in the morn,", 'actions': 'waked'},
-    {'name': "farmer sowing his corn,", 'actions': 'kept'},
-    {'name': "horse and the hound and the horn,", 'actions': 'belong to'},
-]
+    @property
+    def get_song(self):
+        self.song = self.song_revers()
+        return self.song
 
 
-def _get_path_song(chunk: int):
-    path_song = SETTINGS[chunk]
-    return path_song['name'], path_song['actions']
-
-
-@who_called
 def double_song():
-    chunk_list = list(range(0, 12))
-    counter_cuplet = 12
-    _text = []
-    prev_text = ''
-    double_random = hasattr(song, '_is_random')
-    for _ in range(1, counter_cuplet + 1):
-        if not double_random:
-            name, actions = _get_path_song(_ - 1)
-        else:
-            chunk_random = random.choice(chunk_list)
-            chunk_list.remove(chunk_random)
-            name, actions = _get_path_song(chunk_random)
-        if _ == 1 and not actions:
-            _text.append(f"This is the {name} the {name}.")
-        elif _ == 1 and actions:
-            _text.append(f"This is the {name}\nThat {actions} the {name}\nThat {actions}.")
-        elif actions:
-            _text.append(f"This is the {name}\nThat {actions} the {name}\nThat {actions} the {prev_text}")
-        else:
-            _text.append(f"This is the {name} the {name} the {prev_text}")
-        prev_text = _text[-1].replace('This is the ', '')
-    return '\n\n'.join(_text)
+    log.warning("")
+    return song(False, True, False)
 
 
-@who_called
 def random_song():
-    chunk_list = list(range(0, 12))
-    counter_cuplet = 12
-    _text = []
-    prev_text = ''
-    for _ in range(1, counter_cuplet + 1):
-        chunk_random = random.choice(chunk_list)
-        chunk_list.remove(chunk_random)
-        name, actions = _get_path_song(chunk_random)
-        if _ == 1 and not actions:
-            _text.append(f"This is the {name}.")
-        elif _ == 1 and actions:
-            _text.append(f"This is the {name}\nThat {actions}.")
-        else:
-            if actions:
-                _text.append(f"This is the {name}\nThat {actions} the {prev_text}")
-            else:
-                _text.append(f"This is the {name} the {prev_text}")
-        prev_text = _text[-1].replace('This is the ', '')
-    return '\n\n'.join(_text)
+    log.warning("")
+    return song(True, False, False)
 
 
-def song(rnd=False, double=False):
-    if rnd and double:
-        setattr(song, '_is_random', True)
-        text_song = double_song()
-        delattr(song, '_is_random')
-        return text_song
-    elif rnd is True and double is False:
-        return random_song()
-    elif rnd is False and double is True:
-        return double_song()
-    else:
-        return ORIGINAL_SONG
+def song(rnd=False, double=False, reverse=False, order: Optional[List[int]] = None):
+    return BuilderJack(rnd=rnd, double=double, reverse=reverse, order=order).get_song
 
 
 if __name__ == '__main__':
-    print(song(True, True))
-    print(double_song())
+    # print(double_song())
+    print(song(True, False, True, order=[0, 1, 2, 3, 4, 5]))

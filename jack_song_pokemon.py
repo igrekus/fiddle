@@ -1,4 +1,5 @@
 import random
+from typing import Optional, List
 from warnings import warn
 
 verse = """This is the horse and the hound and the horn,
@@ -18,7 +19,8 @@ _make_story = lambda v, n: (lambda f: v[n][f(v[n]):] + (f"\n{v[n + 1][:f(v[n + 1
     lambda c: c.find("the"))
 _decompose_verse = lambda v: list(map(lambda n: _make_story(v, n), range(len(v))))
 _decor = lambda v, n: "This is " + "".join(v[n:]).strip() + "."
-_make_song = lambda f, s: (lambda v: "\n\n".join(map(lambda n: _decor(v, n), range(len(v))[::-1])))(
+_reversed_decor = lambda v, n: "." + "".join(v[n:][::-1]).strip() + " si sihT"
+_make_song = lambda f, s, dec=_decor: (lambda v: "\n\n".join(map(lambda n: dec(v, n), range(len(v))[::-1])))(
     f(_decompose_verse(s.split("\n"))))
 
 _depr = lambda f: lambda: (lambda g: ((lambda h: warn(
@@ -36,11 +38,14 @@ double_song = _depr(__double_song)
 random_song = _depr(__random_song)
 
 
-def song(rnd: bool = False, double: bool = False) -> str:
+def song(rnd: bool = False, double: bool = False, reverse: bool = False, order: Optional[List[int]] = None) -> str:
     functions = {"rnd": lambda s: random.sample(s, len(s)),
-                 "double": lambda s: list(map(lambda r: 2 * r, s))}
+                 "order": lambda s: list(map(lambda idx: s[::-1][idx], order))[::-1],
+                 "double": lambda s: list(map(lambda r: 2 * r, s)),
+                 "reverse": lambda s: list(map(lambda r: r[::-1], s))}
 
     _p = lambda arg, fs: _p(fs[0](arg), fs[1:]) if len(fs) > 1 else fs[0](arg)
 
-    return (lambda locs, fs: _make_song(lambda v: _p(v, [fs.get(k) for k in fs.keys() if locs.get(k)]
-                                                     or (lambda s: s,)), verse))(locals(), functions)
+    return (
+        lambda locs, fs: _make_song(lambda v: _p(v, [fs.get(k) for k in fs.keys() if locs.get(k)] or (lambda s: s,)),
+                                    verse, dec=_reversed_decor if reverse else _decor))(locals(), functions)

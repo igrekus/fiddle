@@ -5,11 +5,12 @@ from pyexpect import expect
 
 from jack_song_denis import song
 
-container_denis = [
+
+container = [
     "That tossed",
     "That belong to",
     "That milked",
-    "",
+    "null",
     "That ate",
     "That worried",
     "That waked",
@@ -21,10 +22,10 @@ container_denis = [
 ]
 
 
-def shuffle_denis(cnt):
-    global container_denis
-    for i in range(len(container_denis)):
-        cnt[i] = container_denis[i]
+def shuffle_patched(cnt):
+    global container
+    for i in range(len(container)):
+        cnt[i] = container[i]
 
 
 def test_song():
@@ -382,7 +383,7 @@ def test_random_song():
     That worried.""")
 
     shf = random.shuffle
-    random.shuffle = shuffle_denis
+    random.shuffle = shuffle_patched
 
     expect(song(rnd=True)).to_equal(expected)
 
@@ -569,7 +570,7 @@ def test_double_random_song():
     That worried.""")
     shf = random.shuffle
 
-    random.shuffle = shuffle_denis
+    random.shuffle = shuffle_patched
 
     expect(song(rnd=True, double=True)).to_equal(expected)
     random.shuffle = shf

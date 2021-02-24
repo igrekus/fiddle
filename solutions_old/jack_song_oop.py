@@ -6,15 +6,22 @@ __all__ = ['song', 'double_song', 'random_song']
 
 
 class DefaultOrder:
+    def __init__(self, order=None):
+        self._order = order
     def order(self, data):
         return data
 
 
-class RandomOrder:
+class RandomOrder(DefaultOrder):
     def order(self, data):
         d = list(data)
         random.shuffle(d)
         return d
+
+
+class NumberedOrder(DefaultOrder):
+    def order(self, data):
+        return [data[::-1][i] for i in self._order][::-1]
 
 
 class DefaultLine:
@@ -38,7 +45,8 @@ class ReversedVerse:
 
 
 class Song:
-    orderers = {True: RandomOrder, False: DefaultOrder}
+    random_orderers = {True: RandomOrder, False: DefaultOrder}
+    numbered_orderers = {True: NumberedOrder, False: DefaultOrder}
     line_formatters = {True: DoubleLine, False: DefaultLine}
     verse_formatters = {True: ReversedVerse, False: DefaultVerse}
     _data = [
@@ -56,9 +64,9 @@ class Song:
         'the house that Jack built '
     ]
 
-    def __init__(self, orderer, line_formatter, verse_formatter):
-        self._formatter = line_formatter
-        self._data = orderer.order(self._data)
+    def __init__(self, random_orderer, line_formatter, verse_formatter, numbered_orderer):
+        self._line_formatter = line_formatter
+        self._data = numbered_orderer.order(random_orderer.order(self._data))
         self._verse_formatter = verse_formatter
 
     def __str__(self):
@@ -71,18 +79,19 @@ class Song:
         return ''.join(self._parts(num))
 
     def _parts(self, num):
-        return self._formatter.format(self._data[-num:])
+        return self._line_formatter.format(self._data[-num:])
 
     def __len__(self):
         return self._data.__len__()
 
 
-def song(rnd=False, double=False, reverse=False):
+def song(rnd=False, double=False, reverse=False, order=None):
     return str(
         Song(
-            orderer=Song.orderers[rnd](),
+            random_orderer=Song.random_orderers[rnd](),
             line_formatter=Song.line_formatters[double](),
-            verse_formatter=Song.verse_formatters[reverse]()
+            verse_formatter=Song.verse_formatters[reverse](),
+            numbered_orderer=Song.numbered_orderers[bool(order)](order)
         )
     )
 
