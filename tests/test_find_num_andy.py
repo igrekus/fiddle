@@ -2,7 +2,7 @@ import random
 
 from pyexpect import expect
 
-from find_num_lex_draven import find_missing, find_duplicate
+from find_num_andy import find_missing, find_duplicate
 
 
 def test_find_missing():
@@ -11,7 +11,7 @@ def test_find_missing():
     random.shuffle(seq)
     expected = seq.pop(random.randint(1, n + 1))
 
-    expect(find_missing(seq, n)).to_equal(expected)
+    expect(find_missing(seq=seq, n=n)).to_equal(expected)
 
 
 def test_find_duplicate():
@@ -21,4 +21,4 @@ def test_find_duplicate():
     expected = random.choice(seq)
     seq.append(expected)
 
-    expect(find_duplicate(seq, n)).to_equal(expected)
+    expect(find_duplicate(seq=seq, n=n)).to_equal(expected)
