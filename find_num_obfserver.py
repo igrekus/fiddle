@@ -1,26 +1,20 @@
 import random
 
-
-def find_missing(seq):
-    print(*set(list(range(1, len(seq)))).difference(seq))
-
-
-def find_duplicate(seq):
-    print([x for x in seq if seq.count(x) >= 2][1])
+n = 1000
+seq = list(range(1, n))
+seq.append(random.randint(1, n))
+seq.remove(random.randint(1, n))
 
 
-#n = 1000
+def find_missing(seq:list, n:int) -> int:
+    a = set(list(range(1, n))).difference(seq)
+    for i in a:
+        return i
 
 
-#find_duplicate код для тестирования
-#Z = list(range(1,n))
-#Z.append(random.randint(1,n))
-
-#find_duplicate(Z)
+def find_duplicate(seq:list, n:int) -> int:
+    return [x for x in seq if seq.count(x) >= 2][1]
 
 
-#find_missing код для тестирования
-#L = list(range(1,n))
-#L.remove(random.randint(1,n))
-
-#find_missind(L)
+print(find_duplicate(seq=seq, n=n))
+print(find_missing(seq=seq, n=n))
