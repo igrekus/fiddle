@@ -1,10 +1,14 @@
-def find_missing(list_int: list, n):
-    list_int.sort()
-    missing = int(list_int[-1] * (list_int[-1] + list_int[0]) / 2 - sum(list_int))
-    return missing
+from typing import List
 
 
-def find_duplicate(list_int: list, n):
-    for i in list_int:
-        if list_int.count(i) > 1:
+def find_missing(seq: List[int], n: int):
+    seq.sort()
+    for i in range(seq[0], seq[-1] + 1):
+        if i not in seq:
+            return i
+
+
+def find_duplicate(seq: List[int], n: [int]):
+    for i in seq:
+        if seq.count(i) > 1:
             return i
