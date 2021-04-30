@@ -13,4 +13,4 @@ def process(path):
         df.to_excel(file.replace('.txt', '.xlsx'), index=False)
 
 
-process(r'D:\work\python\fiddle\TXT')
+process(r'/TXT')
