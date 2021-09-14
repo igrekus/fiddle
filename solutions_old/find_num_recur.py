@@ -2,7 +2,7 @@ find_missing = lambda seq, n: \
     _recur_miss(sorted(seq), 1)
 _recur_miss = \
     lambda seq, count: \
-        (lambda head, *tail: head - 1 if head - count == 1 else _recur_miss(tail, count + 1))(*seq)
+        (lambda head, *tail: head - 1 if head - count == 1 else (head + 2 if len(tail) == 1 else _recur_miss(tail, count + 1)))(*seq)
 
 find_duplicate = lambda seq, n: \
     _recur_dupe(sorted(seq), 1)
