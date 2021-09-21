@@ -2,9 +2,8 @@ import random
 
 from pyexpect import expect
 
-from fiddle import find_missing, find_duplicate
-# from search_in_number_list import find_missing
-# from search_in_number_list_2 import find_duplicate
+# from fiddle import find_missing, find_duplicate
+from search_in_number_list import find_missing, find_duplicate
 
 
 def test_find_missing_random():
