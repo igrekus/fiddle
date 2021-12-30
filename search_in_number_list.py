@@ -20,7 +20,7 @@ number_list.remove(random.choice(number_list))
 def find_missing(seq, n: int) -> int:
     miss = 1
     m = 0
-    for miss_search in range(len(seq)):
+    for miss_search in range(len(sorted(seq))):
         if miss == seq[m]:
             miss += 1
             m += 1
@@ -31,7 +31,7 @@ def find_duplicate(seq, n: int) -> int:
     duplicate = 1
     m = 0
     duplicate_number = 0
-    for duplicate_search in range(len(seq)):
+    for duplicate_search in range(len(sorted(seq))):
         if duplicate == seq[m]:
             duplicate += 1
             m += 1
