@@ -1,9 +1,10 @@
 import os
 
+import pandas as pd
+import seaborn as sb
+
 from io import BytesIO
 from pathlib import Path
-
-import pandas as pd
 
 from forgot_again.file import make_dirs
 
@@ -39,6 +40,12 @@ def _parse_file(path, folder):
         df['ldiff'] = df['L(mm)'].diff()
         df['deriv'] = df['fdiff'] / df['ldiff']
         df.to_excel(f'{folder}/{measure}.xlsx', engine='openpyxl', index=False)
+
+    ax = sb.lineplot(data=df, x='L(mm)', y='F(N)', label='raw', ax=None)
+    ax.set(xlim=(0, 4))
+    fig = ax.get_figure()
+    # fig.savefig(f'{folder}/{measure}.png', dpi=200)
+    # fig.clf()
     return df
 
 
@@ -59,6 +66,12 @@ def filter_df(df, folder):
     out_df['batch'] = batch
     out_df['measure'] = measure
     out_df.to_excel(f'{folder}/{measure:08d}_filtered.xlsx', engine='openpyxl', index=False)
+
+    ax = sb.lineplot(data=out_df, x='L(mm)', y='F(N)', label='filtered', ax=None)
+    ax.set(xlim=(0, 4))
+    fig = ax.get_figure()
+    fig.savefig(f'{folder}/{measure:08d}.png', dpi=200)
+    fig.clf()
     return out_df
 
 
