@@ -8,7 +8,7 @@ from pathlib import Path
 
 from forgot_again.file import make_dirs
 
-path = r'D:\work\python\nb\tear_plots\data'
+path = r'D:\work\python\jupyter_notebooks\slice_plots\data'
 
 
 def _get_dirs(path):
@@ -30,7 +30,7 @@ def _parse_file(path, folder):
     batch, measure = p.parts[-2:]
     measure = measure.lower().replace('.csv', '')
     with open(path, mode='rt', encoding='ascii') as f:
-        bs = BytesIO(''.join(filter(bool, (l.replace('\x00', '') for l in f.readlines()))).encode('ascii'))
+        bs = BytesIO(''.join(filter(bool, (l.replace('\x00', '').replace(',', '.') for l in f.readlines()))).encode('ascii'))
         df = pd.read_csv(bs, sep=';')
         df.columns = ['F(N)', 'L(mm)']
         df = df[df['L(mm)'] != 0]
