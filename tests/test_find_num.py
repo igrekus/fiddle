@@ -3,7 +3,7 @@ import random
 from pyexpect import expect
 
 # from fiddle import find_missing, find_duplicate
-from search_in_number_list import find_missing, find_duplicate
+from find_missing import find_missing, find_duplicate
 
 
 def test_find_missing_random():
