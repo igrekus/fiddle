@@ -26,8 +26,8 @@ def test_4():
 
 def test_5():
     data = [1, [2, 3], 4, 5, expect, [[[[[[[1, [[[False, 'lol', [2, 1], 3]]]]]]]]]], 2]
-    # expect(flatten(data)).to_equal([1, 2, 3, 4, 5, expect, 1, False, 'lol', 2, 1, 3, 2])
-    assert flatten(data) == [1, 2, 3, 4, 5, expect, 1, False, 'lol', 2, 1, 3, 2]
+    expect(flatten(data)).to_equal([1, 2, 3, 4, 5, expect, 1, False, 'lol', 2, 1, 3, 2])
+    # assert flatten(data) == [1, 2, 3, 4, 5, expect, 1, False, 'lol', 2, 1, 3, 2]
 
 
 # def test_find_missing_left_border():
