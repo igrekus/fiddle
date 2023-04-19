@@ -8,7 +8,7 @@ from pathlib import Path
 
 from forgot_again.file import make_dirs
 
-path = r'D:\work\python\jupyter_notebooks\slice_plots\data'
+path = r'D:\work\python\jupyter_notebooks\tear_plots\data'
 
 
 def _get_dirs(path):
@@ -43,7 +43,7 @@ def _parse_file(path, folder):
         df['fdiff'] = df['F(N)'].diff()
         df['ldiff'] = df['L(mm)'].diff()
         df['deriv'] = df['fdiff'] / df['ldiff']
-        df.to_excel(f'{folder}/{measure}.xlsx', engine='openpyxl', index=False)
+        # df.to_excel(f'{folder}/{measure}.xlsx', engine='openpyxl', index=False)
 
     # ax = sb.lineplot(data=df, x='L(mm)', y='F(N)', label='raw', ax=None)
     # ax.set(xlim=(0, 4))
